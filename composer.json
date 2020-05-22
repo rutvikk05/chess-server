@@ -1,0 +1,21 @@
+{
+  "name": "programarivm/pgn-chess-server",
+  "description": "Ratchet WebSocket server listening to PGN chess moves.",
+  "authors": [
+    {
+      "name": "Jordi Bassagañas",
+      "email": "info@programarivm.com",
+      "homepage": "https://programarivm.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "programarivm/pgn-chess": "1.0.8",
+    "cboden/ratchet": "^0.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "PgnChessServer\\": "src/"
+    }
+  }
+}

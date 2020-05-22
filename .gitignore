@@ -1,0 +1,6 @@
+# misc
+.env.example
+
+# php
+/composer.lock
+/vendor/
