@@ -1,6 +1,6 @@
 {
   "name": "programarivm/pgn-chess-server",
-  "description": "Ratchet WebSocket server listening to PGN chess moves.",
+  "description": "PHP Ratchet WebSocket chess server.",
   "authors": [
     {
       "name": "Jordi Bassagañas",

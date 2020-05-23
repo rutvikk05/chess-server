@@ -14,7 +14,11 @@ class Socket implements MessageComponentInterface {
     private $game;
 
     public function __construct() {
-        echo "New game!\n";
+        echo "Welcome to PGN Chess Server" . PHP_EOL;
+        echo "Examples of valid moves:" . PHP_EOL;
+        echo '"w e4"' . PHP_EOL;
+        echo '"b e5"' . PHP_EOL;
+        echo "Listening to messages..." . PHP_EOL;
     }
 
     public function onOpen(ConnectionInterface $conn) {
