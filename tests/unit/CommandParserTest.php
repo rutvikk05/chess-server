@@ -76,4 +76,14 @@ class CommandParserTest extends TestCase
             CommandParser::validate('/quit')
         );
     }
+
+    /**
+     * @test
+     */
+    public function validate_status()
+    {
+        $this->assertTrue(
+            CommandParser::validate('/status')
+        );
+    }
 }

@@ -4,6 +4,7 @@ namespace PgnChessServer;
 
 use PgnChessServer\Command\Quit;
 use PgnChessServer\Command\Start;
+use PgnChessServer\Command\Status;
 
 class CommandParser
 {
@@ -24,6 +25,8 @@ class CommandParser
             case Start::$name:
                 return count(self::$argv) -1 === count(Start::$params) &&
                     in_array(self::$argv[1], Start::$params['mode']);
+            case Status::$name:
+                return count(self::$argv) -1 === 0;
             default:
                 return false;
         }
