@@ -36,7 +36,7 @@ class CommandParserTest extends TestCase
             CommandParser::validate('/start train')
         );
     }
-    
+
     /**
      * @test
      */
@@ -64,6 +64,16 @@ class CommandParserTest extends TestCase
     {
         $this->assertFalse(
             CommandParser::validate('/start player train')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function validate_quit()
+    {
+        $this->assertFalse(
+            CommandParser::validate('/quit')
         );
     }
 }
