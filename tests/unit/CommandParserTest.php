@@ -3,7 +3,6 @@
 namespace PgnChessServer\Tests\Unit;
 
 use PgnChessServer\CommandParser;
-use PgnChessServer\Command\Start;
 use PHPUnit\Framework\TestCase;
 
 class CommandParserTest extends TestCase
@@ -11,11 +10,60 @@ class CommandParserTest extends TestCase
     /**
      * @test
      */
-    public function start()
+    public function validate_start_database()
     {
-        $this->assertInstanceOf(
-            Start::class,
-            CommandParser::parse('/start foo')
+        $this->assertTrue(
+            CommandParser::validate('/start database')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function validate_start_player()
+    {
+        $this->assertTrue(
+            CommandParser::validate('/start player')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function validate_start_train()
+    {
+        $this->assertTrue(
+            CommandParser::validate('/start train')
+        );
+    }
+    
+    /**
+     * @test
+     */
+    public function validate_start_foo()
+    {
+        $this->assertFalse(
+            CommandParser::validate('/start foo')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function validate_start_bar()
+    {
+        $this->assertFalse(
+            CommandParser::validate('/start bar')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function validate_start_player_train()
+    {
+        $this->assertFalse(
+            CommandParser::validate('/start player train')
         );
     }
 }

@@ -2,7 +2,9 @@
 
 namespace PgnChessServer\Command;
 
-class Start
+use PgnChessServer\AbstractCommand;
+
+class Start extends AbstractCommand
 {
     public static $name = '/start';
 
@@ -10,9 +12,9 @@ class Start
 
     public static $params = [
         'mode' => [
-            'train',
-            'foe',
             'database',
+            'player',
+            'train',
         ],
     ];
 }
