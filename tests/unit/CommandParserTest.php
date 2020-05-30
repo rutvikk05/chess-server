@@ -72,7 +72,7 @@ class CommandParserTest extends TestCase
      */
     public function validate_quit()
     {
-        $this->assertFalse(
+        $this->assertTrue(
             CommandParser::validate('/quit')
         );
     }

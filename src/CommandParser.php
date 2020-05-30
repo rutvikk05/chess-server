@@ -2,6 +2,7 @@
 
 namespace PgnChessServer;
 
+use PgnChessServer\Command\Quit;
 use PgnChessServer\Command\Start;
 
 class CommandParser
@@ -18,6 +19,8 @@ class CommandParser
         self::$argv = self::filter($string);
 
         switch (self::$argv[0]) {
+            case Quit::$name:
+                return count(self::$argv) -1 === 0;
             case Start::$name:
                 return count(self::$argv) -1 === count(Start::$params) &&
                     in_array(self::$argv[1], Start::$params['mode']);
