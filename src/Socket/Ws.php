@@ -1,13 +1,13 @@
 <?php
 
-namespace PgnChessServer;
+namespace PgnChessServer\Socket;
 
 use PGNChess\Game;
 use PGNChess\PGN\Symbol;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
-class Socket implements MessageComponentInterface {
+class Ws implements MessageComponentInterface {
 
     private $client;
 
