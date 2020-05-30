@@ -70,6 +70,16 @@ class CommandParserTest extends TestCase
     /**
      * @test
      */
+    public function validate_metadata()
+    {
+        $this->assertTrue(
+            CommandParser::validate('/metadata')
+        );
+    }
+
+    /**
+     * @test
+     */
     public function validate_quit()
     {
         $this->assertTrue(
