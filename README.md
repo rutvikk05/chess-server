@@ -41,6 +41,14 @@ Open a command prompt and play PGN moves:
     w e4
     b e5
 
+### Development
+
+Should you want to play around with the development environment follow the steps below.
+
+Run the tests:
+
+    docker exec -it pgn_chess_server_php_fpm vendor/bin/phpunit tests
+
 ### License
 
 The MIT License (MIT) Jordi Bassagañas.
