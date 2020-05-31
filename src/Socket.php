@@ -5,6 +5,7 @@ namespace PgnChessServer;
 use PGNChess\Game;
 use PGNChess\PGN\Symbol;
 use PgnChessServer\Command\Help;
+use PgnChessServer\Command\History;
 use PgnChessServer\Command\Play;
 use PgnChessServer\Command\Quit;
 use PgnChessServer\Command\Start;
@@ -38,6 +39,13 @@ class Socket implements MessageComponentInterface {
         if (CommandParser::validate($msg)) {
             $argv = CommandParser::$argv;
             switch ($argv[0]) {
+                case History::$name:
+                    $this->client->send(
+                        json_encode([
+                            'history' => $this->game->history(),
+                        ]) . PHP_EOL
+                    );
+                    break;
                 case Play::$name:
                     try {
                         $isLegalMove = $this->game->play($argv[1], $argv[2]);

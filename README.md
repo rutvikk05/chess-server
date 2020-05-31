@@ -23,6 +23,7 @@ Start the server:
     docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/ws-server.php
     Welcome to PGN Chess Server
     Commands available:
+    /history									The current game's history.
     /metadata									Metadata of the current game.
     /play color: w,b pgn: move							Plays a chess move on the board.
     /quit										Quits a game.
@@ -59,6 +60,7 @@ Start the server:
     docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/t-server.php
     Welcome to PGN Chess Server
     Commands available:
+    /history									The current game's history.
     /metadata									Metadata of the current game.
     /play color: w,b pgn: move							Plays a chess move on the board.
     /quit										Quits a game.
