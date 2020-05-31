@@ -2,10 +2,12 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\AbstractCommand;
+use PgnChessServer\CommandTrait;
 
-class Play extends AbstractCommand
+class Play
 {
+    use CommandTrait;
+
     public static $name = '/play';
 
     public static $description = 'Plays a chess move on the board.';
@@ -15,6 +17,6 @@ class Play extends AbstractCommand
             'w',
             'b',
         ],
-        'pgn' => null,
+        'pgn' => 'move',
     ];
 }

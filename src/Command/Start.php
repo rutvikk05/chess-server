@@ -2,10 +2,12 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\AbstractCommand;
+use PgnChessServer\CommandTrait;
 
-class Start extends AbstractCommand
+class Start
 {
+    use CommandTrait;
+
     public static $name = '/start';
 
     public static $description = 'Starts a new game.';

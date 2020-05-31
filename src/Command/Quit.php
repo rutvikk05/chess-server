@@ -2,10 +2,12 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\AbstractCommand;
+use PgnChessServer\CommandTrait;
 
-class Quit extends AbstractCommand
+class Quit
 {
+    use CommandTrait;
+
     public static $name = '/quit';
 
     public static $description = 'Quits a game.';

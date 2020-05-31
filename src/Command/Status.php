@@ -2,10 +2,12 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\AbstractCommand;
+use PgnChessServer\CommandTrait;
 
-class Status extends AbstractCommand
+class Status
 {
+    use CommandTrait;
+    
     public static $name = '/status';
 
     public static $description = 'The current game status.';

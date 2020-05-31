@@ -2,6 +2,7 @@
 
 namespace PgnChessServer;
 
+use PgnChessServer\Command\Help;
 use PgnChessServer\Command\Metadata;
 use PgnChessServer\Command\Play;
 use PgnChessServer\Command\Quit;
@@ -22,6 +23,8 @@ class CommandParser
         self::$argv = self::filter($string);
 
         switch (self::$argv[0]) {
+            case Help::$name:
+                return count(self::$argv) -1 === 0;
             case Metadata::$name:
                 return count(self::$argv) -1 === 0;
             case Play::$name:

@@ -2,10 +2,12 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\AbstractCommand;
+use PgnChessServer\CommandTrait;
 
-class Metadata extends AbstractCommand
+class Metadata
 {
+    use CommandTrait;
+
     public static $name = '/metadata';
 
     public static $description = 'Metadata of the current game.';
