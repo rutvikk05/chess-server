@@ -16,7 +16,8 @@ class Help
 
     public static function output ()
     {
-        $o = 'Commands available: ' . PHP_EOL . PHP_EOL
+        $o = 'Commands available: ' . PHP_EOL
+            . Help::$name . str_repeat("\t", 10) . Help::$description . PHP_EOL
             . Metadata::$name . str_repeat("\t", 9) . Metadata::$description . PHP_EOL
             . Play::$name . ' ' .  Play::printParams() . str_repeat("\t", 7) . Play::$description . PHP_EOL
             . Quit::$name . str_repeat("\t", 10) . Quit::$description . PHP_EOL

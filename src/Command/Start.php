@@ -16,7 +16,7 @@ class Start
         'mode' => [
             'database',
             'player',
-            'train',
+            'training',
         ],
     ];
 }

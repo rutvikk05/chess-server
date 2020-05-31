@@ -34,12 +34,40 @@ Open a console in your favorite browser and play PGN moves:
 Start the server:
 
     docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/t-server.php
+    Welcome to PGN Chess Server
+    Commands available:
+    /help										Provides information on the commands available.
+    /metadata									Metadata of the current game.
+    /play color: w,b pgn: move							Plays a chess move on the board.
+    /quit										Quits a game.
+    /start mode: database,player,training						Starts a new game.
+    /status										The current game status.
 
-Open a command prompt and play PGN moves:
+    Listening to commands...
+
+Open a command prompt and run commands:
 
     telnet 172.23.0.2 8080
-    w e4
-    b e5
+    /start training
+    Game started in training mode.
+    /play w e4
+    true
+    /play w e5
+    false
+    /play b e5
+    true
+    /quit
+    Good bye!
+    /start training
+    Game started in training mode.
+    /play w Nf3
+    true
+    /play Nc5
+    Invalid command.
+    /play b Nc5
+    false
+    /play b Nc6
+    true
 
 ### Development
 

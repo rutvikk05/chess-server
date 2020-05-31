@@ -1,6 +1,6 @@
 <?php
 
-namespace PgnChessServer;
+namespace PgnChessServer\Parser;
 
 use PgnChessServer\Command\Help;
 use PgnChessServer\Command\Metadata;

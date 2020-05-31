@@ -2,7 +2,7 @@
 
 namespace PgnChessServer\Tests\Unit\Command;
 
-use PgnChessServer\CommandParser;
+use PgnChessServer\Parser\CommandParser;
 use PgnChessServer\Command\Help;
 use PHPUnit\Framework\TestCase;
 

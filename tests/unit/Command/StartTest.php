@@ -2,7 +2,7 @@
 
 namespace PgnChessServer\Tests\Unit\Command;
 
-use PgnChessServer\CommandParser;
+use PgnChessServer\Parser\CommandParser;
 use PHPUnit\Framework\TestCase;
 
 class StartTest extends TestCase
@@ -30,10 +30,10 @@ class StartTest extends TestCase
     /**
      * @test
      */
-    public function validate_start_train()
+    public function validate_start_training()
     {
         $this->assertTrue(
-            CommandParser::validate('/start train')
+            CommandParser::validate('/start training')
         );
     }
 
@@ -60,10 +60,10 @@ class StartTest extends TestCase
     /**
      * @test
      */
-    public function validate_start_player_train()
+    public function validate_start_player_training()
     {
         $this->assertFalse(
-            CommandParser::validate('/start player train')
+            CommandParser::validate('/start player training')
         );
     }
 }

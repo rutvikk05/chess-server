@@ -2,7 +2,7 @@
 
 namespace PgnChessServer\Tests\Unit\Command;
 
-use PgnChessServer\CommandParser;
+use PgnChessServer\Parser\CommandParser;
 use PHPUnit\Framework\TestCase;
 
 class MetadataTest extends TestCase
