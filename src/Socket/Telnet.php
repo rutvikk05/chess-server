@@ -4,6 +4,7 @@ namespace PgnChessServer\Socket;
 
 use PGNChess\Game;
 use PGNChess\PGN\Symbol;
+use PgnChessServer\Command\Help;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
@@ -15,10 +16,8 @@ class Telnet implements MessageComponentInterface {
 
     public function __construct() {
         echo "Welcome to PGN Chess Server" . PHP_EOL;
-        echo "Examples of valid moves:" . PHP_EOL;
-        echo '"w e4"' . PHP_EOL;
-        echo '"b e5"' . PHP_EOL;
-        echo "Listening to messages..." . PHP_EOL;
+        echo Help::output() . PHP_EOL;;
+        echo "Now listening to commands..." . PHP_EOL;
     }
 
     public function onOpen(ConnectionInterface $conn) {
