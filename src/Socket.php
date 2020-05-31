@@ -6,6 +6,7 @@ use PGNChess\Game;
 use PGNChess\PGN\Symbol;
 use PgnChessServer\Command\Help;
 use PgnChessServer\Command\History;
+use PgnChessServer\Command\Piece;
 use PgnChessServer\Command\Play;
 use PgnChessServer\Command\Quit;
 use PgnChessServer\Command\Start;
@@ -14,8 +15,8 @@ use PgnChessServer\Parser\CommandParser;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
-class Socket implements MessageComponentInterface {
-
+class Socket implements MessageComponentInterface
+{
     private $client;
 
     private $game;
@@ -46,12 +47,26 @@ class Socket implements MessageComponentInterface {
                         ]) . PHP_EOL
                     );
                     break;
-                case Play::$name:
+                case Piece::$name:
                     try {
-                        $isLegalMove = $this->game->play($argv[1], $argv[2]);
                         $this->client->send(
                             json_encode([
-                                'legal' => $isLegalMove
+                                'piece' => $this->game->piece($argv[1])
+                            ]) . PHP_EOL
+                        );
+                    } catch(\Exception $e) {
+                        $this->client->send(
+                            json_encode([
+                                'message' => 'Invalid square.'
+                            ]) . PHP_EOL
+                        );
+                    }
+                    break;
+                case Play::$name:
+                    try {
+                        $this->client->send(
+                            json_encode([
+                                'legal' => $this->game->play($argv[1], $argv[2])
                             ]) . PHP_EOL
                         );
                     } catch(\Exception $e) {

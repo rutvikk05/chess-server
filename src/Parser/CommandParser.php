@@ -5,6 +5,7 @@ namespace PgnChessServer\Parser;
 use PgnChessServer\Command\Help;
 use PgnChessServer\Command\History;
 use PgnChessServer\Command\Metadata;
+use PgnChessServer\Command\Piece;
 use PgnChessServer\Command\Play;
 use PgnChessServer\Command\Quit;
 use PgnChessServer\Command\Start;
@@ -30,6 +31,8 @@ class CommandParser
                 return count(self::$argv) -1 === 0;
             case Metadata::$name:
                 return count(self::$argv) -1 === 0;
+            case Piece::$name:
+                return count(self::$argv) -1 === count(Piece::$params);
             case Play::$name:
                 return count(self::$argv) -1 === count(Play::$params) &&
                     in_array(self::$argv[1], Play::$params['color']);
