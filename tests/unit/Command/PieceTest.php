@@ -36,14 +36,4 @@ class PieceTest extends TestCase
             CommandParser::validate('/piece e4 e5')
         );
     }
-
-    /**
-     * @test
-     */
-    public function validate_piece_foo()
-    {
-        $this->assertFalse(
-            CommandParser::validate('/piece foo')
-        );
-    }
 }

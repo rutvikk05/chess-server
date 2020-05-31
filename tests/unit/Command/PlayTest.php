@@ -5,7 +5,7 @@ namespace PgnChessServer\Tests\Unit\Command;
 use PgnChessServer\Parser\CommandParser;
 use PHPUnit\Framework\TestCase;
 
-class CommandParserTest extends TestCase
+class PlayTest extends TestCase
 {
     /**
      * @test
