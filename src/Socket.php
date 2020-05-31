@@ -8,6 +8,7 @@ use PgnChessServer\Command\Help;
 use PgnChessServer\Command\Play;
 use PgnChessServer\Command\Quit;
 use PgnChessServer\Command\Start;
+use PgnChessServer\Command\Status;
 use PgnChessServer\Parser\CommandParser;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -66,6 +67,13 @@ class Socket implements MessageComponentInterface {
                     $this->client->send(
                         json_encode([
                             'message' => "Game started in {$argv[1]} mode."
+                        ]) . PHP_EOL
+                    );
+                    break;
+                case Status::$name:
+                    $this->client->send(
+                        json_encode([
+                            'status' => $this->game->status(),
                         ]) . PHP_EOL
                     );
                     break;
