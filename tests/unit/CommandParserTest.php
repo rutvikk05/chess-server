@@ -96,4 +96,14 @@ class CommandParserTest extends TestCase
             CommandParser::validate('/status')
         );
     }
+
+    /**
+     * @test
+     */
+    public function validate_play()
+    {
+        $this->assertFalse(
+            CommandParser::validate('/play')
+        );
+    }
 }

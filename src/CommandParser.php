@@ -3,6 +3,7 @@
 namespace PgnChessServer;
 
 use PgnChessServer\Command\Metadata;
+use PgnChessServer\Command\Play;
 use PgnChessServer\Command\Quit;
 use PgnChessServer\Command\Start;
 use PgnChessServer\Command\Status;
@@ -23,6 +24,9 @@ class CommandParser
         switch (self::$argv[0]) {
             case Metadata::$name:
                 return count(self::$argv) -1 === 0;
+            case Play::$name:
+                return count(self::$argv) -1 === count(Play::$params) &&
+                    in_array(self::$argv[1], Start::$params['color']);
             case Quit::$name:
                 return count(self::$argv) -1 === 0;
             case Start::$name:
