@@ -26,7 +26,7 @@ class CommandParser
                 return count(self::$argv) -1 === 0;
             case Play::$name:
                 return count(self::$argv) -1 === count(Play::$params) &&
-                    in_array(self::$argv[1], Start::$params['color']);
+                    in_array(self::$argv[1], Play::$params['color']);
             case Quit::$name:
                 return count(self::$argv) -1 === 0;
             case Start::$name:
