@@ -23,7 +23,6 @@ Start the server:
     docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/ws-server.php
     Welcome to PGN Chess Server
     Commands available:
-    /help										Provides information on the commands available.
     /metadata									Metadata of the current game.
     /play color: w,b pgn: move							Plays a chess move on the board.
     /quit										Quits a game.
@@ -36,36 +35,22 @@ Open a console in your favorite browser and run commands:
 
     const ws = new WebSocket('ws://172.23.0.2:8080');
     ws.onmessage = (res) => { console.log(res.data) };
-
     ws.send('/start training');
     {"message":"Game started in training mode."}
-
     ws.send('/play w e4');
     {"legal":true}
-
     ws.send('/play w e5');
     {"legal":false}
-
     ws.send('/play b e5');
     {"legal":true}
-
-    ws.send('/quit');
-    {"message":"Good bye!"}
-
-    ws.send('/start training');
-    {"message":"Game started in training mode."}
-
+    ws.send('/play w foo');
+    {"message":"Invalid move."}
     ws.send('/play w Nf3');
     {"legal":true}
-
     ws.send('/play Nc5');
     {"message":"Invalid command."}
-
-    ws.send('/play b Nc5');
-    {"legal":false}
-
-    ws.send('/play b Nc6');
-    {"legal":true}
+    ws.send('/quit');
+    {"message":"Good bye!"}
 
 ### Telnet Server
 
@@ -74,7 +59,6 @@ Start the server:
     docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/t-server.php
     Welcome to PGN Chess Server
     Commands available:
-    /help										Provides information on the commands available.
     /metadata									Metadata of the current game.
     /play color: w,b pgn: move							Plays a chess move on the board.
     /quit										Quits a game.
@@ -87,25 +71,21 @@ Open a command prompt and run commands:
 
     telnet 172.23.0.2 8080
     /start training
-    Game started in training mode.
+    {"message":"Game started in training mode."}
     /play w e4
-    true
+    {"legal":true}
     /play w e5
-    false
+    {"legal":false}
     /play b e5
-    true
-    /quit
-    Good bye!
-    /start training
-    Game started in training mode.
+    {"legal":true}
+    /play w foo
+    {"message":"Invalid move."}
     /play w Nf3
-    true
+    {"legal":true}
     /play Nc5
-    Invalid command.
-    /play b Nc5
-    false
-    /play b Nc6
-    true
+    {"message":"Invalid command."}
+    /quit
+    {"message":"Good bye!"}
 
 ### Development
 

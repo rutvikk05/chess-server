@@ -2,13 +2,13 @@
 
 namespace PgnChessServer;
 
+use PgnChessServer\Socket;
 use Ratchet\Server\IoServer;
-use PgnChessServer\Socket\Telnet;
 
 require __DIR__  . '/../vendor/autoload.php';
 
 $server = IoServer::factory(
-    new Telnet(),
+    new Socket(),
     8080
 );
 

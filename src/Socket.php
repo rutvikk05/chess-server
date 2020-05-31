@@ -1,6 +1,6 @@
 <?php
 
-namespace PgnChessServer\Socket;
+namespace PgnChessServer;
 
 use PGNChess\Game;
 use PGNChess\PGN\Symbol;
@@ -12,7 +12,7 @@ use PgnChessServer\Parser\CommandParser;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
-class Telnet implements MessageComponentInterface {
+class Socket implements MessageComponentInterface {
 
     private $client;
 
@@ -29,7 +29,7 @@ class Telnet implements MessageComponentInterface {
     {
         $this->client = $conn;
 
-        echo "New connection ({$conn->resourceId})\n";
+        echo "New connection ({$conn->resourceId})" . PHP_EOL;
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
@@ -37,28 +37,45 @@ class Telnet implements MessageComponentInterface {
         if (CommandParser::validate($msg)) {
             $argv = CommandParser::$argv;
             switch ($argv[0]) {
-                case Help::$name:
-                    $this->client->send(Help::output() . PHP_EOL);
-                    break;
                 case Play::$name:
                     try {
                         $isLegalMove = $this->game->play($argv[1], $argv[2]);
+                        $this->client->send(
+                            json_encode([
+                                'legal' => $isLegalMove
+                            ]) . PHP_EOL
+                        );
                     } catch(\Exception $e) {
-                        $isLegalMove = false;
+                        $this->client->send(
+                            json_encode([
+                                'message' => 'Invalid move.'
+                            ]) . PHP_EOL
+                        );
                     }
-                    $this->client->send(var_export($isLegalMove, true) . PHP_EOL);
                     break;
                 case Quit::$name:
                     unset($this->game);
-                    $this->client->send("Good bye!" . PHP_EOL);
+                    $this->client->send(
+                        json_encode([
+                            'message' => 'Good bye!'
+                        ]) . PHP_EOL
+                    );
                     break;
                 case Start::$name:
                     $this->game = new Game;
-                    $this->client->send("Game started in {$argv[1]} mode." . PHP_EOL);
+                    $this->client->send(
+                        json_encode([
+                            'message' => "Game started in {$argv[1]} mode."
+                        ]) . PHP_EOL
+                    );
                     break;
             }
         } else {
-            $this->client->send("Invalid command." . PHP_EOL);
+            $this->client->send(
+                json_encode([
+                    'message' => 'Invalid command.'
+                ]) . PHP_EOL
+            );
         }
     }
 

@@ -2,17 +2,17 @@
 
 namespace PgnChessServer;
 
+use PgnChessServer\Socket;
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
-use PgnChessServer\Socket\Ws as WsSocket;
 
 require __DIR__  . '/../vendor/autoload.php';
 
 $server = IoServer::factory(
     new HttpServer(
         new WsServer(
-            new WsSocket()
+            new Socket()
         )
     ),
     8080
