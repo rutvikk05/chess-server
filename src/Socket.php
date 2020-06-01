@@ -21,9 +21,9 @@ use Ratchet\ConnectionInterface;
 
 class Socket implements MessageComponentInterface
 {
-    private $client;
+    private $clients = [];
 
-    private $game;
+    private $games = [];
 
     public function __construct()
     {
@@ -37,105 +37,108 @@ class Socket implements MessageComponentInterface
 
     public function onOpen(ConnectionInterface $conn)
     {
-        $this->client = $conn;
+        $this->clients[$conn->resourceId] = $conn;
 
         echo "New connection ({$conn->resourceId})" . PHP_EOL;
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
+        $client = $this->clients[$from->resourceId];
+        $game = $this->games[$from->resourceId] ?? null;
         if (CommandParser::validate($msg)) {
             $argv = CommandParser::$argv;
-            switch ($argv[0]) {
-                case Captures::$name:
-                    $this->client->send(
+            switch (true) {
+                case Captures::$name === $argv[0] && $game:
+                    $client->send(
                         json_encode([
-                            'captures' => $this->game->captures(),
+                            'captures' => $game->captures(),
                         ]) . PHP_EOL
                     );
                     break;
-                case History::$name:
-                    $this->client->send(
+                case History::$name === $argv[0] && $game:
+                    $client->send(
                         json_encode([
-                            'history' => $this->game->history(),
+                            'history' => $game->history(),
                         ]) . PHP_EOL
                     );
                     break;
-                case Metadata::$name:
-                    $this->client->send(
+                case Metadata::$name === $argv[0] && $game:
+                    $client->send(
                         json_encode([
-                            'metadata' => $this->game->metadata(),
+                            'metadata' => $game->metadata(),
                         ]) . PHP_EOL
                     );
                     break;
-                case Piece::$name:
+                case Piece::$name === $argv[0] && $game:
                     try {
-                        $this->client->send(
+                        $client->send(
                             json_encode([
-                                'piece' => $this->game->piece($argv[1])
+                                'piece' => $game->piece($argv[1])
                             ]) . PHP_EOL
                         );
                     } catch(\Exception $e) {
-                        $this->client->send(
+                        $client->send(
                             json_encode([
                                 'message' => 'Invalid square.'
                             ]) . PHP_EOL
                         );
                     }
                     break;
-                case Pieces::$name:
-                    $this->client->send(
+                case Pieces::$name === $argv[0] && $game:
+                    $client->send(
                         json_encode([
-                            'piece' => $this->game->pieces($argv[1])
+                            'piece' => $game->pieces($argv[1])
                         ]) . PHP_EOL
                     );
                     break;
-                case Play::$name:
+                case Play::$name === $argv[0] && $game:
                     try {
-                        $this->client->send(
+                        $client->send(
                             json_encode([
-                                'legal' => $this->game->play($argv[1], $argv[2])
+                                'legal' => $game->play($argv[1], $argv[2])
                             ]) . PHP_EOL
                         );
                     } catch(\Exception $e) {
-                        $this->client->send(
+                        $client->send(
                             json_encode([
                                 'message' => 'Invalid move.'
                             ]) . PHP_EOL
                         );
                     }
                     break;
-                case Quit::$name:
-                    unset($this->game);
-                    $this->client->send(
+                case Quit::$name === $argv[0] && $game:
+                    unset($this->games[$from->resourceId]);
+                    $client->send(
                         json_encode([
                             'message' => 'Good bye!'
                         ]) . PHP_EOL
                     );
                     break;
-                case Start::$name:
-                    $this->game = new Game;
-                    $this->client->send(
+                case Start::$name === $argv[0] && !$game:
+                    $this->games[$from->resourceId] = new Game;
+                    $client->send(
                         json_encode([
                             'message' => "Game started in {$argv[1]} mode."
                         ]) . PHP_EOL
                     );
                     break;
-                case Status::$name:
-                    $this->client->send(
+                case Status::$name === $argv[0] && $game:
+                    $client->send(
                         json_encode([
-                            'status' => $this->game->status(),
+                            'status' => $game->status(),
                         ]) . PHP_EOL
                     );
                     break;
             }
         } else {
-            $this->client->send(
+            $client->send(
                 json_encode([
                     'message' => 'Whoops! This seems to be an invalid command. Did you provide a valid parameter?'
                 ]) . PHP_EOL
             );
         }
+
     }
 
     public function onClose(ConnectionInterface $conn)
