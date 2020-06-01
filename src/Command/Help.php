@@ -2,6 +2,7 @@
 
 namespace PgnChessServer\Command;
 
+use PgnChessServer\Command\Captures;
 use PgnChessServer\Command\History;
 use PgnChessServer\Command\Metadata;
 use PgnChessServer\Command\Play;
@@ -18,6 +19,7 @@ class Help
     public static function output ()
     {
         $o = 'Commands available: ' . PHP_EOL
+            . Captures::$name . str_repeat("\t", 9) . Captures::$description . PHP_EOL
             . History::$name . str_repeat("\t", 9) . History::$description . PHP_EOL
             . Metadata::$name . str_repeat("\t", 9) . Metadata::$description . PHP_EOL
             . Piece::$name . ' ' .  Piece::printParams() . str_repeat("\t", 8) . Piece::$description . PHP_EOL

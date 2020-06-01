@@ -2,6 +2,7 @@
 
 namespace PgnChessServer\Parser;
 
+use PgnChessServer\Command\Captures;
 use PgnChessServer\Command\Help;
 use PgnChessServer\Command\History;
 use PgnChessServer\Command\Metadata;
@@ -26,6 +27,8 @@ class CommandParser
         self::$argv = self::filter($string);
 
         switch (self::$argv[0]) {
+            case Captures::$name:
+                return count(self::$argv) -1 === 0;
             case Help::$name:
                 return count(self::$argv) -1 === 0;
             case History::$name:

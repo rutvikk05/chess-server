@@ -10,7 +10,7 @@
   ],
   "require": {
     "php": ">=7.1",
-    "programarivm/pgn-chess": "1.0.8",
+    "programarivm/pgn-chess": "^1.0",
     "cboden/ratchet": "^0.4"
   },
   "require-dev": {
