@@ -2,11 +2,13 @@
 
 namespace PgnChessServer;
 
+use Dotenv\Dotenv;
 use PGNChess\Game;
 use PGNChess\PGN\Symbol;
 use PgnChessServer\Command\Captures;
 use PgnChessServer\Command\Help;
 use PgnChessServer\Command\History;
+use PgnChessServer\Command\Metadata;
 use PgnChessServer\Command\Piece;
 use PgnChessServer\Command\Pieces;
 use PgnChessServer\Command\Play;
@@ -25,6 +27,9 @@ class Socket implements MessageComponentInterface
 
     public function __construct()
     {
+        $dotenv = new Dotenv(__DIR__.'/../');
+        $dotenv->load();
+
         echo "Welcome to PGN Chess Server" . PHP_EOL;
         echo Help::output() . PHP_EOL;;
         echo "Listening to commands..." . PHP_EOL;
@@ -53,6 +58,13 @@ class Socket implements MessageComponentInterface
                     $this->client->send(
                         json_encode([
                             'history' => $this->game->history(),
+                        ]) . PHP_EOL
+                    );
+                    break;
+                case Metadata::$name:
+                    $this->client->send(
+                        json_encode([
+                            'metadata' => $this->game->metadata(),
                         ]) . PHP_EOL
                     );
                     break;

@@ -16,10 +16,9 @@ cd $APP_PATH
 cd $APP_PATH
 docker-compose up -d
 
-# TODO
 # update the .env file with the containers' ips
-# GATEWAY="$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' pgn_chess_server_mysql)"
-# sed -i "s/DB_HOST=.*/DB_HOST=${GATEWAY}/g" .env
+GATEWAY="$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' pgn_chess_server_mysql)"
+sed -i "s/DB_HOST=.*/DB_HOST=${GATEWAY}/g" .env
 
 # install dependencies
 docker exec -it pgn_chess_server_php_fpm composer install
