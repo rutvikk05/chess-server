@@ -26,6 +26,7 @@ Start the server:
     /history									The current game's history.
     /metadata									Metadata of the current game.
     /piece position: square								Gets a piece by its position on the board.
+    /pieces color: w,b								Gets the pieces on the board by color.
     /play color: w,b pgn: move							Plays a chess move on the board.
     /quit										Quits a game.
     /start mode: database,player,training						Starts a new game.
@@ -64,6 +65,7 @@ Start the server:
     /history									The current game's history.
     /metadata									Metadata of the current game.
     /piece position: square								Gets a piece by its position on the board.
+    /pieces color: w,b								Gets the pieces on the board by color.
     /play color: w,b pgn: move							Plays a chess move on the board.
     /quit										Quits a game.
     /start mode: database,player,training						Starts a new game.

@@ -7,6 +7,7 @@ use PGNChess\PGN\Symbol;
 use PgnChessServer\Command\Help;
 use PgnChessServer\Command\History;
 use PgnChessServer\Command\Piece;
+use PgnChessServer\Command\Pieces;
 use PgnChessServer\Command\Play;
 use PgnChessServer\Command\Quit;
 use PgnChessServer\Command\Start;
@@ -62,6 +63,13 @@ class Socket implements MessageComponentInterface
                         );
                     }
                     break;
+                case Pieces::$name:
+                    $this->client->send(
+                        json_encode([
+                            'piece' => $this->game->pieces($argv[1])
+                        ]) . PHP_EOL
+                    );
+                    break;
                 case Play::$name:
                     try {
                         $this->client->send(
@@ -104,7 +112,7 @@ class Socket implements MessageComponentInterface
         } else {
             $this->client->send(
                 json_encode([
-                    'message' => 'Invalid command.'
+                    'message' => 'Whoops! This seems to be an invalid command. Did you provide a valid parameter?'
                 ]) . PHP_EOL
             );
         }
