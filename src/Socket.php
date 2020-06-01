@@ -44,10 +44,10 @@ class Socket implements MessageComponentInterface
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        $client = $this->clients[$from->resourceId];
-        $game = $this->games[$from->resourceId] ?? null;
         if (CommandParser::validate($msg)) {
             $argv = CommandParser::$argv;
+            $client = $this->clients[$from->resourceId];
+            $game = $this->games[$from->resourceId] ?? null;
             switch (true) {
                 case Captures::$name === $argv[0] && $game:
                     $client->send(
