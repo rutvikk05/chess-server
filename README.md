@@ -1,6 +1,10 @@
 ## PGN Chess Server
 
-PHP Ratchet WebSocket chess server.
+<p align="center">
+	<img src="https://github.com/programarivm/pgn-chess/blob/master/resources/black-chess-pieces.jpg" />
+</p>
+
+PHP Ratchet WebSocket chess server relying on [PGN Chess](https://github.com/programarivm/pgn-chess) as its chess board representation to play chess games.
 
 ### Set Up
 
