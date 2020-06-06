@@ -2,21 +2,25 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\CommandTrait;
+use PgnChessServer\AbstractCommand;
 
-class Start
+class Start extends AbstractCommand
 {
-    use CommandTrait;
+    public function __construct()
+    {
+        $this->name = '/start';
+        $this->description = 'Starts a new game.';
+        $this->params = [
+            'mode' => [
+                'database',
+                'player',
+                'training',
+            ],
+        ];
+    }
 
-    public static $name = '/start';
-
-    public static $description = 'Starts a new game.';
-
-    public static $params = [
-        'mode' => [
-            'database',
-            'player',
-            'training',
-        ],
-    ];
+    public function validate(array $argv)
+    {
+        return count($argv) - 1 === count($this->params) && in_array($argv[1], $this->params['mode']);
+    }
 }

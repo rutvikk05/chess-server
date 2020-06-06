@@ -2,28 +2,28 @@
 
 namespace PgnChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Parser\CommandParser;
-use PHPUnit\Framework\TestCase;
+use PgnChessServer\Command\Metadata;
+use PgnChessServer\Tests\Unit\CommandTestCase;
 
-class MetadataTest extends TestCase
+class MetadataTest extends CommandTestCase
 {
     /**
      * @test
      */
     public function validate_metadata()
     {
-        $this->assertTrue(
-            CommandParser::validate('/metadata')
+        $this->assertInstanceOf(
+            Metadata::class,
+            self::$parser->validate('/metadata')
         );
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_metadata_foo()
     {
-        $this->assertFalse(
-            CommandParser::validate('/metadata foo')
-        );
+        self::$parser->validate('/metadata foo');
     }
 }

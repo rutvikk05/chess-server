@@ -24,7 +24,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "PgnChessServer\\Tests\\": "tests/"
+      "PgnChessServer\\Tests\\Unit\\": "tests/unit/"
     }
   }
 }

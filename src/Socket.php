@@ -4,7 +4,6 @@ namespace PgnChessServer;
 
 use Dotenv\Dotenv;
 use PGNChess\Game;
-use PGNChess\PGN\Symbol;
 use PgnChessServer\Command\Captures;
 use PgnChessServer\Command\Help;
 use PgnChessServer\Command\History;
@@ -15,6 +14,7 @@ use PgnChessServer\Command\Play;
 use PgnChessServer\Command\Quit;
 use PgnChessServer\Command\Start;
 use PgnChessServer\Command\Status;
+use PgnChessServer\Exception\ParserException;
 use PgnChessServer\Parser\CommandParser;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -25,13 +25,17 @@ class Socket implements MessageComponentInterface
 
     private $games = [];
 
+    private $parser;
+
     public function __construct()
     {
         $dotenv = new Dotenv(__DIR__.'/../');
         $dotenv->load();
+        $this->parser = new CommandParser;
 
         echo "Welcome to PGN Chess Server" . PHP_EOL;
-        echo Help::output() . PHP_EOL;;
+        echo "Commands available:" . PHP_EOL;
+        echo $this->parser->cli->help() . PHP_EOL;
         echo "Listening to commands..." . PHP_EOL;
     }
 
@@ -44,33 +48,59 @@ class Socket implements MessageComponentInterface
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        if (CommandParser::validate($msg)) {
-            $argv = CommandParser::$argv;
-            $client = $this->clients[$from->resourceId];
-            $game = $this->games[$from->resourceId] ?? null;
-            switch (true) {
-                case Captures::$name === $argv[0] && $game:
+        $client = $this->clients[$from->resourceId];
+
+        try {
+            $cmd = $this->parser->validate($msg);
+        } catch (ParserException $e) {
+            $client->send(
+                json_encode([
+                    'message' => $e->getMessage(),
+                ]) . PHP_EOL
+            );
+            return;
+        }
+
+        $game = $this->games[$from->resourceId] ?? null;
+        $argv = $this->parser->argv;
+
+        if (!$game && get_class($cmd) === Start::class) {
+            $this->games[$from->resourceId] = new Game;
+            $client->send(
+                json_encode([
+                    'message' => "Game started in {$argv[1]} mode."
+                ]) . PHP_EOL
+            );
+        } elseif (!$game && in_array(Start::class, $cmd->dependsOn)) {
+            $client->send(
+                json_encode([
+                    'message' => 'A game needs to be started first for this command to be allowed.',
+                ]) . PHP_EOL
+            );
+        } elseif ($game) {
+            switch (get_class($cmd)) {
+                case Captures::class:
                     $client->send(
                         json_encode([
                             'captures' => $game->captures(),
                         ]) . PHP_EOL
                     );
                     break;
-                case History::$name === $argv[0] && $game:
+                case History::class:
                     $client->send(
                         json_encode([
                             'history' => $game->history(),
                         ]) . PHP_EOL
                     );
                     break;
-                case Metadata::$name === $argv[0] && $game:
+                case Metadata::class:
                     $client->send(
                         json_encode([
                             'metadata' => $game->metadata(),
                         ]) . PHP_EOL
                     );
                     break;
-                case Piece::$name === $argv[0] && $game:
+                case Piece::class:
                     try {
                         $client->send(
                             json_encode([
@@ -85,14 +115,14 @@ class Socket implements MessageComponentInterface
                         );
                     }
                     break;
-                case Pieces::$name === $argv[0] && $game:
+                case Pieces::class:
                     $client->send(
                         json_encode([
                             'piece' => $game->pieces($argv[1])
                         ]) . PHP_EOL
                     );
                     break;
-                case Play::$name === $argv[0] && $game:
+                case Play::class:
                     try {
                         $client->send(
                             json_encode([
@@ -107,7 +137,7 @@ class Socket implements MessageComponentInterface
                         );
                     }
                     break;
-                case Quit::$name === $argv[0] && $game:
+                case Quit::class:
                     unset($this->games[$from->resourceId]);
                     $client->send(
                         json_encode([
@@ -115,15 +145,7 @@ class Socket implements MessageComponentInterface
                         ]) . PHP_EOL
                     );
                     break;
-                case Start::$name === $argv[0] && !$game:
-                    $this->games[$from->resourceId] = new Game;
-                    $client->send(
-                        json_encode([
-                            'message' => "Game started in {$argv[1]} mode."
-                        ]) . PHP_EOL
-                    );
-                    break;
-                case Status::$name === $argv[0] && $game:
+                case Status::class:
                     $client->send(
                         json_encode([
                             'status' => $game->status(),
@@ -131,14 +153,7 @@ class Socket implements MessageComponentInterface
                     );
                     break;
             }
-        } else {
-            $client->send(
-                json_encode([
-                    'message' => 'Whoops! This seems to be an invalid command. Did you provide a valid parameter?'
-                ]) . PHP_EOL
-            );
         }
-
     }
 
     public function onClose(ConnectionInterface $conn)

@@ -2,13 +2,21 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\CommandTrait;
+use PgnChessServer\AbstractCommand;
 
-class Quit
+class Quit extends AbstractCommand
 {
-    use CommandTrait;
+    public function __construct()
+    {
+        $this->name = '/quit';
+        $this->description = 'Quits a game.';
+        $this->dependsOn = [
+            Start::class,
+        ];
+    }
 
-    public static $name = '/quit';
-
-    public static $description = 'Quits a game.';
+    public function validate(array $argv)
+    {
+        return count($argv) - 1 === 0;
+    }
 }

@@ -2,28 +2,28 @@
 
 namespace PgnChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Parser\CommandParser;
-use PHPUnit\Framework\TestCase;
+use PgnChessServer\Command\Status;
+use PgnChessServer\Tests\Unit\CommandTestCase;
 
-class StatusTest extends TestCase
+class StatusTest extends CommandTestCase
 {
     /**
      * @test
      */
     public function validate_status()
     {
-        $this->assertTrue(
-            CommandParser::validate('/status')
+        $this->assertInstanceOf(
+            Status::class,
+            self::$parser->validate('/status')
         );
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_status_foo()
     {
-        $this->assertFalse(
-            CommandParser::validate('/status foo')
-        );
+        self::$parser->validate('/status foo');
     }
 }

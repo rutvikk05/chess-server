@@ -2,18 +2,19 @@
 
 namespace PgnChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Parser\CommandParser;
-use PHPUnit\Framework\TestCase;
+use PgnChessServer\Command\Play;
+use PgnChessServer\Tests\Unit\CommandTestCase;
 
-class PlayTest extends TestCase
+class PlayTest extends CommandTestCase
 {
     /**
      * @test
      */
     public function validate_play_w_e4()
     {
-        $this->assertTrue(
-            CommandParser::validate('/play w e4')
+        $this->assertInstanceOf(
+            Play::class,
+            self::$parser->validate('/play w e4')
         );
     }
 
@@ -22,38 +23,36 @@ class PlayTest extends TestCase
      */
     public function validate_play_b_e5()
     {
-        $this->assertTrue(
-            CommandParser::validate('/play w e4')
+        $this->assertInstanceOf(
+            Play::class,
+            self::$parser->validate('/play b e5')
         );
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_play_w_d3_d5()
     {
-        $this->assertFalse(
-            CommandParser::validate('/play w d3 d5')
-        );
+        self::$parser->validate('/play w d3 d5');
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_play_foo_bar()
     {
-        $this->assertFalse(
-            CommandParser::validate('/play foo bar')
-        );
+        self::$parser->validate('/play foo bar');
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_play()
     {
-        $this->assertFalse(
-            CommandParser::validate('/play')
-        );
+        self::$parser->validate('/play');
     }
 }

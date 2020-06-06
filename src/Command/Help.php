@@ -2,33 +2,18 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\Command\Captures;
-use PgnChessServer\Command\History;
-use PgnChessServer\Command\Metadata;
-use PgnChessServer\Command\Play;
-use PgnChessServer\Command\Quit;
-use PgnChessServer\Command\Start;
-use PgnChessServer\Command\Status;
+use PgnChessServer\AbstractCommand;
 
-class Help
+class Help extends AbstractCommand
 {
-    public static $name = '/help';
-
-    public static $description = 'Provides information on the commands available.';
-
-    public static function output ()
+    public function __construct()
     {
-        $o = 'Commands available: ' . PHP_EOL
-            . Captures::$name . str_repeat("\t", 9) . Captures::$description . PHP_EOL
-            . History::$name . str_repeat("\t", 9) . History::$description . PHP_EOL
-            . Metadata::$name . str_repeat("\t", 9) . Metadata::$description . PHP_EOL
-            . Piece::$name . ' ' .  Piece::printParams() . str_repeat("\t", 8) . Piece::$description . PHP_EOL
-            . Pieces::$name . ' ' .  Pieces::printParams() . str_repeat("\t", 8) . Pieces::$description . PHP_EOL
-            . Play::$name . ' ' .  Play::printParams() . str_repeat("\t", 7) . Play::$description . PHP_EOL
-            . Quit::$name . str_repeat("\t", 10) . Quit::$description . PHP_EOL
-            . Start::$name . ' ' .  Start::printParams() . str_repeat("\t", 6) . Start::$description . PHP_EOL
-            . Status::$name . str_repeat("\t", 10) . Status::$description . PHP_EOL;
+        $this->name = '/help';
+        $this->description = 'Provides information on the commands available.';
+    }
 
-        return $o;
+    public function validate(array $argv)
+    {
+        return count($argv) - 1 === 0;
     }
 }

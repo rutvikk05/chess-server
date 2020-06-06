@@ -2,29 +2,28 @@
 
 namespace PgnChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Parser\CommandParser;
 use PgnChessServer\Command\Help;
-use PHPUnit\Framework\TestCase;
+use PgnChessServer\Tests\Unit\CommandTestCase;
 
-class HelpTest extends TestCase
+class HelpTest extends CommandTestCase
 {
     /**
      * @test
      */
     public function validate_help()
     {
-        $this->assertTrue(
-            CommandParser::validate('/help')
+        $this->assertInstanceOf(
+            Help::class,
+            self::$parser->validate('/help')
         );
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_help_foo()
     {
-        $this->assertFalse(
-            CommandParser::validate('/help foo')
-        );
+        self::$parser->validate('/help foo');
     }
 }

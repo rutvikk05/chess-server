@@ -2,13 +2,21 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\CommandTrait;
+use PgnChessServer\AbstractCommand;
 
-class Metadata
+class Metadata extends AbstractCommand
 {
-    use CommandTrait;
+    public function __construct()
+    {
+        $this->name = '/metadata';
+        $this->description = 'Metadata of the current game.';
+        $this->dependsOn = [
+            Start::class,
+        ];
+    }
 
-    public static $name = '/metadata';
-
-    public static $description = 'Metadata of the current game.';
+    public function validate(array $argv)
+    {
+        return count($argv) - 1 === 0;
+    }
 }

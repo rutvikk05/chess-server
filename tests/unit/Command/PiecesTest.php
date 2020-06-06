@@ -2,18 +2,19 @@
 
 namespace PgnChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Parser\CommandParser;
-use PHPUnit\Framework\TestCase;
+use PgnChessServer\Command\Pieces;
+use PgnChessServer\Tests\Unit\CommandTestCase;
 
-class PiecesTest extends TestCase
+class PiecesTest extends CommandTestCase
 {
     /**
      * @test
      */
     public function validate_pieces_w()
     {
-        $this->assertTrue(
-            CommandParser::validate('/pieces w')
+        $this->assertInstanceOf(
+            Pieces::class,
+            self::$parser->validate('/pieces w')
         );
     }
 
@@ -22,28 +23,27 @@ class PiecesTest extends TestCase
      */
     public function validate_pieces_b()
     {
-        $this->assertTrue(
-            CommandParser::validate('/pieces b')
+        $this->assertInstanceOf(
+            Pieces::class,
+            self::$parser->validate('/pieces b')
         );
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_pieces_w_foo()
     {
-        $this->assertFalse(
-            CommandParser::validate('/pieces w foo')
-        );
+        self::$parser->validate('/pieces w foo');
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_pieces_b_foo()
     {
-        $this->assertFalse(
-            CommandParser::validate('/pieces b foo')
-        );
+        self::$parser->validate('/pieces b foo');
     }
 }

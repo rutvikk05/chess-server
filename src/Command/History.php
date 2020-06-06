@@ -2,13 +2,21 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\CommandTrait;
+use PgnChessServer\AbstractCommand;
 
-class History
+class History extends AbstractCommand
 {
-    use CommandTrait;
+    public function __construct()
+    {
+        $this->name = '/history';
+        $this->description = "The current game's history.";
+        $this->dependsOn = [
+            Start::class,
+        ];
+    }
 
-    public static $name = '/history';
-
-    public static $description = "The current game's history.";
+    public function validate(array $argv)
+    {
+        return count($argv) - 1 === 0;
+    }
 }

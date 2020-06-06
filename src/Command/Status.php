@@ -2,13 +2,21 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\CommandTrait;
+use PgnChessServer\AbstractCommand;
 
-class Status
+class Status extends AbstractCommand
 {
-    use CommandTrait;
-    
-    public static $name = '/status';
+    public function __construct()
+    {
+        $this->name = '/status';
+        $this->description = 'The current game status.';
+        $this->dependsOn = [
+            Start::class,
+        ];
+    }
 
-    public static $description = 'The current game status.';
+    public function validate(array $argv)
+    {
+        return count($argv) - 1 === 0;
+    }
 }

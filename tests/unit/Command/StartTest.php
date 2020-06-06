@@ -2,18 +2,19 @@
 
 namespace PgnChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Parser\CommandParser;
-use PHPUnit\Framework\TestCase;
+use PgnChessServer\Command\Start;
+use PgnChessServer\Tests\Unit\CommandTestCase;
 
-class StartTest extends TestCase
+class StartTest extends CommandTestCase
 {
     /**
      * @test
      */
     public function validate_start_database()
     {
-        $this->assertTrue(
-            CommandParser::validate('/start database')
+        $this->assertInstanceOf(
+            Start::class,
+            self::$parser->validate('/start database')
         );
     }
 
@@ -22,8 +23,9 @@ class StartTest extends TestCase
      */
     public function validate_start_player()
     {
-        $this->assertTrue(
-            CommandParser::validate('/start player')
+        $this->assertInstanceOf(
+            Start::class,
+            self::$parser->validate('/start player')
         );
     }
 
@@ -32,38 +34,36 @@ class StartTest extends TestCase
      */
     public function validate_start_training()
     {
-        $this->assertTrue(
-            CommandParser::validate('/start training')
+        $this->assertInstanceOf(
+            Start::class,
+            self::$parser->validate('/start training')
         );
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_start_foo()
     {
-        $this->assertFalse(
-            CommandParser::validate('/start foo')
-        );
+        self::$parser->validate('/start foo');
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_start_bar()
     {
-        $this->assertFalse(
-            CommandParser::validate('/start bar')
-        );
+        self::$parser->validate('/start bar');
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_start_player_training()
     {
-        $this->assertFalse(
-            CommandParser::validate('/start player training')
-        );
+        self::$parser->validate('/start player training');
     }
 }

@@ -2,28 +2,28 @@
 
 namespace PgnChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Parser\CommandParser;
-use PHPUnit\Framework\TestCase;
+use PgnChessServer\Command\Quit;
+use PgnChessServer\Tests\Unit\CommandTestCase;
 
-class QuitTest extends TestCase
+class QuitTest extends CommandTestCase
 {
     /**
      * @test
      */
     public function validate_quit()
     {
-        $this->assertTrue(
-            CommandParser::validate('/quit')
+        $this->assertInstanceOf(
+            Quit::class,
+            self::$parser->validate('/quit')
         );
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_quit_foo()
     {
-        $this->assertFalse(
-            CommandParser::validate('/quit foo')
-        );
+        self::$parser->validate('/quit foo');
     }
 }

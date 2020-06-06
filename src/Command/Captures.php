@@ -2,13 +2,21 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\CommandTrait;
+use PgnChessServer\AbstractCommand;
 
-class Captures
+class Captures extends AbstractCommand
 {
-    use CommandTrait;
+    public function __construct()
+    {
+        $this->name = '/captures';
+        $this->description = 'Gets the pieces captured by both players.';
+        $this->dependsOn = [
+            Start::class,
+        ];
+    }
 
-    public static $name = '/captures';
-
-    public static $description = 'Gets the pieces captured by both players.';
+    public function validate(array $argv)
+    {
+        return count($argv) - 1 === 0;
+    }
 }

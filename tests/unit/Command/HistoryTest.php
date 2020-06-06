@@ -2,28 +2,28 @@
 
 namespace PgnChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Parser\CommandParser;
-use PHPUnit\Framework\TestCase;
+use PgnChessServer\Command\History;
+use PgnChessServer\Tests\Unit\CommandTestCase;
 
-class HistoryTest extends TestCase
+class HistoryTest extends CommandTestCase
 {
     /**
      * @test
      */
     public function validate_history()
     {
-        $this->assertTrue(
-            CommandParser::validate('/history')
+        $this->assertInstanceOf(
+            History::class,
+            self::$parser->validate('/history')
         );
     }
 
     /**
      * @test
+     * @expectedException PgnChessServer\Exception\ParserException
      */
     public function validate_history_foo()
     {
-        $this->assertFalse(
-            CommandParser::validate('/history foo')
-        );
+        self::$parser->validate('/history foo');
     }
 }

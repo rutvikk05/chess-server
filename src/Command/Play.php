@@ -2,21 +2,28 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\CommandTrait;
+use PgnChessServer\AbstractCommand;
 
-class Play
+class Play extends AbstractCommand
 {
-    use CommandTrait;
+    public function __construct()
+    {
+        $this->name = '/play';
+        $this->description = 'Plays a chess move on the board.';
+        $this->params = [
+            'color' => [
+                'w',
+                'b',
+            ],
+            'pgn' => 'move',
+        ];
+        $this->dependsOn = [
+            Start::class,
+        ];
+    }
 
-    public static $name = '/play';
-
-    public static $description = 'Plays a chess move on the board.';
-
-    public static $params = [
-        'color' => [
-            'w',
-            'b',
-        ],
-        'pgn' => 'move',
-    ];
+    public function validate(array $argv)
+    {
+        return count($argv) - 1 === count($this->params) && in_array($argv[1], $this->params['color']);
+    }
 }

@@ -2,17 +2,24 @@
 
 namespace PgnChessServer\Command;
 
-use PgnChessServer\CommandTrait;
+use PgnChessServer\AbstractCommand;
 
-class Piece
+class Piece extends AbstractCommand
 {
-    use CommandTrait;
+    public function __construct()
+    {
+        $this->name = '/piece';
+        $this->description = 'Gets a piece by its position on the board.';
+        $this->params = [
+            'position' => 'square',
+        ];
+        $this->dependsOn = [
+            Start::class,
+        ];
+    }
 
-    public static $name = '/piece';
-
-    public static $description = 'Gets a piece by its position on the board.';
-
-    public static $params = [
-        'position' => 'square',
-    ];
+    public function validate(array $argv)
+    {
+        return count($argv) - 1 === count($this->params);
+    }
 }
