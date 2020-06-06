@@ -40,16 +40,17 @@ Start the server:
 
     docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/t-server.php
     Welcome to PGN Chess Server
-    Commands available:
-    /captures									Gets the pieces captured by both players.
-    /history									The current game's history.
-    /metadata									Metadata of the current game.
-    /piece position: square								Gets a piece by its position on the board.
-    /pieces color: w,b								Gets the pieces on the board by color.
-    /play color: w,b pgn: move							Plays a chess move on the board.
-    /quit										Quits a game.
-    /start mode: database,player,training						Starts a new game.
-    /status										The current game status.
+	Commands available:
+	/captures Gets the pieces captured by both players.
+	/help Provides information on the commands available.
+	/history The current game's history.
+	/metadata Metadata of the current game.
+	/piece {"position":"square"} Gets a piece by its position on the board.
+	/pieces {"color":["w","b"]} Gets the pieces on the board by color.
+	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board.
+	/quit Quits a game.
+	/start {"mode":["database","player","training"]} Starts a new game.
+	/status The current game status.
 
     Listening to commands...
 
@@ -80,16 +81,17 @@ Start the server:
 
     docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/ws-server.php
     Welcome to PGN Chess Server
-    Commands available:
-    /captures									Gets the pieces captured by both players.
-    /history									The current game's history.
-    /metadata									Metadata of the current game.
-    /piece position: square								Gets a piece by its position on the board.
-    /pieces color: w,b								Gets the pieces on the board by color.
-    /play color: w,b pgn: move							Plays a chess move on the board.
-    /quit										Quits a game.
-    /start mode: database,player,training						Starts a new game.
-    /status										The current game status.
+	Commands available:
+	/captures Gets the pieces captured by both players.
+	/help Provides information on the commands available.
+	/history The current game's history.
+	/metadata Metadata of the current game.
+	/piece {"position":"square"} Gets a piece by its position on the board.
+	/pieces {"color":["w","b"]} Gets the pieces on the board by color.
+	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board.
+	/quit Quits a game.
+	/start {"mode":["database","player","training"]} Starts a new game.
+	/status The current game status.
 
     Listening to commands...
 
