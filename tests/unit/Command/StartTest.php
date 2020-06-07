@@ -10,22 +10,66 @@ class StartTest extends CommandTestCase
     /**
      * @test
      */
-    public function validate_start_database()
+    public function validate_start_ai_w()
     {
         $this->assertInstanceOf(
             Start::class,
-            self::$parser->validate('/start database')
+            self::$parser->validate('/start ai w')
         );
     }
 
     /**
      * @test
      */
-    public function validate_start_player()
+    public function validate_start_ai_b()
     {
         $this->assertInstanceOf(
             Start::class,
-            self::$parser->validate('/start player')
+            self::$parser->validate('/start ai b')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function validate_start_database_w()
+    {
+        $this->assertInstanceOf(
+            Start::class,
+            self::$parser->validate('/start database w')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function validate_start_database_b()
+    {
+        $this->assertInstanceOf(
+            Start::class,
+            self::$parser->validate('/start database b')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function validate_start_player_w()
+    {
+        $this->assertInstanceOf(
+            Start::class,
+            self::$parser->validate('/start player w')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function validate_start_player_b()
+    {
+        $this->assertInstanceOf(
+            Start::class,
+            self::$parser->validate('/start player b')
         );
     }
 
@@ -44,6 +88,69 @@ class StartTest extends CommandTestCase
      * @test
      * @expectedException PgnChessServer\Exception\ParserException
      */
+    public function validate_start_ai()
+    {
+        self::$parser->validate('/start ai');
+    }
+
+    /**
+     * @test
+     * @expectedException PgnChessServer\Exception\ParserException
+     */
+    public function validate_start_ai_w_b()
+    {
+        self::$parser->validate('/start ai w b');
+    }
+
+    /**
+     * @test
+     * @expectedException PgnChessServer\Exception\ParserException
+     */
+    public function validate_start_database()
+    {
+        self::$parser->validate('/start database');
+    }
+
+    /**
+     * @test
+     * @expectedException PgnChessServer\Exception\ParserException
+     */
+    public function validate_start_database_w_b()
+    {
+        self::$parser->validate('/start database w b');
+    }
+
+    /**
+     * @test
+     * @expectedException PgnChessServer\Exception\ParserException
+     */
+    public function validate_start_player()
+    {
+        self::$parser->validate('/start player');
+    }
+
+    /**
+     * @test
+     * @expectedException PgnChessServer\Exception\ParserException
+     */
+    public function validate_start_player_w_b()
+    {
+        self::$parser->validate('/start player w b');
+    }
+
+    /**
+     * @test
+     * @expectedException PgnChessServer\Exception\ParserException
+     */
+    public function validate_start_training_w()
+    {
+        self::$parser->validate('/start training w');
+    }
+
+    /**
+     * @test
+     * @expectedException PgnChessServer\Exception\ParserException
+     */
     public function validate_start_foo()
     {
         self::$parser->validate('/start foo');
@@ -56,14 +163,5 @@ class StartTest extends CommandTestCase
     public function validate_start_bar()
     {
         self::$parser->validate('/start bar');
-    }
-
-    /**
-     * @test
-     * @expectedException PgnChessServer\Exception\ParserException
-     */
-    public function validate_start_player_training()
-    {
-        self::$parser->validate('/start player training');
     }
 }

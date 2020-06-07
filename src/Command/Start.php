@@ -2,6 +2,7 @@
 
 namespace PgnChessServer\Command;
 
+use PGNChess\PGN\Symbol;
 use PgnChessServer\AbstractCommand;
 use PgnChessServer\Mode\AiMode;
 use PgnChessServer\Mode\DatabaseMode;
@@ -13,7 +14,7 @@ class Start extends AbstractCommand
     public function __construct()
     {
         $this->name = '/start';
-        $this->description = 'Starts a new game.';
+        $this->description = 'Starts a new game. The "color" parameter is not required in training mode.';
         $this->params = [
             'mode' => [
                 AiMode::NAME,
@@ -21,11 +22,25 @@ class Start extends AbstractCommand
                 PlayerMode::NAME,
                 TrainingMode::NAME,
             ],
+            'color' => [
+                Symbol::WHITE,
+                Symbol::BLACK,
+            ],
         ];
     }
 
     public function validate(array $argv)
     {
-        return count($argv) - 1 === count($this->params) && in_array($argv[1], $this->params['mode']);
+        if (in_array($argv[1], $this->params['mode'])) {
+            switch ($argv[1]) {
+                // second parameter "color" is not required in training mode
+                case TrainingMode::NAME:
+                    return count($argv) - 1 === count($this->params) - 1;
+                default:
+                    return count($argv) - 1 === count($this->params) && in_array($argv[2], $this->params['color']);
+            }
+        }
+
+        return false;
     }
 }
