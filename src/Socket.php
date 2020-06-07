@@ -60,35 +60,42 @@ class Socket implements MessageComponentInterface
         $game = $this->games[$from->resourceId]['game'] ?? null;
         $argv = $this->parser->argv;
 
-        if (!$game && is_a($cmd, Start::class)) {
-            $this->games[$from->resourceId] = [
-                'mode' => $argv[1],
-                'game' => new Game,
-            ];
-            $res = [
-                'message' => "Game started in {$argv[1]} mode."
-            ];
-        } elseif (!$game && in_array(Start::class, $cmd->dependsOn)) {
-            $res = [
-                'message' => 'A game needs to be started first for this command to be allowed.',
-            ];
-        } elseif ($game && is_a($cmd, Quit::class)) {
-            unset($this->games[$from->resourceId]);
-            $res = [
-                'message' => 'Good bye!',
-            ];
-        } elseif ($game) {
-            switch ($this->games[$from->resourceId]['mode']) {
-                case DatabaseMode::NAME:
-                    $dbMode = new DatabaseMode($argv, $cmd, $game);
-                    $res = $dbMode->res();
-                    // TODO
-                    // determine the player's turn
-                    // database moves will go here
-                    // $dbMode->move();
+        if ($game) {
+            if (is_a($cmd, Quit::class)) {
+                unset($this->games[$from->resourceId]);
+                $res = [
+                    'message' => 'Good bye!',
+                ];
+            } else {
+                switch ($this->games[$from->resourceId]['mode']) {
+                    case DatabaseMode::NAME:
+                        $dbMode = new DatabaseMode($argv, $cmd, $game);
+                        $res = $dbMode->res();
+                        // TODO
+                        // determine the player's turn
+                        // a chess move fetched from the database will go here
+                        // $dbMode->move();
+                        break;
+                    case TrainingMode::NAME:
+                        $res = (new TrainingMode($argv, $cmd, $game))->res();
+                        break;
+                }
+            }
+        } else {
+            switch (true) {
+                case is_a($cmd, Start::class):
+                    $this->games[$from->resourceId] = [
+                        'mode' => $argv[1],
+                        'game' => new Game,
+                    ];
+                    $res = [
+                        'message' => "Game started in {$argv[1]} mode."
+                    ];
                     break;
-                case TrainingMode::NAME:
-                    $res = (new TrainingMode($argv, $cmd, $game))->res();
+                case in_array(Start::class, $cmd->dependsOn):
+                    $res = [
+                        'message' => 'A game needs to be started first for this command to be allowed.',
+                    ];
                     break;
             }
         }
