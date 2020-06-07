@@ -1,5 +1,5 @@
 # misc
-.env.example
+.env
 
 # php
 /composer.lock

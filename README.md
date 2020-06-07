@@ -45,11 +45,11 @@ Start the server:
 	/help Provides information on the commands available.
 	/history The current game's history.
 	/metadata Metadata of the current game.
-	/piece {"position":"square"} Gets a piece by its position on the board.
-	/pieces {"color":["w","b"]} Gets the pieces on the board by color.
-	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board.
+	/piece {"position":"square"} Gets a piece by its position on the board. The "position" parameter is mandatory.
+	/pieces {"color":["w","b"]} Gets the pieces on the board by color. The "color" parameter is mandatory.
+	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board. All parameters are mandatory.
 	/quit Quits a game.
-	/start {"mode":["ai","database","player","training"]} Starts a new game.
+	/start {"mode":["ai","database","player","training"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in training mode.
 	/status The current game status.
 
     Listening to commands...
@@ -86,11 +86,11 @@ Start the server:
 	/help Provides information on the commands available.
 	/history The current game's history.
 	/metadata Metadata of the current game.
-	/piece {"position":"square"} Gets a piece by its position on the board.
-	/pieces {"color":["w","b"]} Gets the pieces on the board by color.
-	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board.
+	/piece {"position":"square"} Gets a piece by its position on the board. The "position" parameter is mandatory.
+	/pieces {"color":["w","b"]} Gets the pieces on the board by color. The "color" parameter is mandatory.
+	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board. All parameters are mandatory.
 	/quit Quits a game.
-	/start {"mode":["ai","database","player","training"]} Starts a new game.
+	/start {"mode":["ai","database","player","training"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in training mode.
 	/status The current game status.
 
     Listening to commands...
@@ -122,7 +122,7 @@ Should you want to play around with the development environment follow the steps
 
 Run the tests:
 
-    docker exec -it pgn_chess_server_php_fpm vendor/bin/phpunit tests
+	docker exec -it pgn_chess_server_php_fpm vendor/bin/phpunit --configuration phpunit-docker.xml
 
 ### License
 
