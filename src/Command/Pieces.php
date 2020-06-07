@@ -2,6 +2,7 @@
 
 namespace PgnChessServer\Command;
 
+use PGNChess\PGN\Symbol;
 use PgnChessServer\AbstractCommand;
 
 class Pieces extends AbstractCommand
@@ -12,8 +13,8 @@ class Pieces extends AbstractCommand
         $this->description = 'Gets the pieces on the board by color.';
         $this->params = [
             'color' => [
-                'w',
-                'b',
+                Symbol::WHITE,
+                Symbol::BLACK,
             ],
         ];
         $this->dependsOn = [

@@ -2,6 +2,7 @@
 
 namespace PgnChessServer\Command;
 
+use PGNChess\PGN\Symbol;
 use PgnChessServer\AbstractCommand;
 
 class Play extends AbstractCommand
@@ -12,8 +13,8 @@ class Play extends AbstractCommand
         $this->description = 'Plays a chess move on the board.';
         $this->params = [
             'color' => [
-                'w',
-                'b',
+                Symbol::WHITE,
+                Symbol::BLACK,
             ],
             'pgn' => 'move',
         ];
