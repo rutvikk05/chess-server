@@ -10,7 +10,7 @@ class Play extends AbstractCommand
     public function __construct()
     {
         $this->name = '/play';
-        $this->description = 'Plays a chess move on the board.';
+        $this->description = 'Plays a chess move on the board. All parameters are mandatory.';
         $this->params = [
             'color' => [
                 Symbol::WHITE,

@@ -9,7 +9,7 @@ class Piece extends AbstractCommand
     public function __construct()
     {
         $this->name = '/piece';
-        $this->description = 'Gets a piece by its position on the board.';
+        $this->description = 'Gets a piece by its position on the board. The "position" parameter is mandatory.';
         $this->params = [
             'position' => 'square',
         ];
