@@ -3,6 +3,7 @@
 namespace PgnChessServer\Command;
 
 use PgnChessServer\AbstractCommand;
+use PgnChessServer\Mode\TrainingMode;
 
 class Start extends AbstractCommand
 {
@@ -14,7 +15,7 @@ class Start extends AbstractCommand
             'mode' => [
                 'database',
                 'player',
-                'training',
+                TrainingMode::NAME,
             ],
         ];
     }

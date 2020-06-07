@@ -4,17 +4,10 @@ namespace PgnChessServer;
 
 use Dotenv\Dotenv;
 use PGNChess\Game;
-use PgnChessServer\Command\Captures;
-use PgnChessServer\Command\Help;
-use PgnChessServer\Command\History;
-use PgnChessServer\Command\Metadata;
-use PgnChessServer\Command\Piece;
-use PgnChessServer\Command\Pieces;
-use PgnChessServer\Command\Play;
-use PgnChessServer\Command\Quit;
 use PgnChessServer\Command\Start;
-use PgnChessServer\Command\Status;
+use PgnChessServer\Command\Quit;
 use PgnChessServer\Exception\ParserException;
+use PgnChessServer\Mode\TrainingMode;
 use PgnChessServer\Parser\CommandParser;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -61,99 +54,38 @@ class Socket implements MessageComponentInterface
             return;
         }
 
-        $game = $this->games[$from->resourceId] ?? null;
+        $game = $this->games[$from->resourceId]['game'] ?? null;
         $argv = $this->parser->argv;
 
-        if (!$game && get_class($cmd) === Start::class) {
-            $this->games[$from->resourceId] = new Game;
-            $client->send(
-                json_encode([
-                    'message' => "Game started in {$argv[1]} mode."
-                ]) . PHP_EOL
-            );
+        if (!$game && is_a($cmd, Start::class)) {
+            $this->games[$from->resourceId] = [
+                'mode' => $argv[1],
+                'game' => new Game,
+            ];
+            $res = [
+                'message' => "Game started in {$argv[1]} mode."
+            ];
         } elseif (!$game && in_array(Start::class, $cmd->dependsOn)) {
-            $client->send(
-                json_encode([
-                    'message' => 'A game needs to be started first for this command to be allowed.',
-                ]) . PHP_EOL
-            );
+            $res = [
+                'message' => 'A game needs to be started first for this command to be allowed.',
+            ];
+        } elseif ($game && is_a($cmd, Quit::class)) {
+            unset($this->games[$from->resourceId]);
+            $res = [
+                'message' => 'Good bye!',
+            ];
         } elseif ($game) {
-            switch (get_class($cmd)) {
-                case Captures::class:
-                    $client->send(
-                        json_encode([
-                            'captures' => $game->captures(),
-                        ]) . PHP_EOL
-                    );
+            switch ($this->games[$from->resourceId]['mode']) {
+                case TrainingMode::NAME:
+                    $res = (new TrainingMode($argv, $cmd, $game))->res();
                     break;
-                case History::class:
-                    $client->send(
-                        json_encode([
-                            'history' => $game->history(),
-                        ]) . PHP_EOL
-                    );
-                    break;
-                case Metadata::class:
-                    $client->send(
-                        json_encode([
-                            'metadata' => $game->metadata(),
-                        ]) . PHP_EOL
-                    );
-                    break;
-                case Piece::class:
-                    try {
-                        $client->send(
-                            json_encode([
-                                'piece' => $game->piece($argv[1])
-                            ]) . PHP_EOL
-                        );
-                    } catch(\Exception $e) {
-                        $client->send(
-                            json_encode([
-                                'message' => 'Invalid square.'
-                            ]) . PHP_EOL
-                        );
-                    }
-                    break;
-                case Pieces::class:
-                    $client->send(
-                        json_encode([
-                            'piece' => $game->pieces($argv[1])
-                        ]) . PHP_EOL
-                    );
-                    break;
-                case Play::class:
-                    try {
-                        $client->send(
-                            json_encode([
-                                'legal' => $game->play($argv[1], $argv[2])
-                            ]) . PHP_EOL
-                        );
-                    } catch(\Exception $e) {
-                        $client->send(
-                            json_encode([
-                                'message' => 'Invalid move.'
-                            ]) . PHP_EOL
-                        );
-                    }
-                    break;
-                case Quit::class:
-                    unset($this->games[$from->resourceId]);
-                    $client->send(
-                        json_encode([
-                            'message' => 'Good bye!'
-                        ]) . PHP_EOL
-                    );
-                    break;
-                case Status::class:
-                    $client->send(
-                        json_encode([
-                            'status' => $game->status(),
-                        ]) . PHP_EOL
-                    );
+                // TODO implement the rest of game modes
+                default:
                     break;
             }
         }
+
+        $client->send(json_encode($res) . PHP_EOL);
     }
 
     public function onClose(ConnectionInterface $conn)
