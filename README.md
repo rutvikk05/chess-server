@@ -1,5 +1,7 @@
 ## PGN Chess Server
 
+[![Build Status](https://travis-ci.org/programarivm/pgn-chess-server.svg?branch=master)](https://travis-ci.org/programarivm/pgn-chess-server)
+
 <p align="center">
 	<img src="https://github.com/programarivm/pgn-chess/blob/master/resources/chess-board.jpg" />
 </p>
