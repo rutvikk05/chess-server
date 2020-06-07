@@ -4,7 +4,7 @@ namespace PgnChessServer\Mode;
 
 use PgnChessServer\AbstractMode;
 
-class TrainingMode extends AbstractMode
+class PlayerMode extends AbstractMode
 {
-    const NAME = 'training';
+    const NAME = 'player';
 }

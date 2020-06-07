@@ -3,6 +3,9 @@
 namespace PgnChessServer\Command;
 
 use PgnChessServer\AbstractCommand;
+use PgnChessServer\Mode\AiMode;
+use PgnChessServer\Mode\DatabaseMode;
+use PgnChessServer\Mode\PlayerMode;
 use PgnChessServer\Mode\TrainingMode;
 
 class Start extends AbstractCommand
@@ -13,8 +16,9 @@ class Start extends AbstractCommand
         $this->description = 'Starts a new game.';
         $this->params = [
             'mode' => [
-                'database',
-                'player',
+                AiMode::NAME,
+                DatabaseMode::NAME,
+                PlayerMode::NAME,
                 TrainingMode::NAME,
             ],
         ];

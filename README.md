@@ -49,7 +49,7 @@ Start the server:
 	/pieces {"color":["w","b"]} Gets the pieces on the board by color.
 	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board.
 	/quit Quits a game.
-	/start {"mode":["database","player","training"]} Starts a new game.
+	/start {"mode":["ai","database","player","training"]} Starts a new game.
 	/status The current game status.
 
     Listening to commands...
@@ -90,7 +90,7 @@ Start the server:
 	/pieces {"color":["w","b"]} Gets the pieces on the board by color.
 	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board.
 	/quit Quits a game.
-	/start {"mode":["database","player","training"]} Starts a new game.
+	/start {"mode":["ai","database","player","training"]} Starts a new game.
 	/status The current game status.
 
     Listening to commands...

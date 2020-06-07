@@ -7,6 +7,9 @@ use PGNChess\Game;
 use PgnChessServer\Command\Start;
 use PgnChessServer\Command\Quit;
 use PgnChessServer\Exception\ParserException;
+use PgnChessServer\Mode\AiMode;
+use PgnChessServer\Mode\DatabaseMode;
+use PgnChessServer\Mode\PlayerMode;
 use PgnChessServer\Mode\TrainingMode;
 use PgnChessServer\Parser\CommandParser;
 use Ratchet\MessageComponentInterface;
@@ -76,11 +79,16 @@ class Socket implements MessageComponentInterface
             ];
         } elseif ($game) {
             switch ($this->games[$from->resourceId]['mode']) {
+                case DatabaseMode::NAME:
+                    $dbMode = new DatabaseMode($argv, $cmd, $game);
+                    $res = $dbMode->res();
+                    // TODO
+                    // determine the player's turn
+                    // database moves will go here
+                    // $dbMode->move();
+                    break;
                 case TrainingMode::NAME:
                     $res = (new TrainingMode($argv, $cmd, $game))->res();
-                    break;
-                // TODO implement the rest of game modes
-                default:
                     break;
             }
         }
