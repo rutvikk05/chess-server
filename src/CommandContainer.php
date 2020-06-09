@@ -6,6 +6,7 @@ use PgnChessServer\Command\Captures;
 use PgnChessServer\Command\Help;
 use PgnChessServer\Command\History;
 use PgnChessServer\Command\IsCheck;
+use PgnChessServer\Command\IsMate;
 use PgnChessServer\Command\Metadata;
 use PgnChessServer\Command\Piece;
 use PgnChessServer\Command\Pieces;
@@ -25,6 +26,7 @@ class CommandContainer
         $this->obj->attach(new Help);
         $this->obj->attach(new History);
         $this->obj->attach(new IsCheck);
+        $this->obj->attach(new IsMate);
         $this->obj->attach(new Metadata);
         $this->obj->attach(new Piece);
         $this->obj->attach(new Pieces);
