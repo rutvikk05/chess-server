@@ -7,16 +7,15 @@ use PgnChessServer\Command\History;
 use PgnChessServer\Command\Metadata;
 use PgnChessServer\Command\Piece;
 use PgnChessServer\Command\Pieces;
-use PgnChessServer\Command\Play;
 use PgnChessServer\Command\Status;
 
 abstract class AbstractMode
 {
-    private $argv;
+    protected $argv;
 
-    private $cmd;
+    protected $cmd;
 
-    private $game;
+    protected $game;
 
     public function __construct($argv, $cmd, $game)
     {
@@ -49,16 +48,10 @@ abstract class AbstractMode
                     return [
                         'pieces' => $this->game->pieces($this->argv[1]),
                     ];
-                case Play::class:
-                    return [
-                        'legal' => $this->game->play($this->argv[1], $this->argv[2]),
-                    ];
                 case Status::class:
                     return [
                         'status' => $this->game->status(),
                     ];
-                default:
-                    return [];
             }
         } catch (\Exception $e) {
             return [

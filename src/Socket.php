@@ -68,13 +68,14 @@ class Socket implements MessageComponentInterface
                 ];
             } else {
                 switch ($this->games[$from->resourceId]['mode']) {
+                    case AiMode::NAME:
+                        $res = (new AiMode($argv, $cmd, $game))->res();
+                        break;
                     case DatabaseMode::NAME:
-                        $dbMode = new DatabaseMode($argv, $cmd, $game);
-                        $res = $dbMode->res();
-                        // TODO
-                        // determine the player's turn
-                        // a chess move fetched from the database will go here
-                        // $dbMode->move();
+                        $res = (new DatabaseMode($argv, $cmd, $game))->res();
+                        break;
+                    case PlayerMode::NAME:
+                        $res = (new PlayerMode($argv, $cmd, $game))->res();
                         break;
                     case TrainingMode::NAME:
                         $res = (new TrainingMode($argv, $cmd, $game))->res();
