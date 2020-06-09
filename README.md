@@ -46,6 +46,7 @@ Start the server:
 	/captures Gets the pieces captured by both players.
 	/help Provides information on the commands available.
 	/history The current game's history.
+	/ischeck Finds out if the game is in check.
 	/metadata Metadata of the current game.
 	/piece {"position":"square"} Gets a piece by its position on the board. The "position" parameter is mandatory.
 	/pieces {"color":["w","b"]} Gets the pieces on the board by color. The "color" parameter is mandatory.
@@ -87,6 +88,7 @@ Start the server:
 	/captures Gets the pieces captured by both players.
 	/help Provides information on the commands available.
 	/history The current game's history.
+	/ischeck Finds out if the game is in check.
 	/metadata Metadata of the current game.
 	/piece {"position":"square"} Gets a piece by its position on the board. The "position" parameter is mandatory.
 	/pieces {"color":["w","b"]} Gets the pieces on the board by color. The "color" parameter is mandatory.

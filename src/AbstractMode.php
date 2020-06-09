@@ -4,6 +4,7 @@ namespace PgnChessServer;
 
 use PgnChessServer\Command\Captures;
 use PgnChessServer\Command\History;
+use PgnChessServer\Command\IsCheck;
 use PgnChessServer\Command\Metadata;
 use PgnChessServer\Command\Piece;
 use PgnChessServer\Command\Pieces;
@@ -35,6 +36,10 @@ abstract class AbstractMode
                 case History::class:
                     return [
                         'history' => $this->game->history(),
+                    ];
+                case IsCheck::class:
+                    return [
+                        'check' => $this->game->isCheck(),
                     ];
                 case Metadata::class:
                     return [
