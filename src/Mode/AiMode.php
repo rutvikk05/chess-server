@@ -9,7 +9,15 @@ class AiMode extends AbstractMode
 {
     const NAME = 'ai';
 
-    public function res()
+    public function __construct($argv, $cmd, $game)
+    {
+        parent::__construct($game);
+
+        // TODO
+        // Play the first ai move
+    }
+
+    public function res($argv, $cmd)
     {
         try {
             if (is_a($this->cmd, Play::class)) {

@@ -9,12 +9,12 @@ class TrainingMode extends AbstractMode
 {
     const NAME = 'training';
 
-    public function res()
+    public function res($argv, $cmd)
     {
         try {
-            if (is_a($this->cmd, Play::class)) {
+            if (is_a($cmd, Play::class)) {
                 return [
-                    'legal' => $this->game->play($this->argv[1], $this->argv[2]),
+                    'legal' => $this->game->play($argv[1], $argv[2]),
                 ];
             }
         } catch (\Exception $e) {

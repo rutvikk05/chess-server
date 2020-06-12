@@ -9,10 +9,10 @@ class PlayerMode extends AbstractMode
 {
     const NAME = 'player';
 
-    public function res()
+    public function res($argv, $cmd)
     {
         try {
-            if (is_a($this->cmd, Play::class)) {
+            if (is_a($cmd, Play::class)) {
                 // TODO
                 return [
                     'message' => 'Soon available! Please be patient.',

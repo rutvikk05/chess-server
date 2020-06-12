@@ -13,23 +13,22 @@ use PgnChessServer\Command\Status;
 
 abstract class AbstractMode
 {
-    protected $argv;
-
-    protected $cmd;
-
     protected $game;
 
-    public function __construct($argv, $cmd, $game)
+    public function __construct($game)
     {
-        $this->argv = $argv;
-        $this->cmd = $cmd;
         $this->game = $game;
     }
 
-    public function res()
+    public function getGame()
+    {
+        return $this->game;
+    }
+
+    public function res($argv, $cmd)
     {
         try {
-            switch (get_class($this->cmd)) {
+            switch (get_class($cmd)) {
                 case Captures::class:
                     return [
                         'captures' => $this->game->captures(),
@@ -52,11 +51,11 @@ abstract class AbstractMode
                     ];
                 case Piece::class:
                     return [
-                        'piece' => $this->game->piece($this->argv[1]),
+                        'piece' => $this->game->piece($argv[1]),
                     ];
                 case Pieces::class:
                     return [
-                        'pieces' => $this->game->pieces($this->argv[1]),
+                        'pieces' => $this->game->pieces($argv[1]),
                     ];
                 case Status::class:
                     return [
