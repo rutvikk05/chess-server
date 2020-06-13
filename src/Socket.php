@@ -74,7 +74,6 @@ class Socket implements MessageComponentInterface
                 $res = $this->games[$from->resourceId]->res($argv, $cmd);
             }
         } elseif (is_a($cmd, Start::class)) {
-            $res['message'] = "Game started in {$argv[1]} mode.";
             switch ($argv[1]) {
                 case DatabaseMode::NAME:
                     $mode = new DatabaseMode($argv, $cmd, new Game);
@@ -83,9 +82,11 @@ class Socket implements MessageComponentInterface
                         $first = current($mode->getGame()->history());
                         $res['database'] = $first->color . ' ' . $first->pgn;
                     }
+                    $res['message'] = "Game started in {$argv[1]} mode.";
                     break;
                 case TrainingMode::NAME:
                     $this->games[$from->resourceId] = new TrainingMode(new Game);
+                    $res['message'] = "Game started in {$argv[1]} mode.";
                     break;
             }
         } elseif (in_array(Start::class, $cmd->dependsOn)) {
