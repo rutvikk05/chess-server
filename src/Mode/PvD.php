@@ -36,12 +36,12 @@ class PvD extends AbstractMode
                         $last = $this->game->history()[count($this->game->history())-1];
                         return [
                             'I' => $argv[1] . ' ' . $argv[2],
-                            'database' => $last->color . ' ' . $last->pgn,
+                            'd' => $last->color . ' ' . $last->pgn,
                         ];
                     }
                     return [
                         'I' => $argv[1] . ' ' . $argv[2],
-                        'database' => null,
+                        'd' => null,
                         'message' => "Mmm, sorry. There are no chess moves left in the database.",
                     ];
                 } else {

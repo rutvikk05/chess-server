@@ -80,7 +80,7 @@ class Socket implements MessageComponentInterface
                     $this->games[$from->resourceId] = $mode;
                     if ($argv[2] === Symbol::BLACK) {
                         $first = current($mode->getGame()->history());
-                        $res['database'] = $first->color . ' ' . $first->pgn;
+                        $res['d'] = $first->color . ' ' . $first->pgn;
                     }
                     $res['message'] = "Game started in {$argv[1]} mode.";
                     break;
