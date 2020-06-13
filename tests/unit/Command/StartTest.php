@@ -10,77 +10,77 @@ class StartTest extends CommandTestCase
     /**
      * @test
      */
-    public function validate_start_ai_w()
+    public function validate_start_pva_w()
     {
         $this->assertInstanceOf(
             Start::class,
-            self::$parser->validate('/start ai w')
+            self::$parser->validate('/start pva w')
         );
     }
 
     /**
      * @test
      */
-    public function validate_start_ai_b()
+    public function validate_start_pva_b()
     {
         $this->assertInstanceOf(
             Start::class,
-            self::$parser->validate('/start ai b')
+            self::$parser->validate('/start pva b')
         );
     }
 
     /**
      * @test
      */
-    public function validate_start_database_w()
+    public function validate_start_pvd_w()
     {
         $this->assertInstanceOf(
             Start::class,
-            self::$parser->validate('/start database w')
+            self::$parser->validate('/start pvd w')
         );
     }
 
     /**
      * @test
      */
-    public function validate_start_database_b()
+    public function validate_start_pvd_b()
     {
         $this->assertInstanceOf(
             Start::class,
-            self::$parser->validate('/start database b')
+            self::$parser->validate('/start pvd b')
         );
     }
 
     /**
      * @test
      */
-    public function validate_start_player_w()
+    public function validate_start_pvp_w()
     {
         $this->assertInstanceOf(
             Start::class,
-            self::$parser->validate('/start player w')
+            self::$parser->validate('/start pvp w')
         );
     }
 
     /**
      * @test
      */
-    public function validate_start_player_b()
+    public function validate_start_pvp_b()
     {
         $this->assertInstanceOf(
             Start::class,
-            self::$parser->validate('/start player b')
+            self::$parser->validate('/start pvp b')
         );
     }
 
     /**
      * @test
      */
-    public function validate_start_training()
+    public function validate_start_pvt()
     {
         $this->assertInstanceOf(
             Start::class,
-            self::$parser->validate('/start training')
+            self::$parser->validate('/start pvt')
         );
     }
 
@@ -88,63 +88,63 @@ class StartTest extends CommandTestCase
      * @test
      * @expectedException PgnChessServer\Exception\ParserException
      */
-    public function validate_start_ai()
+    public function validate_start_pva()
     {
-        self::$parser->validate('/start ai');
+        self::$parser->validate('/start pva');
     }
 
     /**
      * @test
      * @expectedException PgnChessServer\Exception\ParserException
      */
-    public function validate_start_ai_w_b()
+    public function validate_start_pva_w_b()
     {
-        self::$parser->validate('/start ai w b');
+        self::$parser->validate('/start pva w b');
     }
 
     /**
      * @test
      * @expectedException PgnChessServer\Exception\ParserException
      */
-    public function validate_start_database()
+    public function validate_start_pvd()
     {
-        self::$parser->validate('/start database');
+        self::$parser->validate('/start pvd');
     }
 
     /**
      * @test
      * @expectedException PgnChessServer\Exception\ParserException
      */
-    public function validate_start_database_w_b()
+    public function validate_start_pvd_w_b()
     {
-        self::$parser->validate('/start database w b');
+        self::$parser->validate('/start pvd w b');
     }
 
     /**
      * @test
      * @expectedException PgnChessServer\Exception\ParserException
      */
-    public function validate_start_player()
+    public function validate_start_pvp()
     {
-        self::$parser->validate('/start player');
+        self::$parser->validate('/start pvp');
     }
 
     /**
      * @test
      * @expectedException PgnChessServer\Exception\ParserException
      */
-    public function validate_start_player_w_b()
+    public function validate_start_pvp_w_b()
     {
-        self::$parser->validate('/start player w b');
+        self::$parser->validate('/start pvp w b');
     }
 
     /**
      * @test
      * @expectedException PgnChessServer\Exception\ParserException
      */
-    public function validate_start_training_w()
+    public function validate_start_pvt_w()
     {
-        self::$parser->validate('/start training w');
+        self::$parser->validate('/start pvt w');
     }
 
     /**

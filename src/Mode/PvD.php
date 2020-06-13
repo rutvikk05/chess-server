@@ -6,9 +6,10 @@ use PGNChess\PGN\Symbol;
 use PgnChessServer\AbstractMode;
 use PgnChessServer\Command\Play;
 
-class DatabaseMode extends AbstractMode
+class PvD extends AbstractMode
 {
-    const NAME = 'database';
+    /** player vs database */
+    const NAME = 'pvd';
 
     protected $color;
 

@@ -8,10 +8,10 @@ use PGNChess\PGN\Symbol;
 use PgnChessServer\Command\Start;
 use PgnChessServer\Command\Quit;
 use PgnChessServer\Exception\ParserException;
-// use PgnChessServer\Mode\AiMode;
-use PgnChessServer\Mode\DatabaseMode;
-// use PgnChessServer\Mode\PlayerMode;
-use PgnChessServer\Mode\TrainingMode;
+// use PgnChessServer\Mode\PvA;
+use PgnChessServer\Mode\PvD;
+// use PgnChessServer\Mode\PvP;
+use PgnChessServer\Mode\PvT;
 use PgnChessServer\Parser\CommandParser;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -75,8 +75,8 @@ class Socket implements MessageComponentInterface
             }
         } elseif (is_a($cmd, Start::class)) {
             switch ($argv[1]) {
-                case DatabaseMode::NAME:
-                    $mode = new DatabaseMode($argv, $cmd, new Game);
+                case PvD::NAME:
+                    $mode = new PvD($argv, $cmd, new Game);
                     $this->games[$from->resourceId] = $mode;
                     if ($argv[2] === Symbol::BLACK) {
                         $first = current($mode->getGame()->history());
@@ -84,8 +84,8 @@ class Socket implements MessageComponentInterface
                     }
                     $res['message'] = "Game started in {$argv[1]} mode.";
                     break;
-                case TrainingMode::NAME:
-                    $this->games[$from->resourceId] = new TrainingMode(new Game);
+                case PvT::NAME:
+                    $this->games[$from->resourceId] = new PvT(new Game);
                     $res['message'] = "Game started in {$argv[1]} mode.";
                     break;
             }

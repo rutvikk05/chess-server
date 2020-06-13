@@ -5,22 +5,15 @@ namespace PgnChessServer\Mode;
 use PgnChessServer\AbstractMode;
 use PgnChessServer\Command\Play;
 
-class AiMode extends AbstractMode
+class PvP extends AbstractMode
 {
-    const NAME = 'ai';
-
-    public function __construct($argv, $cmd, $game)
-    {
-        parent::__construct($game);
-
-        // TODO
-        // Play the first ai move
-    }
+    /** player vs player */
+    const NAME = 'pvp';
 
     public function res($argv, $cmd)
     {
         try {
-            if (is_a($this->cmd, Play::class)) {
+            if (is_a($cmd, Play::class)) {
                 // TODO
                 return [
                     'message' => 'Soon available! Please be patient.',

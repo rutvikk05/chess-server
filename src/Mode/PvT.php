@@ -5,9 +5,10 @@ namespace PgnChessServer\Mode;
 use PgnChessServer\AbstractMode;
 use PgnChessServer\Command\Play;
 
-class TrainingMode extends AbstractMode
+class PvT extends AbstractMode
 {
-    const NAME = 'training';
+    /** player vs themselves */
+    const NAME = 'pvt';
 
     public function res($argv, $cmd)
     {
