@@ -44,7 +44,16 @@ Development environment for testing purposes:
 
 Production:
 
-	docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/db-seed.php data/prod/01_your_games.pgn
+	bash/load.sh
+	This will load the games in the data/prod folder. Are you sure to continue? (y|n) y
+	Good! This is a valid PGN file. 3179 games were inserted into the database.
+	21 s...
+	Good! This is a valid PGN file. 1313 games were inserted into the database.
+	28 s...
+	Good! This is a valid PGN file. 1900 games were inserted into the database.
+	38 s...
+	Good! This is a valid PGN file. 776 games were inserted into the database.
+	42 s...
 
 ### Telnet Server
 
