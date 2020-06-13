@@ -44,7 +44,7 @@ Development environment for testing purposes:
 
 Production:
 
-	bash/load.sh
+	docker exec -it --user 1000:1000 pgn_chess_server_php_fpm bash/load.sh
 	This will load the games in the data/prod folder. Are you sure to continue? (y|n) y
 	Good! This is a valid PGN file. 3179 games were inserted into the database.
 	21 s...

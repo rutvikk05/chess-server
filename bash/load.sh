@@ -16,7 +16,7 @@ cd $APP_PATH
 
 for file in data/prod/*
 do
-  docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/db-seed.php $file --quiet
+  php cli/db-seed.php $file --quiet
   echo "$SECONDS s...";
 done
 
