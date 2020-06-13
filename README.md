@@ -53,74 +53,52 @@ Start the server:
 	/pieces {"color":["w","b"]} Gets the pieces on the board by color. The "color" parameter is mandatory.
 	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board. All parameters are mandatory.
 	/quit Quits a game.
-	/start {"mode":["ai","database","player","training"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in training mode.
+	/start {"mode":["pva","pvd","pvp","pvt"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in pvt (player vs themselves) mode.
 	/status The current game status.
 
     Listening to commands...
 
 Open a command prompt and run commands:
 
-	telnet 172.23.0.2 8080
-	Trying 172.23.0.2...
-	Connected to 172.23.0.2.
+	telnet 172.23.0.3 8080
+	Trying 172.23.0.3...
+	Connected to 172.23.0.3.
 	Escape character is '^]'.
-	/start training
-	{"message":"Game started in training mode."}
-	/play e4
-	{"message":"Whoops! This seems to be an invalid command. Did you provide a valid parameter?"}
-	/play w e4
-	{"legal":true}
-	/play w c5
-	{"legal":false}
-	/play b c5
-	{"legal":true}
-	/play w Nf3
-	{"legal":true}
+	/start pvd b
+	{"database":"w d4","message":"Game started in pvd mode."}
+	/history
+	{"history":[{"pgn":"d4","color":"w","identity":"P","position":"d2","isCapture":false,"isCheck":false}]}
+	/play b d6
+	{"I":"b d6","database":"w Nf3"}
+	/history
+	{"history":[{"pgn":"d4","color":"w","identity":"P","position":"d2","isCapture":false,"isCheck":false},{"pgn":"d6","color":"b","identity":"P","position":"d7","isCapture":false,"isCheck":false},{"pgn":"Nf3","color":"w","identity":"N","position":"g1","isCapture":false,"isCheck":false}]}
 	/metadata
-	{"metadata":{"Event":"TCh-FRA Top 12 2018","Site":"Brest FRA","Date":"2018.05.28","Round":"3.1","White":"Kveinys, Aloyzas","Black":"Bellaiche, Anthony","Result":"1-0","WhiteElo":"2493","BlackElo":"2459","EventDate":"2018.05.26","ECO":"B40","movetext":"1.e4 c5 2.Nf3 e6 3.g3 Nc6 4.Bg2 Nf6 5.Qe2 d5 6.exd5 Nxd5 7.O-O Be7 8.Rd1 Qb6 9.c4 Nf6 10.Na3 O-O 11.Nc2 Re8 12.d3 h6 13.b3 e5 14.Re1 Bf8 15.Bb2 Bg4 16.Qd2 Qc7 17.h3 Bh5 18.Nh4 Rad8 19.g4 Bg6 20.Nxg6 fxg6 21.Re3 Nd7 22.Rae1 Be7 23.f4 exf4 24.Re6 Nf8 25.R6e4 g5 26.Qe2 Qd7 27.d4 cxd4 28.Nxd4 Nxd4 29.Bxd4 Bb4 30.Rxe8 Qxd4+ 31.Kh1 Rxe8 32.Qxe8 Bxe1 33.Bd5+ Kh7 34.Qxf8 Qe5 35.Bg8+ 1-0"}}
+	{"metadata":{"Event":"3. Sat Djenovici May IM","Site":"Djenovici MNE","Date":"2018.05.27","Round":"9.5","White":"Zherebtsova, Alexandra","Black":"Bozanic, Ivica","Result":"1\/2-1\/2","WhiteElo":"2203","BlackElo":"2176","EventDate":"2018.05.19","ECO":"A42","movetext":"1.d4 d6 2.Nf3 g6 3.c4 Bg7 4.Nc3 f5 5.e4 Nf6 6.exf5 gxf5 7.d5 e5 8.dxe6 Bxe6 9.Bd3 Nc6 10.O-O O-O 11.Re1 Bd7 12.Bg5 Re8 13.c5 Rxe1+ 14.Qxe1 Qf8 15.cxd6 cxd6 16.Bc4+ Kh8 17.Bf4 Re8 18.Qd1 Ne5 19.Bb3 Nxf3+ 20.Qxf3 Bc6 21.Qd1 Ne4 22.Nxe4 fxe4 23.Qxd6 Qxd6 24.Bxd6 Bxb2 25.Rd1 Kg7 26.Bc5 a5 27.Bd4+ Bxd4 28.Rxd4 Kf6 29.Kf1 Ke5 30.Rd2 a4 31.Bc4 b5 32.Be2 b4 33.Ke1 Bd5 34.Bd1 Bc6 35.Rc2 Bd5 36.Rb2 b3 37.axb3 axb3 38.Kd2 Kd4 39.Rb1 Rb8 40.Rb2 Ra8 41.Bxb3 Rb8 42.Kc2 Rxb3 43.Rxb3 Bxb3+ 44.Kxb3 Kd3 45.h4 Ke2 46.f4 exf3 47.gxf3 Kxf3 48.h5 h6 49.Kc3 Kg4 50.Kd3 Kxh5 51.Ke2 Kg4 52.Kf1 1\/2-1\/2"}}
+	/play b g6
+	{"I":"b g6","database":"w c4"}
+	/metadata
+	{"metadata":{"Event":"CHN-RUS Summit Blitz 2018","Site":"Qinhuangdao CHN","Date":"2018.05.26","Round":"1.1","White":"Li, Chao2","Black":"Matlakov, Maxim","Result":"1\/2-1\/2","WhiteElo":"2724","BlackElo":"2704","EventDate":"2018.05.26","ECO":"A41","movetext":"1.d4 d6 2.Nf3 g6 3.c4 Bg7 4.Nc3 Bg4 5.e3 Nc6 6.Be2 Nf6 7.h3 Bd7 8.b3 O-O 9.Bb2 e5 10.dxe5 dxe5 11.O-O e4 12.Nd2 Re8 13.a3 h5 14.Qc2 Bf5 15.Rfd1 Qe7 16.Nd5 Nxd5 17.cxd5 Bxb2 18.Qxb2 Ne5 19.Nc4 Rad8 20.Qxe5 1\/2-1\/2"}}
+	/piece g6
+	{"piece":{"color":"b","identity":"P","position":"g6","moves":["g5"]}}
+	/quit
+	{"message":"Good bye!"}
 
 ### WebSocket Server
 
-Start the server:
+Start the WebSocket server:
 
     docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/ws-server.php
-    Welcome to PGN Chess Server
-	Commands available:
-	/captures Gets the pieces captured by both players.
-	/help Provides information on the commands available.
-	/history The current game's history.
-	/ischeck Finds out if the game is in check.
-	/ismate Finds out if the game is over.
-	/metadata Metadata of the current game.
-	/piece {"position":"square"} Gets a piece by its position on the board. The "position" parameter is mandatory.
-	/pieces {"color":["w","b"]} Gets the pieces on the board by color. The "color" parameter is mandatory.
-	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board. All parameters are mandatory.
-	/quit Quits a game.
-	/start {"mode":["ai","database","player","training"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in training mode.
-	/status The current game status.
-
-    Listening to commands...
 
 Open a console in your favorite browser and run commands:
 
-    const ws = new WebSocket('ws://172.23.0.2:8080');
+    const ws = new WebSocket('ws://172.23.0.3:8080');
     ws.onmessage = (res) => { console.log(res.data) };
-    ws.send('/start training');
-    {"message":"Game started in training mode."}
-    ws.send('/play w e4');
-    {"legal":true}
-    ws.send('/play w e5');
-    {"legal":false}
-    ws.send('/play b e5');
-    {"legal":true}
-    ws.send('/play w foo');
-    {"message":"Invalid move."}
-    ws.send('/play w Nf3');
-    {"legal":true}
-    ws.send('/play Nc5');
-    {"message":"Invalid command."}
-    ws.send('/quit');
-    {"message":"Good bye!"}
+    ws.send('/start pvd b');
+    {"database":"w d4","message":"Game started in pvd mode."}
+	ws.send('/play b d6');
+	{"I":"b d6","database":"w c4"}
+	ws.send('/play b a6');
+	{"I":"b a6","database":null,"message":"Mmm, sorry. There are no chess moves left in the database."}
 
 ### Development
 
