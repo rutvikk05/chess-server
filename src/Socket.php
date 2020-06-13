@@ -74,17 +74,20 @@ class Socket implements MessageComponentInterface
                 $res = $this->games[$from->resourceId]->res($argv, $cmd);
             }
         } elseif (is_a($cmd, Start::class)) {
+            $res['message'] = "Game started in {$argv[1]} mode.";
             switch ($argv[1]) {
                 case DatabaseMode::NAME:
                     $mode = new DatabaseMode($argv, $cmd, new Game);
                     $this->games[$from->resourceId] = $mode;
-                    $argv[2] === Symbol::BLACK ? $res['move'] = $mode->getMove() : null;
+                    if ($argv[2] === Symbol::BLACK) {
+                        $first = current($mode->getGame()->history());
+                        $res['database'] = $first->color . ' ' . $first->pgn;
+                    }
                     break;
                 case TrainingMode::NAME:
                     $this->games[$from->resourceId] = new TrainingMode(new Game);
                     break;
             }
-            $res['message'] = "Game started in {$argv[1]} mode.";
         } elseif (in_array(Start::class, $cmd->dependsOn)) {
             $res = [
                 'message' => 'A game needs to be started first for this command to be allowed.',

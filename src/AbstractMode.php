@@ -2,6 +2,7 @@
 
 namespace PgnChessServer;
 
+use PGNChess\PGN\Symbol;
 use PgnChessServer\Command\Captures;
 use PgnChessServer\Command\History;
 use PgnChessServer\Command\IsCheck;
@@ -66,6 +67,15 @@ abstract class AbstractMode
             return [
                 'message' => $e->getMessage(),
             ];
+        }
+    }
+
+    protected function getOppositeColor($color): string
+    {
+        if ($color == Symbol::WHITE) {
+            return Symbol::BLACK;
+        } else {
+            return Symbol::WHITE;
         }
     }
 }
