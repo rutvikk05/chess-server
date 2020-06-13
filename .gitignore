@@ -1,6 +1,9 @@
 # misc
 .env
 
+# pgn files
+/data/prod
+
 # php
 /composer.lock
 /vendor/

@@ -14,15 +14,19 @@ Create an `.env` file:
 
     cp .env.example .env
 
-Bootstrap the environment:
+Copy your PGN games into the `data/prod` folder in order to be able to populate the database with custom data:
 
-    bash/dev/start.sh
+	cp 01_your_games.pgn data/prod/01_your_games.pgn
+
+Start the server:
+
+    bash/start.sh
 
 Find out your Docker container's IP address:
 
     docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pgn_chess_server_php_fpm
 
-### Create a PGN Chess Database
+### Create the PGN Chess Database
 
 	docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/db-create.php
 	This will remove the current PGN Chess database and the data will be lost.
@@ -30,11 +34,17 @@ Find out your Docker container's IP address:
 
 ### Seed the Database with Games
 
-	docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/db-seed.php data/01_games.pgn
+Development environment for testing purposes:
+
+	docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/db-seed.php data/dev/01_games.pgn
 	This will search for valid PGN games in the file.
 	Large files (for example 50MB) may take a few seconds to be inserted into the database.
 	Do you want to proceed? (Y/N): y
 	Good! This is a valid PGN file. 512 games were inserted into the database.
+
+Production:
+
+	docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/db-seed.php data/prod/01_your_games.pgn
 
 ### Telnet Server
 
