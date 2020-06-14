@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p "This will load the games in the data/prod folder. Are you sure to continue? (y|n) " -n 1 -r
+read -p "This will load the PGN files stored in the data/prod folder. Are you sure to continue? (y|n) " -n 1 -r
 echo    # (optional) move to a new line
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
@@ -17,7 +17,7 @@ cd $APP_PATH
 for file in data/prod/*
 do
   php cli/db-seed.php $file --quiet
-  echo "$SECONDS s...";
+  echo "Loading games for $SECONDS s...";
 done
 
 echo "The loading of games is completed.";

@@ -44,16 +44,57 @@ Development environment for testing purposes:
 
 Production:
 
-	docker exec -it --user 1000:1000 pgn_chess_server_php_fpm bash/load.sh
-	This will load the games in the data/prod folder. Are you sure to continue? (y|n) y
+	This will load the PGN files stored in the data/prod folder. Are you sure to continue? (y|n) y
 	Good! This is a valid PGN file. 3179 games were inserted into the database.
-	21 s...
+	Loading games for 15 s...
 	Good! This is a valid PGN file. 1313 games were inserted into the database.
-	28 s...
+	Loading games for 20 s...
 	Good! This is a valid PGN file. 1900 games were inserted into the database.
-	38 s...
+	Loading games for 28 s...
 	Good! This is a valid PGN file. 776 games were inserted into the database.
-	42 s...
+	Loading games for 30 s...
+	Good! This is a valid PGN file. 1661 games were inserted into the database.
+	Loading games for 36 s...
+	Good! This is a valid PGN file. 2180 games were inserted into the database.
+	Loading games for 46 s...
+	Character encoding detected: . Needs to be UTF-8.
+	Loading games for 46 s...
+	Good! This is a valid PGN file. 3828 games were inserted into the database.
+	Loading games for 64 s...
+
+To give you an idea about how long it typically takes to run the `bash/load.sh` script, it took me about 25 minutes to populate the database with 400,000 games on a laptop with the following features.
+
+#### `lscpu`
+
+	Architecture:        x86_64
+	CPU op-mode(s):      32-bit, 64-bit
+	Byte Order:          Little Endian
+	CPU(s):              4
+	On-line CPU(s) list: 0-3
+	Thread(s) per core:  2
+	Core(s) per socket:  2
+	Socket(s):           1
+	NUMA node(s):        1
+	Vendor ID:           GenuineIntel
+	CPU family:          6
+	Model:               142
+	Model name:          Intel(R) Pentium(R) CPU 4415U @ 2.30GHz
+	Stepping:            9
+	CPU MHz:             800.008
+	CPU max MHz:         2300.0000
+	CPU min MHz:         400.0000
+	BogoMIPS:            4608.00
+	Virtualisation:      VT-x
+	L1d cache:           32K
+	L1i cache:           32K
+	L2 cache:            256K
+	L3 cache:            2048K
+	NUMA node0 CPU(s):   0-3
+
+#### `free -m`	              
+				  total        used        free      shared  buff/cache   available
+	Mem:           3802        2446         132         409        1224         663
+	Swap:          3951         557        3393
 
 ### Telnet Server
 
