@@ -61,7 +61,7 @@ class PvD extends AbstractMode
 
     protected function autoPlay()
     {
-        $movetext = explode(' ', $this->game->metadata()['movetext']);
+        $movetext = explode(' ', $this->metadata()['movetext']);
         $i = array_key_last($this->game->history()) + 1;
         if (isset($movetext[$i])) {
             $this->color === Symbol::WHITE ? $pgn = $movetext[$i] : $pgn = explode('.', $movetext[$i])[1];
