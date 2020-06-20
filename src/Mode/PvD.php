@@ -21,7 +21,7 @@ class PvD extends AbstractMode
 
         // play the first move if the opponent's color is white
         if ($argv[2] === Symbol::BLACK) {
-            $movetext = explode(' ', $this->game->metadata()['movetext']);
+            $movetext = explode(' ', $this->metadata()['movetext']);
             $pgn = explode('.', $movetext[0])[1];
             $this->game->play(Symbol::WHITE, $pgn);
         }
