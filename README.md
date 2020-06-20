@@ -24,6 +24,10 @@ Update your `.env` file accordingly and run:
 
     bash/start.sh
 
+Find out your Docker container's IP address:
+
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pgn_chess_server_php_fpm
+
 ### Telnet Server
 
 Start the server:
