@@ -14,56 +14,15 @@ Create an `.env` file:
 
     cp .env.example .env
 
-Copy your PGN games into the `data/prod` folder in order to be able to populate the database with custom data:
-
-	cp 01_your_games.pgn data/prod/01_your_games.pgn
-
-Start the server:
-
-    bash/start.sh
-
-Find out your Docker container's IP address:
-
-    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pgn_chess_server_php_fpm
-
 ### Create the PGN Chess Database
 
-	docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/db-create.php
-	This will remove the current PGN Chess database and the data will be lost.
-	Do you want to proceed? (Y/N): y
+This allows the server to process database-related commands. For details please visit [PGN Chess Data](https://github.com/programarivm/pgn-chess-data) which is another repo providing you with CLI tools to manage a database of PGN games.
 
-### Seed the Database with Games
+### Start the Environment
 
-Development environment for testing purposes:
+Update your `.env` file accordingly and run:
 
-	docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/db-seed.php data/dev/01_games.pgn
-	This will search for valid PGN games in the file.
-	Large files (for example 50MB) may take a few seconds to be inserted into the database.
-	Do you want to proceed? (Y/N): y
-	Good! This is a valid PGN file. 512 games were inserted into the database.
-
-Production:
-
-	docker exec -it --user 1000:1000 pgn_chess_server_php_fpm bash/load.sh
-	This will load the PGN files stored in the data/prod folder. Are you sure to continue? (y|n) y
-	Good! This is a valid PGN file. 3179 games were inserted into the database.
-	Loading games for 15 s...
-	Good! This is a valid PGN file. 1313 games were inserted into the database.
-	Loading games for 20 s...
-	Good! This is a valid PGN file. 1900 games were inserted into the database.
-	Loading games for 28 s...
-	Good! This is a valid PGN file. 776 games were inserted into the database.
-	Loading games for 30 s...
-	Good! This is a valid PGN file. 1661 games were inserted into the database.
-	Loading games for 36 s...
-	Good! This is a valid PGN file. 2180 games were inserted into the database.
-	Loading games for 46 s...
-	Character encoding detected: . Needs to be UTF-8.
-	Loading games for 46 s...
-	Good! This is a valid PGN file. 3828 games were inserted into the database.
-	Loading games for 64 s...
-
-> To give you an idea about how long it typically takes to run the `bash/load.sh` script, it took me about 25 minutes to filter, validate and populate the database with 400,000 games on an average mainstream laptop.
+    bash/start.sh
 
 ### Telnet Server
 
