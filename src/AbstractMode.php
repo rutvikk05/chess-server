@@ -7,7 +7,6 @@ use ChessServer\Command\Captures;
 use ChessServer\Command\History;
 use ChessServer\Command\IsCheck;
 use ChessServer\Command\IsMate;
-use ChessServer\Command\Metadata;
 use ChessServer\Command\Piece;
 use ChessServer\Command\Pieces;
 use ChessServer\Command\Status;
@@ -45,10 +44,6 @@ abstract class AbstractMode
                 case IsMate::class:
                     return [
                         'mate' => $this->game->isCheck(),
-                    ];
-                case Metadata::class:
-                    return [
-                        'metadata' => $this->metadata(),
                     ];
                 case Piece::class:
                     return [

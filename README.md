@@ -20,7 +20,6 @@ Start the server:
 	/history The current game's history.
 	/ischeck Finds out if the game is in check.
 	/ismate Finds out if the game is over.
-	/metadata Metadata of the current game.
 	/piece {"position":"square"} Gets a piece by its position on the board. The "position" parameter is mandatory.
 	/pieces {"color":["w","b"]} Gets the pieces on the board by color. The "color" parameter is mandatory.
 	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board. All parameters are mandatory.
@@ -44,12 +43,8 @@ Open a command prompt and run commands:
 	{"I":"b d6","d":"w Nf3"}
 	/history
 	{"history":[{"pgn":"d4","color":"w","identity":"P","position":"d2","isCapture":false,"isCheck":false},{"pgn":"d6","color":"b","identity":"P","position":"d7","isCapture":false,"isCheck":false},{"pgn":"Nf3","color":"w","identity":"N","position":"g1","isCapture":false,"isCheck":false}]}
-	/metadata
-	{"metadata":{"Event":"3. Sat Djenovici May IM","Site":"Djenovici MNE","Date":"2018.05.27","Round":"9.5","White":"Zherebtsova, Alexandra","Black":"Bozanic, Ivica","Result":"1\/2-1\/2","WhiteElo":"2203","BlackElo":"2176","EventDate":"2018.05.19","ECO":"A42","movetext":"1.d4 d6 2.Nf3 g6 3.c4 Bg7 4.Nc3 f5 5.e4 Nf6 6.exf5 gxf5 7.d5 e5 8.dxe6 Bxe6 9.Bd3 Nc6 10.O-O O-O 11.Re1 Bd7 12.Bg5 Re8 13.c5 Rxe1+ 14.Qxe1 Qf8 15.cxd6 cxd6 16.Bc4+ Kh8 17.Bf4 Re8 18.Qd1 Ne5 19.Bb3 Nxf3+ 20.Qxf3 Bc6 21.Qd1 Ne4 22.Nxe4 fxe4 23.Qxd6 Qxd6 24.Bxd6 Bxb2 25.Rd1 Kg7 26.Bc5 a5 27.Bd4+ Bxd4 28.Rxd4 Kf6 29.Kf1 Ke5 30.Rd2 a4 31.Bc4 b5 32.Be2 b4 33.Ke1 Bd5 34.Bd1 Bc6 35.Rc2 Bd5 36.Rb2 b3 37.axb3 axb3 38.Kd2 Kd4 39.Rb1 Rb8 40.Rb2 Ra8 41.Bxb3 Rb8 42.Kc2 Rxb3 43.Rxb3 Bxb3+ 44.Kxb3 Kd3 45.h4 Ke2 46.f4 exf3 47.gxf3 Kxf3 48.h5 h6 49.Kc3 Kg4 50.Kd3 Kxh5 51.Ke2 Kg4 52.Kf1 1\/2-1\/2"}}
 	/play b g6
 	{"I":"b g6","d":"w c4"}
-	/metadata
-	{"metadata":{"Event":"CHN-RUS Summit Blitz 2018","Site":"Qinhuangdao CHN","Date":"2018.05.26","Round":"1.1","White":"Li, Chao2","Black":"Matlakov, Maxim","Result":"1\/2-1\/2","WhiteElo":"2724","BlackElo":"2704","EventDate":"2018.05.26","ECO":"A41","movetext":"1.d4 d6 2.Nf3 g6 3.c4 Bg7 4.Nc3 Bg4 5.e3 Nc6 6.Be2 Nf6 7.h3 Bd7 8.b3 O-O 9.Bb2 e5 10.dxe5 dxe5 11.O-O e4 12.Nd2 Re8 13.a3 h5 14.Qc2 Bf5 15.Rfd1 Qe7 16.Nd5 Nxd5 17.cxd5 Bxb2 18.Qxb2 Ne5 19.Nc4 Rad8 20.Qxe5 1\/2-1\/2"}}
 	/piece g6
 	{"piece":{"color":"b","identity":"P","position":"g6","moves":["g5"]}}
 	/quit
