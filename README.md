@@ -1,4 +1,4 @@
-## PGN Chess Server
+## PHP Chess Server
 
 [![Build Status](https://travis-ci.org/programarivm/pgn-chess-server.svg?branch=master)](https://travis-ci.org/programarivm/pgn-chess-server)
 
