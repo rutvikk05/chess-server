@@ -6,33 +6,13 @@
 	<img src="https://github.com/programarivm/pgn-chess/blob/master/resources/chess-board.jpg" />
 </p>
 
-PHP Ratchet WebSocket chess server using [PGN Chess](https://github.com/programarivm/pgn-chess) as its chess board representation to play chess games.
-
-### Set Up
-
-Create an `.env` file:
-
-    cp .env.example .env
-
-### Create the PGN Chess Database
-
-This allows the server to process database-related commands. For details please visit [PGN Chess Data](https://github.com/programarivm/pgn-chess-data) which is another repo providing you with CLI tools to manage a database of PGN games.
-
-### Start the Environment
-
-Update your `.env` file accordingly and run:
-
-    bash/start.sh
-
-Find out your Docker container's IP address:
-
-    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pgn_chess_server_php_fpm
+PHP Ratchet WebSocket server using [PHP Chess](https://github.com/programarivm/php-chess).
 
 ### Telnet Server
 
 Start the server:
 
-    docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/t-server.php
+    $ php cli/t-server.php
     Welcome to PGN Chess Server
 	Commands available:
 	/captures Gets the pieces captured by both players.
@@ -79,7 +59,7 @@ Open a command prompt and run commands:
 
 Start the WebSocket server:
 
-    docker exec -it --user 1000:1000 pgn_chess_server_php_fpm php cli/ws-server.php
+    $ php cli/ws-server.php
 
 Open a console in your favorite browser and run commands:
 
@@ -91,14 +71,6 @@ Open a console in your favorite browser and run commands:
 	{"I":"b d6","d":"w c4"}
 	ws.send('/play b a6');
 	{"I":"b a6","d":null,"message":"Mmm, sorry. There are no chess moves left in the database."}
-
-### Development
-
-Should you want to play around with the development environment follow the steps below.
-
-Run the tests:
-
-	docker exec -it pgn_chess_server_php_fpm vendor/bin/phpunit --configuration phpunit-docker.xml
 
 ### License
 
