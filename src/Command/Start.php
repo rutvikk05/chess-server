@@ -1,13 +1,13 @@
 <?php
 
-namespace PgnChessServer\Command;
+namespace ChessServer\Command;
 
 use PGNChess\PGN\Symbol;
-use PgnChessServer\AbstractCommand;
-use PgnChessServer\Mode\PvA;
-use PgnChessServer\Mode\PvD;
-use PgnChessServer\Mode\PvP;
-use PgnChessServer\Mode\PvT;
+use ChessServer\AbstractCommand;
+use ChessServer\Mode\PvA;
+use ChessServer\Mode\PvD;
+use ChessServer\Mode\PvP;
+use ChessServer\Mode\PvT;
 
 class Start extends AbstractCommand
 {

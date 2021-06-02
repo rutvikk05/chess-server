@@ -1,19 +1,19 @@
 <?php
 
-namespace PgnChessServer;
+namespace ChessServer;
 
-use PgnChessServer\Command\Captures;
-use PgnChessServer\Command\Help;
-use PgnChessServer\Command\History;
-use PgnChessServer\Command\IsCheck;
-use PgnChessServer\Command\IsMate;
-use PgnChessServer\Command\Metadata;
-use PgnChessServer\Command\Piece;
-use PgnChessServer\Command\Pieces;
-use PgnChessServer\Command\Play;
-use PgnChessServer\Command\Quit;
-use PgnChessServer\Command\Start;
-use PgnChessServer\Command\Status;
+use ChessServer\Command\Captures;
+use ChessServer\Command\Help;
+use ChessServer\Command\History;
+use ChessServer\Command\IsCheck;
+use ChessServer\Command\IsMate;
+use ChessServer\Command\Metadata;
+use ChessServer\Command\Piece;
+use ChessServer\Command\Pieces;
+use ChessServer\Command\Play;
+use ChessServer\Command\Quit;
+use ChessServer\Command\Start;
+use ChessServer\Command\Status;
 
 class CommandContainer
 {

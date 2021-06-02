@@ -1,9 +1,9 @@
 <?php
 
-namespace PgnChessServer\Tests\Unit\Command;
+namespace ChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Command\Help;
-use PgnChessServer\Tests\Unit\CommandTestCase;
+use ChessServer\Command\Help;
+use ChessServer\Tests\Unit\CommandTestCase;
 
 class HelpTest extends CommandTestCase
 {
@@ -20,7 +20,7 @@ class HelpTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_help_foo()
     {

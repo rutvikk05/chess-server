@@ -1,9 +1,9 @@
 <?php
 
-namespace PgnChessServer\Command;
+namespace ChessServer\Command;
 
 use PGNChess\PGN\Symbol;
-use PgnChessServer\AbstractCommand;
+use ChessServer\AbstractCommand;
 
 class Play extends AbstractCommand
 {

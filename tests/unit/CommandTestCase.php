@@ -1,8 +1,8 @@
 <?php
 
-namespace PgnChessServer\Tests\Unit;
+namespace ChessServer\Tests\Unit;
 
-use PgnChessServer\Parser\CommandParser;
+use ChessServer\Parser\CommandParser;
 use PHPUnit\Framework\TestCase;
 
 class CommandTestCase extends TestCase

@@ -1,9 +1,9 @@
 <?php
 
-namespace PgnChessServer\Tests\Unit\Command;
+namespace ChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Command\Start;
-use PgnChessServer\Tests\Unit\CommandTestCase;
+use ChessServer\Command\Start;
+use ChessServer\Tests\Unit\CommandTestCase;
 
 class StartTest extends CommandTestCase
 {
@@ -86,7 +86,7 @@ class StartTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_start_pva()
     {
@@ -95,7 +95,7 @@ class StartTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_start_pva_w_b()
     {
@@ -104,7 +104,7 @@ class StartTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_start_pvd()
     {
@@ -113,7 +113,7 @@ class StartTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_start_pvd_w_b()
     {
@@ -122,7 +122,7 @@ class StartTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_start_pvp()
     {
@@ -131,7 +131,7 @@ class StartTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_start_pvp_w_b()
     {
@@ -140,7 +140,7 @@ class StartTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_start_pvt_w()
     {
@@ -149,7 +149,7 @@ class StartTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_start_foo()
     {
@@ -158,7 +158,7 @@ class StartTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_start_bar()
     {

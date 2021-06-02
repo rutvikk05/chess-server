@@ -1,9 +1,9 @@
 <?php
 
-namespace PgnChessServer\Mode;
+namespace ChessServer\Mode;
 
-use PgnChessServer\AbstractMode;
-use PgnChessServer\Command\Play;
+use ChessServer\AbstractMode;
+use ChessServer\Command\Play;
 
 class PvA extends AbstractMode
 {

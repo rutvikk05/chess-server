@@ -20,12 +20,12 @@
   },
   "autoload": {
     "psr-4": {
-      "PgnChessServer\\": "src/"
+      "ChessServer\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "PgnChessServer\\Tests\\Unit\\": "tests/unit/"
+      "ChessServer\\Tests\\Unit\\": "tests/unit/"
     }
   }
 }

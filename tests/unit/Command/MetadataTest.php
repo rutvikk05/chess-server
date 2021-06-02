@@ -1,9 +1,9 @@
 <?php
 
-namespace PgnChessServer\Tests\Unit\Command;
+namespace ChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Command\Metadata;
-use PgnChessServer\Tests\Unit\CommandTestCase;
+use ChessServer\Command\Metadata;
+use ChessServer\Tests\Unit\CommandTestCase;
 
 class MetadataTest extends CommandTestCase
 {
@@ -20,7 +20,7 @@ class MetadataTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_metadata_foo()
     {

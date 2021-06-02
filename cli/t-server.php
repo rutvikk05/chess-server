@@ -1,8 +1,8 @@
 <?php
 
-namespace PgnChessServer;
+namespace ChessServer;
 
-use PgnChessServer\Socket;
+use ChessServer\Socket;
 use Ratchet\Server\IoServer;
 
 require __DIR__  . '/../vendor/autoload.php';

@@ -1,18 +1,18 @@
 <?php
 
-namespace PgnChessServer;
+namespace ChessServer;
 
 use Dotenv\Dotenv;
 use PGNChess\Game;
 use PGNChess\PGN\Symbol;
-use PgnChessServer\Command\Start;
-use PgnChessServer\Command\Quit;
-use PgnChessServer\Exception\ParserException;
-// use PgnChessServer\Mode\PvA;
-use PgnChessServer\Mode\PvD;
-// use PgnChessServer\Mode\PvP;
-use PgnChessServer\Mode\PvT;
-use PgnChessServer\Parser\CommandParser;
+use ChessServer\Command\Start;
+use ChessServer\Command\Quit;
+use ChessServer\Exception\ParserException;
+// use ChessServer\Mode\PvA;
+use ChessServer\Mode\PvD;
+// use ChessServer\Mode\PvP;
+use ChessServer\Mode\PvT;
+use ChessServer\Parser\CommandParser;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 

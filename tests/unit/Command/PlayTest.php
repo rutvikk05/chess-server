@@ -1,9 +1,9 @@
 <?php
 
-namespace PgnChessServer\Tests\Unit\Command;
+namespace ChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Command\Play;
-use PgnChessServer\Tests\Unit\CommandTestCase;
+use ChessServer\Command\Play;
+use ChessServer\Tests\Unit\CommandTestCase;
 
 class PlayTest extends CommandTestCase
 {
@@ -31,7 +31,7 @@ class PlayTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_play_w_d3_d5()
     {
@@ -40,7 +40,7 @@ class PlayTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_play_foo_bar()
     {
@@ -49,7 +49,7 @@ class PlayTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_play()
     {

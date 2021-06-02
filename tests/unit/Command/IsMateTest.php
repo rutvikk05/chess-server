@@ -1,9 +1,9 @@
 <?php
 
-namespace PgnChessServer\Tests\Unit\Command;
+namespace ChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Command\IsMate;
-use PgnChessServer\Tests\Unit\CommandTestCase;
+use ChessServer\Command\IsMate;
+use ChessServer\Tests\Unit\CommandTestCase;
 
 class IsMateTest extends CommandTestCase
 {
@@ -20,7 +20,7 @@ class IsMateTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_ismate_foo()
     {

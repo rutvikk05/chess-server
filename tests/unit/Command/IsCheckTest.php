@@ -1,9 +1,9 @@
 <?php
 
-namespace PgnChessServer\Tests\Unit\Command;
+namespace ChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Command\IsCheck;
-use PgnChessServer\Tests\Unit\CommandTestCase;
+use ChessServer\Command\IsCheck;
+use ChessServer\Tests\Unit\CommandTestCase;
 
 class IsCheckTest extends CommandTestCase
 {
@@ -20,7 +20,7 @@ class IsCheckTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_ischeck_foo()
     {

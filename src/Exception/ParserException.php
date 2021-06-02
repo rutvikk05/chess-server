@@ -1,6 +1,6 @@
 <?php
 
-namespace PgnChessServer\Exception;
+namespace ChessServer\Exception;
 
 /**
  * Thrown when a chess command cannot be parsed.

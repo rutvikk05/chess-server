@@ -1,9 +1,9 @@
 <?php
 
-namespace PgnChessServer\Tests\Unit\Command;
+namespace ChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Command\Captures;
-use PgnChessServer\Tests\Unit\CommandTestCase;
+use ChessServer\Command\Captures;
+use ChessServer\Tests\Unit\CommandTestCase;
 
 class CapturesTest extends CommandTestCase
 {
@@ -20,7 +20,7 @@ class CapturesTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_captures_foo()
     {

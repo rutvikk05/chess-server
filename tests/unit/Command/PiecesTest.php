@@ -1,9 +1,9 @@
 <?php
 
-namespace PgnChessServer\Tests\Unit\Command;
+namespace ChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Command\Pieces;
-use PgnChessServer\Tests\Unit\CommandTestCase;
+use ChessServer\Command\Pieces;
+use ChessServer\Tests\Unit\CommandTestCase;
 
 class PiecesTest extends CommandTestCase
 {
@@ -31,7 +31,7 @@ class PiecesTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_pieces_w_foo()
     {
@@ -40,7 +40,7 @@ class PiecesTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_pieces_b_foo()
     {

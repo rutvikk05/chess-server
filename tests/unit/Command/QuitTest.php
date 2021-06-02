@@ -1,9 +1,9 @@
 <?php
 
-namespace PgnChessServer\Tests\Unit\Command;
+namespace ChessServer\Tests\Unit\Command;
 
-use PgnChessServer\Command\Quit;
-use PgnChessServer\Tests\Unit\CommandTestCase;
+use ChessServer\Command\Quit;
+use ChessServer\Tests\Unit\CommandTestCase;
 
 class QuitTest extends CommandTestCase
 {
@@ -20,7 +20,7 @@ class QuitTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException PgnChessServer\Exception\ParserException
+     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_quit_foo()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PgnChessServer;
+namespace ChessServer;
 
 abstract class AbstractCommand
 {

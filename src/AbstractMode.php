@@ -1,16 +1,16 @@
 <?php
 
-namespace PgnChessServer;
+namespace ChessServer;
 
 use PGNChess\PGN\Symbol;
-use PgnChessServer\Command\Captures;
-use PgnChessServer\Command\History;
-use PgnChessServer\Command\IsCheck;
-use PgnChessServer\Command\IsMate;
-use PgnChessServer\Command\Metadata;
-use PgnChessServer\Command\Piece;
-use PgnChessServer\Command\Pieces;
-use PgnChessServer\Command\Status;
+use ChessServer\Command\Captures;
+use ChessServer\Command\History;
+use ChessServer\Command\IsCheck;
+use ChessServer\Command\IsMate;
+use ChessServer\Command\Metadata;
+use ChessServer\Command\Piece;
+use ChessServer\Command\Pieces;
+use ChessServer\Command\Status;
 
 abstract class AbstractMode
 {

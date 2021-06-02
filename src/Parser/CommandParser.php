@@ -1,9 +1,9 @@
 <?php
 
-namespace PgnChessServer\Parser;
+namespace ChessServer\Parser;
 
-use PgnChessServer\CommandContainer;
-use PgnChessServer\Exception\ParserException;
+use ChessServer\CommandContainer;
+use ChessServer\Exception\ParserException;
 
 class CommandParser
 {

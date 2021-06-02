@@ -1,8 +1,8 @@
 <?php
 
-namespace PgnChessServer;
+namespace ChessServer;
 
-use PgnChessServer\Socket;
+use ChessServer\Socket;
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;

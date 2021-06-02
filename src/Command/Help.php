@@ -1,8 +1,8 @@
 <?php
 
-namespace PgnChessServer\Command;
+namespace ChessServer\Command;
 
-use PgnChessServer\AbstractCommand;
+use ChessServer\AbstractCommand;
 
 class Help extends AbstractCommand
 {
