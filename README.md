@@ -35,20 +35,7 @@ Open a command prompt and run commands:
 	Trying 172.23.0.3...
 	Connected to 172.23.0.3.
 	Escape character is '^]'.
-	/start pvd b
-	{"d":"w d4","message":"Game started in pvd mode."}
-	/history
-	{"history":[{"pgn":"d4","color":"w","identity":"P","position":"d2","isCapture":false,"isCheck":false}]}
-	/play b d6
-	{"I":"b d6","d":"w Nf3"}
-	/history
-	{"history":[{"pgn":"d4","color":"w","identity":"P","position":"d2","isCapture":false,"isCheck":false},{"pgn":"d6","color":"b","identity":"P","position":"d7","isCapture":false,"isCheck":false},{"pgn":"Nf3","color":"w","identity":"N","position":"g1","isCapture":false,"isCheck":false}]}
-	/play b g6
-	{"I":"b g6","d":"w c4"}
-	/piece g6
-	{"piece":{"color":"b","identity":"P","position":"g6","moves":["g5"]}}
-	/quit
-	{"message":"Good bye!"}
+	/help
 
 ### WebSocket Server
 
@@ -60,12 +47,7 @@ Open a console in your favorite browser and run commands:
 
     const ws = new WebSocket('ws://172.23.0.3:8080');
     ws.onmessage = (res) => { console.log(res.data) };
-    ws.send('/start pvd b');
-    {"d":"w d4","message":"Game started in pvd mode."}
-	ws.send('/play b d6');
-	{"I":"b d6","d":"w c4"}
-	ws.send('/play b a6');
-	{"I":"b a6","d":null,"message":"Mmm, sorry. There are no chess moves left in the database."}
+    ws.send('/help');
 
 ### License
 
