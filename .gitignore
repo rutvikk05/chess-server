@@ -1,6 +1,3 @@
-# misc
-.env
-
 # php
 /composer.lock
 /vendor/
