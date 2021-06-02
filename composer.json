@@ -1,5 +1,5 @@
 {
-  "name": "programarivm/pgn-chess-server",
+  "name": "programarivm/chess-server",
   "description": "PHP Ratchet WebSocket chess server.",
   "authors": [
     {
@@ -11,6 +11,7 @@
   "require": {
     "php": ">=7.1",
     "programarivm/php-chess": "dev-master",
+    "rubix/ml": "dev-master",
     "cboden/ratchet": "^0.4",
     "vlucas/phpdotenv": "^2.5"
   },
