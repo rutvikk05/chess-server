@@ -2,7 +2,6 @@
 
 namespace ChessServer;
 
-use Dotenv\Dotenv;
 use PGNChess\Game;
 use PGNChess\PGN\Symbol;
 use ChessServer\Command\Start;
@@ -26,8 +25,6 @@ class Socket implements MessageComponentInterface
 
     public function __construct()
     {
-        $dotenv = new Dotenv(__DIR__.'/../');
-        $dotenv->load();
         $this->parser = new CommandParser;
 
         echo "Welcome to PGN Chess Server" . PHP_EOL;

@@ -12,8 +12,7 @@
     "php": ">=7.1",
     "programarivm/php-chess": "dev-master",
     "rubix/ml": "dev-master",
-    "cboden/ratchet": "^0.4",
-    "vlucas/phpdotenv": "^2.5"
+    "cboden/ratchet": "^0.4"
   },
   "require-dev": {
     "phpunit/phpunit": "~5.0"
