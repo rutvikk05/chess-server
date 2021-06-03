@@ -24,6 +24,6 @@ class PvT extends AbstractMode
             ];
         }
 
-        return parent::res();
+        return parent::res($argv, $cmd);
     }
 }
