@@ -2,7 +2,7 @@
 
 namespace ChessServer;
 
-use PGNChess\PGN\Symbol;
+use Chess\PGN\Symbol;
 use ChessServer\Command\Captures;
 use ChessServer\Command\History;
 use ChessServer\Command\IsCheck;

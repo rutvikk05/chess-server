@@ -2,7 +2,7 @@
 
 namespace ChessServer\Mode;
 
-use PGNChess\PGN\Symbol;
+use Chess\PGN\Symbol;
 use ChessServer\AbstractMode;
 use ChessServer\Command\Play;
 

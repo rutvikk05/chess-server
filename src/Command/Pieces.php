@@ -2,7 +2,7 @@
 
 namespace ChessServer\Command;
 
-use PGNChess\PGN\Symbol;
+use Chess\PGN\Symbol;
 use ChessServer\AbstractCommand;
 
 class Pieces extends AbstractCommand

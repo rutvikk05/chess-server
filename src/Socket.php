@@ -2,8 +2,8 @@
 
 namespace ChessServer;
 
-use PGNChess\Game;
-use PGNChess\PGN\Symbol;
+use Chess\Game;
+use Chess\PGN\Symbol;
 use ChessServer\Command\Start;
 use ChessServer\Command\Quit;
 use ChessServer\Exception\ParserException;
