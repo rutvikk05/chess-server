@@ -22,16 +22,16 @@ class CommandContainer
     {
         $this->obj = new \SplObjectStorage;
         $this->obj->attach(new Ascii());
-        $this->obj->attach(new Captures);
-        $this->obj->attach(new History);
-        $this->obj->attach(new IsCheck);
-        $this->obj->attach(new IsMate);
-        $this->obj->attach(new Piece);
-        $this->obj->attach(new Pieces);
-        $this->obj->attach(new Play);
-        $this->obj->attach(new Quit);
-        $this->obj->attach(new Start);
-        $this->obj->attach(new Status);
+        $this->obj->attach(new Captures());
+        $this->obj->attach(new History());
+        $this->obj->attach(new IsCheck());
+        $this->obj->attach(new IsMate());
+        $this->obj->attach(new Piece());
+        $this->obj->attach(new Pieces());
+        $this->obj->attach(new Play());
+        $this->obj->attach(new Quit());
+        $this->obj->attach(new Start());
+        $this->obj->attach(new Status());
     }
 
     public function findByName(string $name)
