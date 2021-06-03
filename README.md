@@ -2,10 +2,6 @@
 
 [![Build Status](https://travis-ci.org/programarivm/pgn-chess-server.svg?branch=master)](https://travis-ci.org/programarivm/pgn-chess-server)
 
-<p align="center">
-	<img src="https://github.com/programarivm/pgn-chess/blob/master/resources/chess-board.jpg" />
-</p>
-
 PHP Ratchet WebSocket server using [PHP Chess](https://github.com/programarivm/php-chess).
 
 ### Telnet Server
@@ -24,7 +20,7 @@ Start the server:
 	/pieces {"color":["w","b"]} Gets the pieces on the board by color. The "color" parameter is mandatory.
 	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board. All parameters are mandatory.
 	/quit Quits a game.
-	/start {"mode":["pva","pvd","pvp","pvt"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in pvt (player vs themselves) mode.
+	/start {"mode":["pvt"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in pvt (player vs themselves) mode.
 	/status The current game status.
 
 	Listening to commands...
@@ -35,7 +31,8 @@ Open a command prompt and run commands:
 	Trying 127.0.0.1...
 	Connected to localhost.
 	Escape character is '^]'.
-	/help
+	/start pvt
+	{"message":"Game started in pvt mode."}
 
 ### WebSocket Server
 
@@ -47,7 +44,7 @@ Open a console in your favorite browser and run commands:
 
     const ws = new WebSocket('ws://127.0.0.1:8080');
     ws.onmessage = (res) => { console.log(res.data) };
-    ws.send('/help');
+    ws.send('/start pvt');
 
 ### License
 

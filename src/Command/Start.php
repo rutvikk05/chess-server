@@ -4,9 +4,6 @@ namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
 use ChessServer\AbstractCommand;
-use ChessServer\Mode\PvA;
-use ChessServer\Mode\PvD;
-use ChessServer\Mode\PvP;
 use ChessServer\Mode\PvT;
 
 class Start extends AbstractCommand
@@ -17,9 +14,6 @@ class Start extends AbstractCommand
         $this->description = 'Starts a new game. The "color" parameter is not required in pvt (player vs themselves) mode.';
         $this->params = [
             'mode' => [
-                PvA::NAME,
-                PvD::NAME,
-                PvP::NAME,
                 PvT::NAME,
             ],
             'color' => [

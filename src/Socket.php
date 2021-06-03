@@ -7,9 +7,6 @@ use Chess\PGN\Symbol;
 use ChessServer\Command\Start;
 use ChessServer\Command\Quit;
 use ChessServer\Exception\ParserException;
-// use ChessServer\Mode\PvA;
-use ChessServer\Mode\PvD;
-// use ChessServer\Mode\PvP;
 use ChessServer\Mode\PvT;
 use ChessServer\Parser\CommandParser;
 use Ratchet\MessageComponentInterface;
@@ -72,15 +69,6 @@ class Socket implements MessageComponentInterface
             }
         } elseif (is_a($cmd, Start::class)) {
             switch ($argv[1]) {
-                case PvD::NAME:
-                    $mode = new PvD($argv, $cmd, new Game);
-                    $this->games[$from->resourceId] = $mode;
-                    if ($argv[2] === Symbol::BLACK) {
-                        $first = current($mode->getGame()->history());
-                        $res['d'] = $first->color . ' ' . $first->pgn;
-                    }
-                    $res['message'] = "Game started in {$argv[1]} mode.";
-                    break;
                 case PvT::NAME:
                     $this->games[$from->resourceId] = new PvT(new Game);
                     $res['message'] = "Game started in {$argv[1]} mode.";
