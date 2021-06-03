@@ -7,7 +7,6 @@ use ChessServer\Command\Help;
 use ChessServer\Command\History;
 use ChessServer\Command\IsCheck;
 use ChessServer\Command\IsMate;
-use ChessServer\Command\Metadata;
 use ChessServer\Command\Piece;
 use ChessServer\Command\Pieces;
 use ChessServer\Command\Play;
@@ -27,7 +26,6 @@ class CommandContainer
         $this->obj->attach(new History);
         $this->obj->attach(new IsCheck);
         $this->obj->attach(new IsMate);
-        $this->obj->attach(new Metadata);
         $this->obj->attach(new Piece);
         $this->obj->attach(new Pieces);
         $this->obj->attach(new Play);
