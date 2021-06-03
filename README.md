@@ -12,8 +12,8 @@ PHP Ratchet WebSocket server using [PHP Chess](https://github.com/programarivm/p
 
 Start the server:
 
-    $ php cli/t-server.php
-    Welcome to PGN Chess Server
+	$ php cli/t-server.php
+	Welcome to PHP Chess Server
 	Commands available:
 	/captures Gets the pieces captured by both players.
 	/help Provides information on the commands available.
@@ -27,13 +27,13 @@ Start the server:
 	/start {"mode":["pva","pvd","pvp","pvt"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in pvt (player vs themselves) mode.
 	/status The current game status.
 
-    Listening to commands...
+	Listening to commands...
 
 Open a command prompt and run commands:
 
-	telnet 172.23.0.3 8080
-	Trying 172.23.0.3...
-	Connected to 172.23.0.3.
+	$ telnet localhost 8080
+	Trying 127.0.0.1...
+	Connected to localhost.
 	Escape character is '^]'.
 	/help
 
@@ -45,7 +45,7 @@ Start the WebSocket server:
 
 Open a console in your favorite browser and run commands:
 
-    const ws = new WebSocket('ws://172.23.0.3:8080');
+    const ws = new WebSocket('ws://127.0.0.1:8080');
     ws.onmessage = (res) => { console.log(res.data) };
     ws.send('/help');
 
@@ -58,7 +58,7 @@ The MIT License (MIT) Jordi Bassagañas.
 Would you help make this app better?
 
 - Feel free to send a pull request
-- Drop an email at info@programarivm.com with the subject "PGN Chess Server"
+- Drop an email at info@programarivm.com with the subject "PHP Chess Server"
 - Leave me a comment on [Twitter](https://twitter.com/programarivm)
 
 Thank you.

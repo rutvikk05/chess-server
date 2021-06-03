@@ -27,7 +27,7 @@ class Socket implements MessageComponentInterface
     {
         $this->parser = new CommandParser;
 
-        echo "Welcome to PGN Chess Server" . PHP_EOL;
+        echo "Welcome to PHP Chess Server" . PHP_EOL;
         echo "Commands available:" . PHP_EOL;
         echo $this->parser->cli->help() . PHP_EOL;
         echo "Listening to commands..." . PHP_EOL;
