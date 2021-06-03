@@ -11,8 +11,8 @@ Start the server:
 	$ php cli/t-server.php
 	Welcome to PHP Chess Server
 	Commands available:
+	/ascii Prints the ASCII representation of the game.
 	/captures Gets the pieces captured by both players.
-	/help Provides information on the commands available.
 	/history The current game's history.
 	/ischeck Finds out if the game is in check.
 	/ismate Finds out if the game is over.
