@@ -3,6 +3,7 @@
 namespace ChessServer;
 
 use Chess\PGN\Symbol;
+use ChessServer\Command\Ascii;
 use ChessServer\Command\Captures;
 use ChessServer\Command\History;
 use ChessServer\Command\IsCheck;
@@ -29,6 +30,10 @@ abstract class AbstractMode
     {
         try {
             switch (get_class($cmd)) {
+                case Ascii::class:
+                    return [
+                        'ascii' => $this->game->ascii(),
+                    ];
                 case Captures::class:
                     return [
                         'captures' => $this->game->captures(),
