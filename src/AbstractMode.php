@@ -69,13 +69,4 @@ abstract class AbstractMode
             ];
         }
     }
-
-    protected function getOppositeColor($color): string
-    {
-        if ($color == Symbol::WHITE) {
-            return Symbol::BLACK;
-        } else {
-            return Symbol::WHITE;
-        }
-    }
 }
