@@ -5,6 +5,7 @@ namespace ChessServer;
 use Chess\PGN\Symbol;
 use ChessServer\Command\Ascii;
 use ChessServer\Command\Captures;
+use ChessServer\Command\Fen;
 use ChessServer\Command\History;
 use ChessServer\Command\IsCheck;
 use ChessServer\Command\IsMate;
@@ -35,6 +36,10 @@ abstract class AbstractMode
                 case Ascii::class:
                     return [
                         'ascii' => $this->game->ascii(),
+                    ];
+                case Fen::class:
+                    return [
+                        'fen' => $this->game->fen(),
                     ];
                 case Captures::class:
                     return [

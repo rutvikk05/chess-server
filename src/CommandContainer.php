@@ -4,6 +4,7 @@ namespace ChessServer;
 
 use ChessServer\Command\Ascii;
 use ChessServer\Command\Captures;
+use ChessServer\Command\Fen;
 use ChessServer\Command\History;
 use ChessServer\Command\IsCheck;
 use ChessServer\Command\IsMate;
@@ -24,6 +25,7 @@ class CommandContainer
         $this->obj = new \SplObjectStorage;
         $this->obj->attach(new Ascii());
         $this->obj->attach(new Captures());
+        $this->obj->attach(new Fen());
         $this->obj->attach(new History());
         $this->obj->attach(new IsCheck());
         $this->obj->attach(new IsMate());
