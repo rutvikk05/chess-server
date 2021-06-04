@@ -36,6 +36,6 @@ class CommandParser
 
     protected function filter($string)
     {
-        return array_map('trim', explode(' ', $string));
+        return array_map('trim', str_getcsv($string, ' '));
     }
 }
