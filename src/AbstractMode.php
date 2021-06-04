@@ -11,6 +11,7 @@ use ChessServer\Command\IsMate;
 use ChessServer\Command\Piece;
 use ChessServer\Command\Pieces;
 use ChessServer\Command\Play;
+use ChessServer\Command\PlayFen;
 use ChessServer\Command\Status;
 
 abstract class AbstractMode
@@ -62,6 +63,10 @@ abstract class AbstractMode
                 case Play::class:
                     return [
                         'legal' => $this->game->play($argv[1], $argv[2]),
+                    ];
+                case PlayFen::class:
+                    return [
+                        'legal' => $this->game->playFen($argv[1], $argv[2]),
                     ];
                 case Status::class:
                     return [

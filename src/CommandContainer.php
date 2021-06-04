@@ -10,6 +10,7 @@ use ChessServer\Command\IsMate;
 use ChessServer\Command\Piece;
 use ChessServer\Command\Pieces;
 use ChessServer\Command\Play;
+use ChessServer\Command\PlayFen;
 use ChessServer\Command\Quit;
 use ChessServer\Command\Start;
 use ChessServer\Command\Status;
@@ -29,6 +30,7 @@ class CommandContainer
         $this->obj->attach(new Piece());
         $this->obj->attach(new Pieces());
         $this->obj->attach(new Play());
+        $this->obj->attach(new PlayFen());
         $this->obj->attach(new Quit());
         $this->obj->attach(new Start());
         $this->obj->attach(new Status());
