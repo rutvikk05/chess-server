@@ -10,6 +10,7 @@ use ChessServer\Command\IsCheck;
 use ChessServer\Command\IsMate;
 use ChessServer\Command\Piece;
 use ChessServer\Command\Pieces;
+use ChessServer\Command\Play;
 use ChessServer\Command\Status;
 
 abstract class AbstractMode
@@ -57,6 +58,10 @@ abstract class AbstractMode
                 case Pieces::class:
                     return [
                         'pieces' => $this->game->pieces($argv[1]),
+                    ];
+                case Play::class:
+                    return [
+                        'legal' => $this->game->play($argv[1], $argv[2]),
                     ];
                 case Status::class:
                     return [
