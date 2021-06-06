@@ -13,7 +13,6 @@ class PlayFen extends AbstractCommand
         $this->description = 'Plays a chess move on the board. All parameters are mandatory.';
         $this->params = [
             'from' => 'FEN',
-            'to' => 'FEN',
         ];
         $this->dependsOn = [
             Start::class,
