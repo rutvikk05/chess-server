@@ -5,8 +5,7 @@ namespace ChessServer\Mode;
 use ChessServer\AbstractMode;
 use ChessServer\Command\Play;
 
-class PvT extends AbstractMode
+class Analysis extends AbstractMode
 {
-    /** player vs themselves */
-    const NAME = 'pvt';
+    const NAME = 'analysis';
 }

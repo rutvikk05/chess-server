@@ -7,7 +7,7 @@ use Chess\PGN\Symbol;
 use ChessServer\Command\Start;
 use ChessServer\Command\Quit;
 use ChessServer\Exception\ParserException;
-use ChessServer\Mode\PvT;
+use ChessServer\Mode\Analysis;
 use ChessServer\Parser\CommandParser;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -69,8 +69,8 @@ class Socket implements MessageComponentInterface
             }
         } elseif (is_a($cmd, Start::class)) {
             switch ($argv[1]) {
-                case PvT::NAME:
-                    $this->games[$from->resourceId] = new PvT(new Game);
+                case Analysis::NAME:
+                    $this->games[$from->resourceId] = new Analysis(new Game);
                     $res['message'] = "Game started in {$argv[1]} mode.";
                     break;
             }

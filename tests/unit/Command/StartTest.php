@@ -10,11 +10,11 @@ class StartTest extends CommandTestCase
     /**
      * @test
      */
-    public function validate_start_pvt()
+    public function validate_start_analysis()
     {
         $this->assertInstanceOf(
             Start::class,
-            self::$parser->validate('/start pvt')
+            self::$parser->validate('/start analysis')
         );
     }
 
@@ -22,9 +22,9 @@ class StartTest extends CommandTestCase
      * @test
      * @expectedException ChessServer\Exception\ParserException
      */
-    public function validate_start_pvt_w()
+    public function validate_start_analysis_w()
     {
-        self::$parser->validate('/start pvt w');
+        self::$parser->validate('/start analysis w');
     }
 
     /**

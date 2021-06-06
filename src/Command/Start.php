@@ -4,17 +4,17 @@ namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
 use ChessServer\AbstractCommand;
-use ChessServer\Mode\PvT;
+use ChessServer\Mode\Analysis;
 
 class Start extends AbstractCommand
 {
     public function __construct()
     {
         $this->name = '/start';
-        $this->description = 'Starts a new game. The "color" parameter is not required in pvt (player vs themselves) mode.';
+        $this->description = 'Starts a new game. The "color" parameter is not required in analysis mode.';
         $this->params = [
             'mode' => [
-                PvT::NAME,
+                Analysis::NAME,
             ],
             'color' => [
                 Symbol::WHITE,
@@ -28,7 +28,7 @@ class Start extends AbstractCommand
         if (in_array($argv[1], $this->params['mode'])) {
             switch ($argv[1]) {
                 // second parameter "color" is not required in training mode
-                case PvT::NAME:
+                case Analysis::NAME:
                     return count($argv) - 1 === count($this->params) - 1;
                 default:
                     return count($argv) - 1 === count($this->params) && in_array($argv[2], $this->params['color']);

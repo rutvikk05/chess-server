@@ -8,7 +8,7 @@ PHP Ratchet WebSocket server using [PHP Chess](https://github.com/programarivm/p
 
 Start the server:
 
-	$ php cli/t-server.php 
+	$ php cli/t-server.php
 	Welcome to PHP Chess Server
 	Commands available:
 	/ascii Prints the ASCII representation of the game.
@@ -22,7 +22,7 @@ Start the server:
 	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board. All parameters are mandatory.
 	/playfen {"from":"FEN","to":"FEN"} Plays a chess move on the board. All parameters are mandatory.
 	/quit Quits a game.
-	/start {"mode":["pvt"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in pvt (player vs themselves) mode.
+	/start {"mode":["analysis"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in analysis mode.
 	/status The current game status.
 
 	Listening to commands...
@@ -33,8 +33,8 @@ Open a command prompt and run commands:
 	Trying 127.0.0.1...
 	Connected to localhost.
 	Escape character is '^]'.
-	/start pvt
-	{"message":"Game started in pvt mode."}
+	/start analysis
+	{"message":"Game started in analysis mode."}
 
 ### WebSocket Server
 
@@ -46,7 +46,7 @@ Open a console in your favorite browser and run commands:
 
     const ws = new WebSocket('ws://127.0.0.1:8080');
     ws.onmessage = (res) => { console.log(res.data) };
-    ws.send('/start pvt');
+    ws.send('/start analysis');
 
 ### License
 
