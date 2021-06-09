@@ -64,6 +64,10 @@ class Socket implements MessageComponentInterface
                 $res = [
                     'message' => 'Good bye!',
                 ];
+            } elseif (is_a($cmd, Start::class)) {
+                $res = [
+                    'message' => 'Game already started.',
+                ];
             } else {
                 $res = $this->games[$from->resourceId]->res($argv, $cmd);
             }
@@ -71,7 +75,9 @@ class Socket implements MessageComponentInterface
             switch ($argv[1]) {
                 case Analysis::NAME:
                     $this->games[$from->resourceId] = new Analysis(new Game);
-                    $res['message'] = "Game started in {$argv[1]} mode.";
+                    $res = [
+                        'message' =>"Game started in {$argv[1]} mode.",
+                    ];
                     break;
             }
         } elseif (in_array(Start::class, $cmd->dependsOn)) {
