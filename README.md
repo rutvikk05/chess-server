@@ -8,24 +8,25 @@ PHP Ratchet WebSocket server using [PHP Chess](https://github.com/programarivm/p
 
 Start the server:
 
-	$ php cli/t-server.php
-	Welcome to PHP Chess Server
-	Commands available:
-	/ascii Prints the ASCII representation of the game.
-	/captures Gets the pieces captured by both players.
-	/fen Prints the FEN string representation of the game.
-	/history The current game's history.
-	/ischeck Finds out if the game is in check.
-	/ismate Finds out if the game is over.
-	/piece {"position":"square"} Gets a piece by its position on the board. The "position" parameter is mandatory.
-	/pieces {"color":["w","b"]} Gets the pieces on the board by color. The "color" parameter is mandatory.
-	/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board. All parameters are mandatory.
-	/playfen {"from":"FEN","to":"FEN"} Plays a chess move on the board. All parameters are mandatory.
-	/quit Quits a game.
-	/start {"mode":["analysis"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in analysis mode.
-	/status The current game status.
+		$ php cli/t-server.php 
+		Welcome to PHP Chess Server
+		Commands available:
+		/ascii Prints the ASCII representation of the game.
+		/castling Gets the castling status.
+		/captures Gets the pieces captured by both players.
+		/fen Prints the FEN string representation of the game.
+		/history The current game's history.
+		/ischeck Finds out if the game is in check.
+		/ismate Finds out if the game is over.
+		/piece {"position":"square"} Gets a piece by its position on the board. The "position" parameter is mandatory.
+		/pieces {"color":["w","b"]} Gets the pieces on the board by color. The "color" parameter is mandatory.
+		/play {"color":["w","b"],"pgn":"move"} Plays a chess move on the board. All parameters are mandatory.
+		/playfen {"from":"FEN"} Plays a chess move on the board. All parameters are mandatory.
+		/quit Quits a game.
+		/start {"mode":["analysis"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in analysis mode.
+		/status The current game status.
 
-	Listening to commands...
+		Listening to commands...
 
 Open a command prompt and run commands:
 

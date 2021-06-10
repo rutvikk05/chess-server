@@ -3,6 +3,7 @@
 namespace ChessServer;
 
 use ChessServer\Command\Ascii;
+use ChessServer\Command\Castling;
 use ChessServer\Command\Captures;
 use ChessServer\Command\Fen;
 use ChessServer\Command\History;
@@ -24,6 +25,7 @@ class CommandContainer
     {
         $this->obj = new \SplObjectStorage;
         $this->obj->attach(new Ascii());
+        $this->obj->attach(new Castling());
         $this->obj->attach(new Captures());
         $this->obj->attach(new Fen());
         $this->obj->attach(new History());
