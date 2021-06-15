@@ -4,11 +4,11 @@
 
 PHP Ratchet WebSocket server using [PHP Chess](https://github.com/programarivm/php-chess).
 
-### Telnet Server
+### WebSocket Server
 
-Start the server:
+Start the WebSocket server:
 
-	$ php cli/t-server.php 
+	$ php cli/ws-server.php
 	Welcome to PHP Chess Server
 	Commands available:
 	/ascii Prints the ASCII representation of the game.
@@ -27,21 +27,6 @@ Start the server:
 	/status The current game status.
 
 	Listening to commands...
-
-Open a command prompt and run commands:
-
-	$ telnet localhost 8080
-	Trying 127.0.0.1...
-	Connected to localhost.
-	Escape character is '^]'.
-	/start analysis
-	{"message":"Game started in analysis mode."}
-
-### WebSocket Server
-
-Start the WebSocket server:
-
-    $ php cli/ws-server.php
 
 Open a console in your favorite browser and run commands:
 
