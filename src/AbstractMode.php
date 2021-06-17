@@ -72,11 +72,11 @@ abstract class AbstractMode
                     ];
                 case Play::class:
                     return [
-                        'legal' => $this->game->play($argv[1], $argv[2]),
+                        'play' => $this->game->play($argv[1], $argv[2]),
                     ];
                 case PlayFen::class:
                     return [
-                        'legal' => $this->game->playFen($argv[1]),
+                        'playfen' => $this->game->playFen($argv[1]),
                     ];
                 case Status::class:
                     return [
