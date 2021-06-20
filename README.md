@@ -1,7 +1,5 @@
 ## PHP Chess Server
 
-[![Build Status](https://travis-ci.org/programarivm/pgn-chess-server.svg?branch=master)](https://travis-ci.org/programarivm/pgn-chess-server)
-
 PHP Ratchet WebSocket server using [PHP Chess](https://github.com/programarivm/php-chess). The chess server is intended to connect to a [Redux Chess](https://github.com/programarivm/redux-chess) app.
 
 ### WebSocket Server
