@@ -76,7 +76,10 @@ abstract class AbstractMode
                     ];
                 case PlayFen::class:
                     return [
-                        'playfen' => $this->game->playFen($argv[1]),
+                        'playfen' => [
+                          'legal' => $this->game->playFen($argv[1]),
+                          'movetext' => $this->game->movetext(),
+                        ],
                     ];
                 case Status::class:
                     return [
