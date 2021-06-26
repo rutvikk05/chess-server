@@ -2,8 +2,6 @@
 
 namespace ChessServer\Command;
 
-use ChessServer\AbstractCommand;
-
 class IsMate extends AbstractCommand
 {
     public function __construct()

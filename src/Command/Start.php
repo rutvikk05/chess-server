@@ -3,7 +3,6 @@
 namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
-use ChessServer\AbstractCommand;
 use ChessServer\Mode\Analysis;
 use ChessServer\Mode\Friend;
 

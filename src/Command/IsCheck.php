@@ -2,8 +2,6 @@
 
 namespace ChessServer\Command;
 
-use ChessServer\AbstractCommand;
-
 class IsCheck extends AbstractCommand
 {
     public function __construct()

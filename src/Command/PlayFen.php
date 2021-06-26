@@ -3,7 +3,6 @@
 namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
-use ChessServer\AbstractCommand;
 
 class PlayFen extends AbstractCommand
 {
