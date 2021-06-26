@@ -5,6 +5,7 @@ namespace ChessServer\Command;
 use Chess\PGN\Symbol;
 use ChessServer\AbstractCommand;
 use ChessServer\Mode\Analysis;
+use ChessServer\Mode\Friend;
 
 class Start extends AbstractCommand
 {
@@ -15,6 +16,7 @@ class Start extends AbstractCommand
         $this->params = [
             'mode' => [
                 Analysis::NAME,
+                Friend::NAME,
             ],
             'color' => [
                 Symbol::WHITE,
@@ -27,7 +29,7 @@ class Start extends AbstractCommand
     {
         if (in_array($argv[1], $this->params['mode'])) {
             switch ($argv[1]) {
-                // second parameter "color" is not required in training mode
+                // the second parameter "color" is not required in analysis mode
                 case Analysis::NAME:
                     return count($argv) - 1 === count($this->params) - 1;
                 default:

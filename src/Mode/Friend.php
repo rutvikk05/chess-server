@@ -4,7 +4,7 @@ namespace ChessServer\Mode;
 
 use ChessServer\AbstractMode;
 
-class Analysis extends AbstractMode
+class Friend extends AbstractMode
 {
-    const NAME = 'analysis';
+    const NAME = 'friend';
 }
