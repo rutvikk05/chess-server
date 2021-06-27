@@ -4,6 +4,7 @@ namespace ChessServer;
 
 use Chess\Game;
 use Chess\PGN\Symbol;
+use ChessServer\Command\AcceptFriendRequest;
 use ChessServer\Command\Start;
 use ChessServer\Command\Quit;
 use ChessServer\Exception\ParserException;
@@ -86,7 +87,6 @@ class Socket implements MessageComponentInterface
                     ];
                     break;
                 case PlayFriend::NAME:
-                    $this->games[$from->resourceId] = new PlayFriend(new Game);
                     $payload = [
                         "iss" => $_ENV['JWT_ISS'],
                         "iat" => time(),
@@ -94,6 +94,7 @@ class Socket implements MessageComponentInterface
                         "exp" => time() + 600 // ten minutes by default
                     ];
                     $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
+                    $this->games[$from->resourceId] = new PlayFriend(new Game, $jwt);
                     $res = [
                         'id' => $jwt,
                     ];
@@ -102,6 +103,14 @@ class Socket implements MessageComponentInterface
         } elseif (in_array(Start::class, $cmd->dependsOn)) {
             $res = [
                 'message' => 'A game needs to be started first for this command to be allowed.',
+            ];
+        } elseif (is_a($cmd, AcceptFriendRequest::class)) {
+            // TODO
+            // Try to find an initialized, JWT-based game (player vs player) and
+            // assign it to $this->games[$from->resourceId]
+            // $this->games[$from->resourceId] = $game;
+            $res = [
+                'message' => "Game started: {$argv[1]}",
             ];
         }
 

@@ -8,6 +8,20 @@ class PlayFriend extends AbstractMode
 {
     const NAME = 'playfriend';
 
+    protected $jwt;
+
+    public function __construct($game, $jwt)
+    {
+        parent::__construct($game);
+
+        $this->jwt = $jwt;
+    }
+
+    public function getJwt()
+    {
+        return $this->jwt;
+    }
+
     public function res($argv, $cmd)
     {
         parent::res($argv, $cmd);

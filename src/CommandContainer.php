@@ -2,6 +2,7 @@
 
 namespace ChessServer;
 
+use ChessServer\Command\AcceptFriendRequest;
 use ChessServer\Command\Ascii;
 use ChessServer\Command\Castling;
 use ChessServer\Command\Captures;
@@ -23,6 +24,7 @@ class CommandContainer
     public function __construct()
     {
         $this->obj = new \SplObjectStorage;
+        $this->obj->attach(new AcceptFriendRequest());
         $this->obj->attach(new Ascii());
         $this->obj->attach(new Castling());
         $this->obj->attach(new Captures());
