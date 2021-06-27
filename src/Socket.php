@@ -3,12 +3,15 @@
 namespace ChessServer;
 
 use Chess\Game;
-use Chess\PGN\Symbol;
+use ChessServer\Command\AcceptFriendRequest;
 use ChessServer\Command\Start;
 use ChessServer\Command\Quit;
 use ChessServer\Exception\ParserException;
 use ChessServer\Mode\Analysis;
+use ChessServer\Mode\PlayFriend;
 use ChessServer\Parser\CommandParser;
+use Dotenv\Dotenv;
+use Firebase\JWT\JWT;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
@@ -22,6 +25,9 @@ class Socket implements MessageComponentInterface
 
     public function __construct()
     {
+        $dotenv = Dotenv::createImmutable(__DIR__.'/../');
+        $dotenv->load();
+
         $this->parser = new CommandParser;
 
         echo "Welcome to PHP Chess Server" . PHP_EOL;
@@ -76,7 +82,20 @@ class Socket implements MessageComponentInterface
                 case Analysis::NAME:
                     $this->games[$from->resourceId] = new Analysis(new Game);
                     $res = [
-                        'message' =>"Game started in {$argv[1]} mode.",
+                        'message' => "Game started in {$argv[1]} mode.",
+                    ];
+                    break;
+                case PlayFriend::NAME:
+                    $payload = [
+                        "iss" => $_ENV['JWT_ISS'],
+                        "iat" => time(),
+                        "color" => $argv[2],
+                        "exp" => time() + 600 // ten minutes by default
+                    ];
+                    $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
+                    $this->games[$from->resourceId] = new PlayFriend(new Game, $jwt);
+                    $res = [
+                        'id' => $jwt,
                     ];
                     break;
             }
@@ -84,6 +103,17 @@ class Socket implements MessageComponentInterface
             $res = [
                 'message' => 'A game needs to be started first for this command to be allowed.',
             ];
+        } elseif (is_a($cmd, AcceptFriendRequest::class)) {
+            if ($game = $this->findRequest($argv[1])) {
+                $this->games[$from->resourceId] = $game;
+                $res = [
+                    'message' => "Friend request accepted: {$argv[1]}",
+                ];
+            } else {
+                $res = [
+                    'message' => "Friend request not found.",
+                ];
+            }
         }
 
         $client->send(json_encode($res) . PHP_EOL);
@@ -99,5 +129,16 @@ class Socket implements MessageComponentInterface
         echo "An error has occurred: {$e->getMessage()}\n";
 
         $conn->close();
+    }
+
+    protected function findRequest(string $jwt)
+    {
+        foreach ($this->games as $game) {
+            if ($jwt === $game->getJwt()) {
+                return $game;
+            }
+        }
+
+        return null;
     }
 }

@@ -3,7 +3,6 @@
 namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
-use ChessServer\AbstractCommand;
 
 class Pieces extends AbstractCommand
 {

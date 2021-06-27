@@ -2,8 +2,6 @@
 
 namespace ChessServer\Command;
 
-use ChessServer\AbstractCommand;
-
 class Captures extends AbstractCommand
 {
     public function __construct()

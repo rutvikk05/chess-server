@@ -2,8 +2,6 @@
 
 namespace ChessServer\Command;
 
-use ChessServer\AbstractCommand;
-
 class Castling extends AbstractCommand
 {
     public function __construct()

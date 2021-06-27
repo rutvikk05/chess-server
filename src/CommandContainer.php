@@ -2,6 +2,7 @@
 
 namespace ChessServer;
 
+use ChessServer\Command\AcceptFriendRequest;
 use ChessServer\Command\Ascii;
 use ChessServer\Command\Castling;
 use ChessServer\Command\Captures;
@@ -11,7 +12,6 @@ use ChessServer\Command\IsCheck;
 use ChessServer\Command\IsMate;
 use ChessServer\Command\Piece;
 use ChessServer\Command\Pieces;
-use ChessServer\Command\Play;
 use ChessServer\Command\PlayFen;
 use ChessServer\Command\Quit;
 use ChessServer\Command\Start;
@@ -24,6 +24,7 @@ class CommandContainer
     public function __construct()
     {
         $this->obj = new \SplObjectStorage;
+        $this->obj->attach(new AcceptFriendRequest());
         $this->obj->attach(new Ascii());
         $this->obj->attach(new Castling());
         $this->obj->attach(new Captures());
@@ -33,7 +34,6 @@ class CommandContainer
         $this->obj->attach(new IsMate());
         $this->obj->attach(new Piece());
         $this->obj->attach(new Pieces());
-        $this->obj->attach(new Play());
         $this->obj->attach(new PlayFen());
         $this->obj->attach(new Quit());
         $this->obj->attach(new Start());

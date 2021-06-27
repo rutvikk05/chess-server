@@ -2,8 +2,6 @@
 
 namespace ChessServer\Command;
 
-use ChessServer\AbstractCommand;
-
 class Ascii extends AbstractCommand
 {
     public function __construct()
