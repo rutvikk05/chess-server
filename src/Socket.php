@@ -10,6 +10,8 @@ use ChessServer\Exception\ParserException;
 use ChessServer\Mode\Analysis;
 use ChessServer\Mode\PlayFriend;
 use ChessServer\Parser\CommandParser;
+use Dotenv\Dotenv;
+use Firebase\JWT\JWT;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
@@ -23,6 +25,9 @@ class Socket implements MessageComponentInterface
 
     public function __construct()
     {
+        $dotenv = Dotenv::createImmutable(__DIR__.'/../');
+        $dotenv->load();
+
         $this->parser = new CommandParser;
 
         echo "Welcome to PHP Chess Server" . PHP_EOL;
@@ -81,10 +86,17 @@ class Socket implements MessageComponentInterface
                     ];
                     break;
                 case PlayFriend::NAME:
-                    $this->games[$from->resourceId] = new PlayFriend(new Game);
                     // TODO
+                    $payload = [
+                        "iss" => "http://example.org",
+                        "aud" => "http://example.com",
+                        "iat" => 1356999524,
+                        "nbf" => 1357000000
+                    ];
+                    $this->games[$from->resourceId] = new PlayFriend(new Game);
+                    $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
                     $res = [
-                        'id' => 'todo',
+                        'id' => $jwt,
                     ];
                     break;
             }
