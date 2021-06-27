@@ -4,6 +4,10 @@ PHP Ratchet WebSocket server using [PHP Chess](https://github.com/programarivm/p
 
 ### WebSocket Server
 
+Create an `.env` file:
+
+    $ cp .env.example .env
+
 Start the server:
 
 	$ php cli/ws-server.php
