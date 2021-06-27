@@ -3,7 +3,6 @@
 namespace ChessServer;
 
 use Chess\Game;
-use Chess\PGN\Symbol;
 use ChessServer\Command\AcceptFriendRequest;
 use ChessServer\Command\Start;
 use ChessServer\Command\Quit;
@@ -105,13 +104,16 @@ class Socket implements MessageComponentInterface
                 'message' => 'A game needs to be started first for this command to be allowed.',
             ];
         } elseif (is_a($cmd, AcceptFriendRequest::class)) {
-            // TODO
-            // Try to find an initialized, JWT-based game (player vs player) and
-            // assign it to $this->games[$from->resourceId]
-            // $this->games[$from->resourceId] = $game;
-            $res = [
-                'message' => "Game started: {$argv[1]}",
-            ];
+            if ($game = $this->findRequest($argv[1])) {
+                $this->games[$from->resourceId] = $game;
+                $res = [
+                    'message' => "Friend request accepted: {$argv[1]}",
+                ];
+            } else {
+                $res = [
+                    'message' => "Friend request not found.",
+                ];
+            }
         }
 
         $client->send(json_encode($res) . PHP_EOL);
@@ -127,5 +129,16 @@ class Socket implements MessageComponentInterface
         echo "An error has occurred: {$e->getMessage()}\n";
 
         $conn->close();
+    }
+
+    protected function findRequest(string $jwt)
+    {
+        foreach ($this->games as $game) {
+            if ($jwt === $game->getJwt()) {
+                return $game;
+            }
+        }
+
+        return null;
     }
 }
