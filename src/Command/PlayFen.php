@@ -9,9 +9,9 @@ class PlayFen extends AbstractCommand
     public function __construct()
     {
         $this->name = '/playfen';
-        $this->description = 'Plays a chess move on the board. All parameters are mandatory.';
+        $this->description = 'Plays a chess move in shortened FEN format. The "fen" parameter is mandatory.';
         $this->params = [
-            'from' => 'FEN',
+            'fen' => 'FEN',
         ];
         $this->dependsOn = [
             Start::class,

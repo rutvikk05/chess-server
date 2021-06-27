@@ -11,24 +11,24 @@ Create an `.env` file:
 Start the server:
 
 	$ php cli/ws-server.php
-	Welcome to PHP Chess Server
-	Commands available:
-	/accept {"id":"id"} Accepts a friend request to play a game.
-	/ascii Prints the ASCII representation of the game.
-	/castling Gets the castling status.
-	/captures Gets the pieces captured by both players.
-	/fen Prints the FEN string representation of the game.
-	/history The current game's history.
-	/ischeck Finds out if the game is in check.
-	/ismate Finds out if the game is over.
-	/piece {"position":"square"} Gets a piece by its position on the board. The "position" parameter is mandatory.
-	/pieces {"color":["w","b"]} Gets the pieces on the board by color. The "color" parameter is mandatory.
-	/playfen {"from":"FEN"} Plays a chess move on the board. All parameters are mandatory.
-	/quit Quits a game.
-	/start {"mode":["analysis","playfriend"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in analysis mode.
-	/status The current game status.
+    Welcome to PHP Chess Server
+    Commands available:
+    /accept {"id":"id"} Accepts a friend request to play a game.
+    /ascii Prints the ASCII representation of the game.
+    /castling Gets the castling status.
+    /captures Gets the pieces captured by both players.
+    /fen Prints the FEN string representation of the game.
+    /history The current game's history.
+    /ischeck Finds out if the game is in check.
+    /ismate Finds out if the game is over.
+    /piece {"position":"square"} Gets a piece by its position on the board. The "position" parameter is mandatory.
+    /pieces {"color":["w","b"]} Gets the pieces on the board by color. The "color" parameter is mandatory.
+    /playfen {"fen":"FEN"} Plays a chess move in shortened FEN format. The "fen" parameter is mandatory.
+    /quit Quits a game.
+    /start {"mode":["analysis","playfriend"],"color":["w","b"]} Starts a new game. The "color" parameter is not required in analysis mode.
+    /status The current game status.
 
-	Listening to commands...
+    Listening to commands...
 
 Open a console in your favorite browser and run commands:
 
