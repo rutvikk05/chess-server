@@ -86,14 +86,13 @@ class Socket implements MessageComponentInterface
                     ];
                     break;
                 case PlayFriend::NAME:
-                    // TODO
-                    $payload = [
-                        "iss" => "http://example.org",
-                        "aud" => "http://example.com",
-                        "iat" => 1356999524,
-                        "nbf" => 1357000000
-                    ];
                     $this->games[$from->resourceId] = new PlayFriend(new Game);
+                    $payload = [
+                        "iss" => $_ENV['JWT_ISS'],
+                        "iat" => time(),
+                        "color" => $argv[2],
+                        "exp" => time() + 600 // ten minutes by default
+                    ];
                     $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
                     $res = [
                         'id' => $jwt,
