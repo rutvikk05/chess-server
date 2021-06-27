@@ -4,9 +4,9 @@ namespace ChessServer\Mode;
 
 use ChessServer\Command\PlayFen;
 
-class Friend extends AbstractMode
+class PlayFriend extends AbstractMode
 {
-    const NAME = 'friend';
+    const NAME = 'playfriend';
 
     public function res($argv, $cmd)
     {

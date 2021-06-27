@@ -8,7 +8,7 @@ use ChessServer\Command\Start;
 use ChessServer\Command\Quit;
 use ChessServer\Exception\ParserException;
 use ChessServer\Mode\Analysis;
-use ChessServer\Mode\Friend;
+use ChessServer\Mode\PlayFriend;
 use ChessServer\Parser\CommandParser;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -77,13 +77,14 @@ class Socket implements MessageComponentInterface
                 case Analysis::NAME:
                     $this->games[$from->resourceId] = new Analysis(new Game);
                     $res = [
-                        'message' =>"Game started in {$argv[1]} mode.",
+                        'message' => "Game started in {$argv[1]} mode.",
                     ];
                     break;
-                case Friend::NAME:
-                    $this->games[$from->resourceId] = new Friend(new Game);
+                case PlayFriend::NAME:
+                    $this->games[$from->resourceId] = new PlayFriend(new Game);
+                    // TODO
                     $res = [
-                        'message' =>"Game started in {$argv[1]} mode.",
+                        'id' => 'todo',
                     ];
                     break;
             }
