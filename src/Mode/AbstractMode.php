@@ -72,6 +72,8 @@ abstract class AbstractMode
                     return [
                         'status' => $this->game->status(),
                     ];
+                default:
+                    return null;
             }
         } catch (\Exception $e) {
             return [
