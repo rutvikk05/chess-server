@@ -10,16 +10,24 @@ class PlayFriend extends AbstractMode
 
     protected $jwt;
 
+    protected $hash;
+
     public function __construct($game, $jwt)
     {
         parent::__construct($game);
 
         $this->jwt = $jwt;
+        $this->hash = md5($jwt);
     }
 
     public function getJwt()
     {
         return $this->jwt;
+    }
+
+    public function getHash()
+    {
+        return $this->hash;
     }
 
     public function res($argv, $cmd)
