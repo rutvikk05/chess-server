@@ -95,7 +95,7 @@ class Socket implements MessageComponentInterface
                     $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
                     $this->games[$from->resourceId] = new PlayFriend(new Game, $jwt);
                     $res = [
-                        'id' => $jwt,
+                        'id' => md5($jwt),
                     ];
                     break;
             }
@@ -131,10 +131,10 @@ class Socket implements MessageComponentInterface
         $conn->close();
     }
 
-    protected function findRequest(string $jwt)
+    protected function findRequest(string $hash)
     {
         foreach ($this->games as $game) {
-            if ($jwt === $game->getJwt()) {
+            if ($hash === $game->getHash()) {
                 return $game;
             }
         }
