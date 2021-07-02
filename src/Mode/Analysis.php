@@ -10,7 +10,9 @@ class Analysis extends AbstractMode
 
     public function res($argv, $cmd)
     {
-        parent::res($argv, $cmd);
+        if ($res = parent::res($argv, $cmd)) {
+            return $res;
+        }
 
         try {
             switch (get_class($cmd)) {
