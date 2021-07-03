@@ -21,7 +21,7 @@ class PlayFriend extends AbstractMode
                         'playfen' => [
                           'legal' => $this->game->playFen($argv[1]),
                           'movetext' => $this->game->movetext(),
-                          'ascii' => $this->game->ascii(),
+                          'fen' => $this->game->fen(),
                         ],
                     ];
             }
