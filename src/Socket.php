@@ -4,11 +4,13 @@ namespace ChessServer;
 
 use Chess\Game;
 use ChessServer\Command\AcceptFriendRequest;
+use ChessServer\Command\PlayFen;
 use ChessServer\Command\Start;
 use ChessServer\Command\Quit;
 use ChessServer\Exception\ParserException;
-use ChessServer\Mode\Analysis;
-use ChessServer\Mode\PlayFriend;
+use ChessServer\Mode\AbstractMode;
+use ChessServer\Mode\Analysis as AnalysisMode;
+use ChessServer\Mode\PlayFriend as PlayFriendMode;
 use ChessServer\Parser\CommandParser;
 use Dotenv\Dotenv;
 use Firebase\JWT\JWT;
@@ -19,7 +21,7 @@ class Socket implements MessageComponentInterface
 {
     private $clients = [];
 
-    private $games = [];
+    private $modes = [];
 
     private $parser;
 
@@ -45,28 +47,22 @@ class Socket implements MessageComponentInterface
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        $client = $this->clients[$from->resourceId];
-
         try {
             $cmd = $this->parser->validate($msg);
         } catch (ParserException $e) {
-            $client->send(
+            $this->clients[$from->resourceId]->send(
                 json_encode([
                     'message' => $e->getMessage(),
-                ]) . PHP_EOL
+                ])
             );
             return;
         }
 
-        isset($this->games[$from->resourceId])
-            ? $game = $this->games[$from->resourceId]->getGame()
-            : $game = null;
+        isset($this->modes[$from->resourceId]) ? $mode = $this->modes[$from->resourceId] : $mode = null;
 
-        $argv = $this->parser->argv;
-
-        if ($game) {
+        if ($mode) {
             if (is_a($cmd, Quit::class)) {
-                unset($this->games[$from->resourceId]);
+                unset($this->modes[$from->resourceId]);
                 $res = [
                     'message' => 'Good bye!',
                 ];
@@ -74,26 +70,35 @@ class Socket implements MessageComponentInterface
                 $res = [
                     'message' => 'Game already started.',
                 ];
+            } elseif (
+                is_a($cmd, PlayFen::class) &&
+                is_a($this->modes[$from->resourceId], PlayFriendMode::class)
+            ) {
+                $this->sendToMany(
+                    $mode->getResourceIds(),
+                    $mode->res($this->parser->argv, $cmd)
+                );
+                return;
             } else {
-                $res = $this->games[$from->resourceId]->res($argv, $cmd);
+                $res = $this->modes[$from->resourceId]->res($this->parser->argv, $cmd);
             }
         } elseif (is_a($cmd, Start::class)) {
-            switch ($argv[1]) {
-                case Analysis::NAME:
-                    $this->games[$from->resourceId] = new Analysis(new Game);
+            switch ($this->parser->argv[1]) {
+                case AnalysisMode::NAME:
+                    $this->modes[$from->resourceId] = new AnalysisMode(new Game, [$from->resourceId]);
                     $res = [
-                        'message' => "Game started in {$argv[1]} mode.",
+                        'message' => "Game started in {$this->parser->argv[1]} mode.",
                     ];
                     break;
-                case PlayFriend::NAME:
+                case PlayFriendMode::NAME:
                     $payload = [
                         "iss" => $_ENV['JWT_ISS'],
                         "iat" => time(),
-                        "color" => $argv[2],
+                        "color" => $this->parser->argv[2],
                         "exp" => time() + 600 // ten minutes by default
                     ];
                     $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
-                    $this->games[$from->resourceId] = new PlayFriend(new Game, $jwt);
+                    $this->modes[$from->resourceId] = new PlayFriendMode(new Game, [$from->resourceId], $jwt);
                     $res = [
                         'id' => md5($jwt),
                     ];
@@ -104,11 +109,13 @@ class Socket implements MessageComponentInterface
                 'message' => 'A game needs to be started first for this command to be allowed.',
             ];
         } elseif (is_a($cmd, AcceptFriendRequest::class)) {
-            if ($game = $this->findRequest($argv[1])) {
-                $this->games[$from->resourceId] = $game;
+            if ($mode = $this->findMode($this->parser->argv[1])) {
+                $this->syncModeWith($mode, $from);
                 $res = [
-                    'message' => "Friend request accepted: {$argv[1]}",
+                    'message' => "Friend request accepted: {$this->parser->argv[1]}",
                 ];
+                $this->sendToMany($mode->getResourceIds(), $res);
+                return;
             } else {
                 $res = [
                     'message' => "Friend request not found.",
@@ -116,7 +123,7 @@ class Socket implements MessageComponentInterface
             }
         }
 
-        $client->send(json_encode($res) . PHP_EOL);
+        $this->clients[$from->resourceId]->send(json_encode($res));
     }
 
     public function onClose(ConnectionInterface $conn)
@@ -131,14 +138,31 @@ class Socket implements MessageComponentInterface
         $conn->close();
     }
 
-    protected function findRequest(string $hash)
+    protected function findMode(string $hash)
     {
-        foreach ($this->games as $game) {
-            if ($hash === $game->getHash()) {
-                return $game;
+        foreach ($this->modes as $mode) {
+            if ($hash === $mode->getHash()) {
+                return $mode;
             }
         }
 
         return null;
+    }
+
+    protected function syncModeWith(AbstractMode $mode, ConnectionInterface $from)
+    {
+        $resourceIds = $mode->getResourceIds();
+        $resourceIds[] = $from->resourceId;
+        $mode->setResourceIds($resourceIds);
+        foreach ($resourceIds as $resourceId) {
+            $this->modes[$resourceId] = $mode;
+        }
+    }
+
+    protected function sendToMany(array $resourceIds, array $res)
+    {
+        foreach ($resourceIds as $resourceId) {
+            $this->clients[$resourceId]->send(json_encode($res));
+        }
     }
 }

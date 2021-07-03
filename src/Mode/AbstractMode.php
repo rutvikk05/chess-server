@@ -2,7 +2,7 @@
 
 namespace ChessServer\Mode;
 
-use Chess\PGN\Symbol;
+use Chess\Game;
 use ChessServer\Command\Ascii;
 use ChessServer\Command\Castling;
 use ChessServer\Command\Captures;
@@ -18,14 +18,47 @@ abstract class AbstractMode
 {
     protected $game;
 
-    public function __construct($game)
+    protected $resourceIds;
+
+    protected $jwt;
+
+    protected $hash;
+
+    public function __construct(Game $game, array $resourceIds, string $jwt=null)
     {
         $this->game = $game;
+        $this->resourceIds = $resourceIds;
+        if ($jwt) {
+            $this->jwt = $jwt;
+            $this->hash = md5($jwt);
+        }
     }
 
     public function getGame()
     {
         return $this->game;
+    }
+
+    public function getResourceIds(): array
+    {
+        return $this->resourceIds;
+    }
+
+    public function setResourceIds(array $resourceIds)
+    {
+        $this->resourceIds = $resourceIds;
+
+        return $this;
+    }
+
+    public function getJwt()
+    {
+        return $this->jwt;
+    }
+
+    public function getHash()
+    {
+        return $this->hash;
     }
 
     public function res($argv, $cmd)
@@ -40,13 +73,13 @@ abstract class AbstractMode
                     return [
                         'castling' => $this->game->castling(),
                     ];
-                case Fen::class:
-                    return [
-                        'fen' => $this->game->fen(),
-                    ];
                 case Captures::class:
                     return [
                         'captures' => $this->game->captures(),
+                    ];
+                case Fen::class:
+                    return [
+                        'fen' => $this->game->fen(),
                     ];
                 case History::class:
                     return [
