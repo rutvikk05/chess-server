@@ -21,6 +21,7 @@ class Analysis extends AbstractMode
                         'playfen' => [
                           'legal' => $this->game->playFen($argv[1]),
                           'movetext' => $this->game->movetext(),
+                          'fen' => $this->game->fen(),
                         ],
                     ];
             }
