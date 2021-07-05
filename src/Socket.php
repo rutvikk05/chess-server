@@ -50,11 +50,10 @@ class Socket implements MessageComponentInterface
         try {
             $cmd = $this->parser->validate($msg);
         } catch (ParserException $e) {
-            $this->clients[$from->resourceId]->send(
-                json_encode([
-                    'message' => $e->getMessage(),
-                ])
-            );
+            $res = [
+                'validate' => $e->getMessage(),
+            ];
+            $this->clients[$from->resourceId]->send(json_encode($res));
             return;
         }
 
@@ -64,11 +63,11 @@ class Socket implements MessageComponentInterface
             if (is_a($cmd, Quit::class)) {
                 unset($this->modes[$from->resourceId]);
                 $res = [
-                    'message' => 'Good bye!',
+                    $cmd->name => 'Good bye!',
                 ];
             } elseif (is_a($cmd, Start::class)) {
                 $res = [
-                    'message' => 'Game already started.',
+                    $cmd->name => 'Game already started.',
                 ];
             } elseif (
                 is_a($cmd, PlayFen::class) &&
@@ -87,7 +86,7 @@ class Socket implements MessageComponentInterface
                 case AnalysisMode::NAME:
                     $this->modes[$from->resourceId] = new AnalysisMode(new Game, [$from->resourceId]);
                     $res = [
-                        'message' => "Game started in {$this->parser->argv[1]} mode.",
+                        $cmd->name => "Game started in {$this->parser->argv[1]} mode.",
                     ];
                     break;
                 case PlayFriendMode::NAME:
@@ -100,25 +99,28 @@ class Socket implements MessageComponentInterface
                     $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
                     $this->modes[$from->resourceId] = new PlayFriendMode(new Game, [$from->resourceId], $jwt);
                     $res = [
-                        'id' => md5($jwt),
+                      $cmd->name => [
+                        'hash' => md5($jwt),
+                        'color' => $this->parser->argv[2],
+                      ],
                     ];
                     break;
             }
         } elseif (in_array(Start::class, $cmd->dependsOn)) {
             $res = [
-                'message' => 'A game needs to be started first for this command to be allowed.',
+                $cmd->name => 'A game needs to be started first for this command to be allowed.',
             ];
         } elseif (is_a($cmd, AcceptFriendRequest::class)) {
             if ($mode = $this->findMode($this->parser->argv[1])) {
                 $this->syncModeWith($mode, $from);
                 $res = [
-                    'message' => "Friend request accepted: {$this->parser->argv[1]}",
+                    $cmd->name => "Friend request accepted: {$this->parser->argv[1]}",
                 ];
                 $this->sendToMany($mode->getResourceIds(), $res);
                 return;
             } else {
                 $res = [
-                    'message' => "Friend request not found.",
+                    $cmd->name => "Friend request not found.",
                 ];
             }
         }

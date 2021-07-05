@@ -12,6 +12,7 @@ use ChessServer\Command\IsCheck;
 use ChessServer\Command\IsMate;
 use ChessServer\Command\Piece;
 use ChessServer\Command\Pieces;
+use ChessServer\Command\PlayFen;
 use ChessServer\Command\Status;
 
 abstract class AbstractMode
@@ -67,50 +68,58 @@ abstract class AbstractMode
             switch (get_class($cmd)) {
                 case Ascii::class:
                     return [
-                        'ascii' => $this->game->ascii(),
+                        $cmd->name => $this->game->ascii(),
                     ];
                 case Castling::class:
                     return [
-                        'castling' => $this->game->castling(),
+                        $cmd->name => $this->game->castling(),
                     ];
                 case Captures::class:
                     return [
-                        'captures' => $this->game->captures(),
+                        $cmd->name => $this->game->captures(),
                     ];
                 case Fen::class:
                     return [
-                        'fen' => $this->game->fen(),
+                        $cmd->name => $this->game->fen(),
                     ];
                 case History::class:
                     return [
-                        'history' => $this->game->history(),
+                        $cmd->name => $this->game->history(),
                     ];
                 case IsCheck::class:
                     return [
-                        'check' => $this->game->isCheck(),
+                        $cmd->name => $this->game->isCheck(),
                     ];
                 case IsMate::class:
                     return [
-                        'mate' => $this->game->isCheck(),
+                        $cmd->name => $this->game->isCheck(),
                     ];
                 case Piece::class:
                     return [
-                        'piece' => $this->game->piece($argv[1]),
+                        $cmd->name => $this->game->piece($argv[1]),
                     ];
                 case Pieces::class:
                     return [
-                        'pieces' => $this->game->pieces($argv[1]),
+                        $cmd->name => $this->game->pieces($argv[1]),
+                    ];
+                case PlayFen::class:
+                    return [
+                        $cmd->name => [
+                            'legal' => $this->game->playFen($argv[1]),
+                            'movetext' => $this->game->movetext(),
+                            'fen' => $this->game->fen(),
+                        ],
                     ];
                 case Status::class:
                     return [
-                        'status' => $this->game->status(),
+                        $cmd->name => $this->game->status(),
                     ];
                 default:
                     return null;
             }
         } catch (\Exception $e) {
             return [
-                'message' => $e->getMessage(),
+                'error' => $e->getMessage(),
             ];
         }
     }
