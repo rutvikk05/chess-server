@@ -105,6 +105,7 @@ abstract class AbstractMode
                 case PlayFen::class:
                     return [
                         $cmd->name => [
+                            'turn' => $this->game->status()->turn,
                             'legal' => $this->game->playFen($argv[1]),
                             'movetext' => $this->game->movetext(),
                             'fen' => $this->game->fen(),
