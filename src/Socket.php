@@ -3,6 +3,7 @@
 namespace ChessServer;
 
 use Chess\Game;
+use Chess\PGN\Symbol;
 use ChessServer\Command\AcceptFriendRequest;
 use ChessServer\Command\PlayFen;
 use ChessServer\Command\Start;
@@ -113,8 +114,13 @@ class Socket implements MessageComponentInterface
         } elseif (is_a($cmd, AcceptFriendRequest::class)) {
             if ($mode = $this->findMode($this->parser->argv[1])) {
                 $this->syncModeWith($mode, $from);
+                $jwt = $mode->getJwt();
+                $decoded = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
                 $res = [
-                    $cmd->name => "Friend request accepted: {$this->parser->argv[1]}",
+                  $cmd->name => [
+                    'hash' => $this->parser->argv[1],
+                    'color' => Symbol::oppColor($decoded->color),
+                  ],
                 ];
                 $this->sendToMany($mode->getResourceIds(), $res);
                 return;
