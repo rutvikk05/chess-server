@@ -87,23 +87,26 @@ class Socket implements MessageComponentInterface
                 case AnalysisMode::NAME:
                     $this->modes[$from->resourceId] = new AnalysisMode(new Game, [$from->resourceId]);
                     $res = [
-                        $cmd->name => "Game started in {$this->parser->argv[1]} mode.",
+                        $cmd->name => [
+                            'mode' => AnalysisMode::NAME,
+                        ],
                     ];
                     break;
                 case PlayFriendMode::NAME:
                     $payload = [
-                        "iss" => $_ENV['JWT_ISS'],
-                        "iat" => time(),
-                        "color" => $this->parser->argv[2],
-                        "exp" => time() + 600 // ten minutes by default
+                        'iss' => $_ENV['JWT_ISS'],
+                        'iat' => time(),
+                        'color' => $this->parser->argv[2],
+                        'exp' => time() + 600 // ten minutes by default
                     ];
                     $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
                     $this->modes[$from->resourceId] = new PlayFriendMode(new Game, [$from->resourceId], $jwt);
                     $res = [
-                      $cmd->name => [
-                        'hash' => md5($jwt),
-                        'color' => $this->parser->argv[2],
-                      ],
+                        $cmd->name => [
+                            'mode' => PlayFriendMode::NAME,
+                            'jwt' => $jwt,
+                            'hash' => md5($jwt),
+                        ],
                     ];
                     break;
             }
@@ -117,10 +120,10 @@ class Socket implements MessageComponentInterface
                 $jwt = $mode->getJwt();
                 $decoded = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
                 $res = [
-                  $cmd->name => [
-                    'hash' => $this->parser->argv[1],
-                    'color' => Symbol::oppColor($decoded->color),
-                  ],
+                    $cmd->name => [
+                        'jwt' => $jwt,
+                        'hash' => md5($jwt),
+                    ],
                 ];
                 $this->sendToMany($mode->getResourceIds(), $res);
                 return;
