@@ -11,7 +11,7 @@ class Start extends AbstractCommand
     public function __construct()
     {
         $this->name = '/start';
-        $this->description = 'Starts a new game. "color" and "min" are not required in analysis mode.';
+        $this->description = 'Starts a new game.';
         $this->params = [
             'mode' => [
                 Analysis::NAME,
