@@ -97,6 +97,7 @@ class Socket implements MessageComponentInterface
                         'iss' => $_ENV['JWT_ISS'],
                         'iat' => time(),
                         'color' => $this->parser->argv[2],
+                        'min' => $this->parser->argv[3],
                         'exp' => time() + 600 // ten minutes by default
                     ];
                     $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);

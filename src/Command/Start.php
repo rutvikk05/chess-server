@@ -11,7 +11,7 @@ class Start extends AbstractCommand
     public function __construct()
     {
         $this->name = '/start';
-        $this->description = 'Starts a new game. The "color" parameter is not required in analysis mode.';
+        $this->description = 'Starts a new game. "color" and "min" are not required in analysis mode.';
         $this->params = [
             'mode' => [
                 Analysis::NAME,
@@ -21,6 +21,7 @@ class Start extends AbstractCommand
                 Symbol::WHITE,
                 Symbol::BLACK,
             ],
+            'min' => 'int',
         ];
     }
 
@@ -31,7 +32,10 @@ class Start extends AbstractCommand
                 case Analysis::NAME:
                     return count($argv) - 1 === count($this->params) - 1;
                 case PlayFriend::NAME:
-                    return count($argv) - 1 === count($this->params) && in_array($argv[2], $this->params['color']);
+                    return count($argv) - 1 ===
+                      count($this->params) &&
+                      in_array($argv[2], $this->params['color']) &&
+                      is_numeric($argv[3]);
                 default:
                     // do nothing
                     break;
