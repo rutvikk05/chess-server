@@ -30,7 +30,7 @@ class Start extends AbstractCommand
         if (in_array($argv[1], $this->params['mode'])) {
             switch ($argv[1]) {
                 case Analysis::NAME:
-                    return count($argv) - 1 === count($this->params) - 1;
+                    return count($argv) - 1 === count($this->params) - 2;
                 case PlayFriend::NAME:
                     return count($argv) - 1 ===
                       count($this->params) &&
