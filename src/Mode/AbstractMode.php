@@ -107,6 +107,7 @@ abstract class AbstractMode
                         $cmd->name => [
                             'turn' => $this->game->status()->turn,
                             'legal' => $this->game->playFen($argv[1]),
+                            'check' => $this->game->isCheck(),
                             'movetext' => $this->game->movetext(),
                             'fen' => $this->game->fen(),
                         ],
