@@ -3,32 +3,33 @@
 namespace ChessServer;
 
 use ChessServer\Socket;
-use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
+use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
+use React\EventLoop\Factory;
 use React\Socket\Server;
 use React\Socket\SecureServer;
 
 require __DIR__  . '/../vendor/autoload.php';
 
-$loop = \React\EventLoop\Factory::create();
+$loop = Factory::create();
 
-$socket = new Server('8443', $loop);
-$socket = new SecureServer($socket, $loop, [
-    'local_cert'  => __DIR__  . '/../ssl/cert.pem',
-    'local_pk' => __DIR__  . '/../ssl/key.pem',
+$server = new Server('0.0.0.0:8443', $loop);
+
+$secureServer = new SecureServer($server, $loop, [
+    'local_cert'  => __DIR__  . '/../ssl/programarivm.com.crt',
+    'local_pk' => __DIR__  . '/../ssl/programarivm.com.key',
     'allow_self_signed' => true,
-    'verify_peer' => false
+    'verify_peer' => false,
+    'verify_peer_name' => false
 ]);
 
-$server = new IoServer(
-    new HttpServer(
-        new WsServer(
-            new Socket()
-        )
-    ),
-    $socket,
-    $loop
+$httpServer = new HttpServer(
+    new WsServer(
+        new Socket()
+    )
 );
 
-$server->run();
+$ioServer = new IoServer($httpServer, $secureServer, $loop);
+
+$ioServer->run();
