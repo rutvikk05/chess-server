@@ -2,11 +2,13 @@
 
 PHP Ratchet WebSocket server using [PHP Chess](https://github.com/programarivm/php-chess). The chess server is intended to connect to a [Redux Chess](https://github.com/programarivm/redux-chess) app.
 
-### WebSocket Server
+### Setup
 
 Create an `.env` file:
 
     $ cp .env.example .env
+
+### WebSocket Server
 
 Start the server:
 
@@ -34,6 +36,18 @@ Start the server:
 Open a console in your favorite browser and run commands:
 
     const ws = new WebSocket('ws://127.0.0.1:8080');
+    ws.onmessage = (res) => { console.log(res.data) };
+    ws.send('/start analysis');
+
+### Secure WebSocket Server
+
+Start the server:
+
+	$ php cli/wss-server.php
+
+Open a console in your favorite browser and run commands:
+
+    const ws = new WebSocket('wss://pchess.net:8443');
     ws.onmessage = (res) => { console.log(res.data) };
     ws.send('/start analysis');
 
