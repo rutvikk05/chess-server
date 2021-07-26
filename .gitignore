@@ -3,4 +3,4 @@
 # php
 /composer.lock
 /vendor/
-/ssl/
+/ssl/*
