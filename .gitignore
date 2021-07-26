@@ -3,4 +3,7 @@
 # php
 /composer.lock
 /vendor/
-/ssl/*
+/ssl/*.pem
+/ssl/*.csr
+/ssl/*.crt
+/ssl/*.key
