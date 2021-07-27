@@ -17,7 +17,7 @@ $loop = Factory::create();
 $server = new Server('0.0.0.0:8443', $loop);
 
 $secureServer = new SecureServer($server, $loop, [
-    'local_cert'  => __DIR__  . '/../ssl/ca_bundle.crt',
+    'local_cert'  => __DIR__  . '/../ssl/certificate.crt',
     'local_pk' => __DIR__  . '/../ssl/private.key',
 ]);
 
