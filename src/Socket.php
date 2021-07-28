@@ -147,6 +147,11 @@ class Socket implements MessageComponentInterface
         }
 
         $this->clients[$from->resourceId]->send(json_encode($res));
+
+        $this->log->info('Sent message', [
+            'id' => $from->resourceId,
+            'res' => $res,
+        ]);
     }
 
     public function onClose(ConnectionInterface $conn)
