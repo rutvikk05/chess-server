@@ -15,6 +15,8 @@ use ChessServer\Mode\PlayFriend as PlayFriendMode;
 use ChessServer\Parser\CommandParser;
 use Dotenv\Dotenv;
 use Firebase\JWT\JWT;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
@@ -26,24 +28,33 @@ class Socket implements MessageComponentInterface
 
     private $parser;
 
+    private $log;
+
     public function __construct()
     {
         $dotenv = Dotenv::createImmutable(__DIR__.'/../');
         $dotenv->load();
 
+        // create a command parser
         $this->parser = new CommandParser;
+
+        // create a log channel
+        $this->log = new Logger($_ENV['BASE_URL']);
+        $this->log->pushHandler(new StreamHandler(__DIR__.'/../storage/pchess.log', Logger::INFO));
 
         echo "Welcome to PHP Chess Server" . PHP_EOL;
         echo "Commands available:" . PHP_EOL;
         echo $this->parser->cli->help() . PHP_EOL;
         echo "Listening to commands..." . PHP_EOL;
+
+        $this->log->info('Started the chess server');
     }
 
     public function onOpen(ConnectionInterface $conn)
     {
         $this->clients[$conn->resourceId] = $conn;
 
-        echo "New connection ({$conn->resourceId})" . PHP_EOL;
+        $this->log->info('New connection', ['id' => $conn->resourceId]);
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
@@ -136,18 +147,23 @@ class Socket implements MessageComponentInterface
         }
 
         $this->clients[$from->resourceId]->send(json_encode($res));
+
+        $this->log->info('Sent message', [
+            'id' => $from->resourceId,
+            'res' => $res,
+        ]);
     }
 
     public function onClose(ConnectionInterface $conn)
     {
-        echo "Connection {$conn->resourceId} has disconnected\n";
+        $this->log->info('Closed connection', ['id' => $conn->resourceId]);
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
-        echo "An error has occurred: {$e->getMessage()}\n";
-
         $conn->close();
+
+        $this->log->info('Occurred an error', ['message' => $e->getMessage()]);
     }
 
     protected function findMode(string $hash)
