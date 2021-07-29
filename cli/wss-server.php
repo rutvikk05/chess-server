@@ -7,6 +7,7 @@ use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
 use React\EventLoop\Factory;
+use React\Socket\LimitingServer;
 use React\Socket\Server;
 use React\Socket\SecureServer;
 
@@ -22,12 +23,14 @@ $secureServer = new SecureServer($server, $loop, [
     'verify_peer' => false,
 ]);
 
+$limitingServer = new LimitingServer($secureServer, 100);
+
 $httpServer = new HttpServer(
     new WsServer(
         new Socket()
     )
 );
 
-$ioServer = new IoServer($httpServer, $secureServer, $loop);
+$ioServer = new IoServer($httpServer, $limitingServer, $loop);
 
 $ioServer->run();
