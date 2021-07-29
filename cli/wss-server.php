@@ -23,7 +23,7 @@ $secureServer = new SecureServer($server, $loop, [
     'verify_peer' => false,
 ]);
 
-$limitingServer = new LimitingServer($secureServer, 100);
+$limitingServer = new LimitingServer($secureServer, 25);
 
 $httpServer = new HttpServer(
     new WsServer(
