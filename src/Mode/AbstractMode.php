@@ -108,6 +108,7 @@ abstract class AbstractMode
                             'turn' => $this->game->status()->turn,
                             'legal' => $this->game->playFen($argv[1]),
                             'check' => $this->game->isCheck(),
+                            'mate' => $this->game->isMate(),
                             'movetext' => $this->game->movetext(),
                             'fen' => $this->game->fen(),
                         ],
