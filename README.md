@@ -8,6 +8,8 @@ Create an `.env` file:
 
     $ cp .env.example .env
 
+Before starting the server for the first time, make sure to copy the `certificate.crt` and `private.key` files into the `ssl` folder as explained in [A Simple Example of SSL/TLS WebSocket With ReactPHP and Ratchet](https://medium.com/geekculture/a-simple-example-of-ssl-tls-websocket-with-reactphp-and-ratchet-e03be973f521).
+
 ### WebSocket Server
 
 Start the server:
