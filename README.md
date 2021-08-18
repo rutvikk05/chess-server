@@ -22,6 +22,7 @@ Start the server:
     /castling Gets the castling status.
     /captures Gets the pieces captured by both players.
     /fen Prints the FEN string representation of the game.
+    /heuristicpicture Takes a balanced heuristic picture of the current game.
     /history The current game's history.
     /ischeck Finds out if the game is in check.
     /ismate Finds out if the game is over.
@@ -33,7 +34,6 @@ Start the server:
     /status The current game status.
 
     Listening to commands...
-
 
 Open a console in your favorite browser and run commands:
 
