@@ -7,6 +7,7 @@ use ChessServer\Command\Ascii;
 use ChessServer\Command\Castling;
 use ChessServer\Command\Captures;
 use ChessServer\Command\Fen;
+use ChessServer\Command\HeuristicPicture;
 use ChessServer\Command\History;
 use ChessServer\Command\IsCheck;
 use ChessServer\Command\IsMate;
@@ -29,6 +30,7 @@ class CommandContainer
         $this->obj->attach(new Castling());
         $this->obj->attach(new Captures());
         $this->obj->attach(new Fen());
+        $this->obj->attach(new HeuristicPicture());
         $this->obj->attach(new History());
         $this->obj->attach(new IsCheck());
         $this->obj->attach(new IsMate());
