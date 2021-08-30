@@ -30,7 +30,7 @@ Start the server:
     /pieces {"color":["w","b"]} Gets the pieces on the board by color.
     /playfen {"fen":"string"} Plays a chess move in shortened FEN format.
     /quit Quits a game.
-    /start {"mode":["analysis","playfriend"],"color":["w","b"],"min":"int"} Starts a new game.
+    /start {"mode":["analysis","fen","playfriend"],"fen":"string","jwt":"string","hash":"string"} Starts a new game.
     /status The current game status.
 
     Listening to commands...
