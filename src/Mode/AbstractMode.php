@@ -41,6 +41,13 @@ abstract class AbstractMode
         return $this->game;
     }
 
+    public function setGame(Game $game)
+    {
+        $this->game = $game;
+
+        return $this;
+    }
+
     public function getResourceIds(): array
     {
         return $this->resourceIds;

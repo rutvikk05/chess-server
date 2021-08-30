@@ -104,6 +104,28 @@ class Socket implements MessageComponentInterface
                         ],
                     ];
                     break;
+                case FenMode::NAME:
+                    // TODO:
+                    // See https://github.com/programarivm/php-chess/issues/36
+                    // FEN validation logic should be written in programarivm/php-chess rather than
+                    // catching a Throwable object in the chess server.
+                    try {
+                        $fenMode = new FenMode(new Game, [$from->resourceId]);
+                        $game = $fenMode->getGame();
+                        $game->loadFen($this->parser->argv[2]);
+                        $fenMode->setGame($game);
+                        $this->modes[$from->resourceId] = $fenMode;
+                        $res = [
+                            $cmd->name => [
+                                'mode' => FenMode::NAME,
+                            ],
+                        ];
+                    } catch (\Throwable $e) {
+                        $res = [
+                            $cmd->name => 'Whoops! This FEN string could not be loaded.',
+                        ];
+                    }
+                    break;
                 case PlayFriendMode::NAME:
                     $payload = [
                         'iss' => $_ENV['JWT_ISS'],
