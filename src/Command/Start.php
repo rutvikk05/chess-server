@@ -3,9 +3,9 @@
 namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
-use ChessServer\Mode\Analysis;
-use ChessServer\Mode\Fen;
-use ChessServer\Mode\PlayFriend;
+use ChessServer\Mode\AnalysisMode;
+use ChessServer\Mode\FenMode;
+use ChessServer\Mode\PlayFriendMode;
 
 class Start extends AbstractCommand
 {
@@ -15,9 +15,9 @@ class Start extends AbstractCommand
         $this->description = 'Starts a new game.';
         $this->params = [
             'mode' => [
-                Analysis::NAME,
-                Fen::NAME,
-                PlayFriend::NAME,
+                AnalysisMode::NAME,
+                FenMode::NAME,
+                PlayFriendMode::NAME,
             ],
             'fen' => 'string',  // FEN mode
             'jwt' => 'string',  // PlayFriend mode
@@ -29,12 +29,12 @@ class Start extends AbstractCommand
     {
         if (in_array($argv[1], $this->params['mode'])) {
             switch ($argv[1]) {
-                case Analysis::NAME:
+                case AnalysisMode::NAME:
                     return count($argv) - 1 === 1;
-                case Fen::NAME:
+                case FenMode::NAME:
                     return count($argv) - 1 === 2;
-                case PlayFriend::NAME:
-                    return count($argv) - 1 === 3; 
+                case PlayFriendMode::NAME:
+                    return count($argv) - 1 === 3;
                 default:
                     // do nothing
                     break;

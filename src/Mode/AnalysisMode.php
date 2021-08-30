@@ -2,7 +2,7 @@
 
 namespace ChessServer\Mode;
 
-class Analysis extends AbstractMode
+class AnalysisMode extends AbstractMode
 {
     const NAME = 'analysis';
 }

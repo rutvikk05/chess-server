@@ -2,7 +2,7 @@
 
 namespace ChessServer\Mode;
 
-class PlayFriend extends AbstractMode
+class PlayFriendMode extends AbstractMode
 {
     const NAME = 'playfriend';
 }

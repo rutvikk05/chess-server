@@ -2,7 +2,7 @@
 
 namespace ChessServer\Mode;
 
-class Fen extends AbstractMode
+class FenMode extends AbstractMode
 {
     const NAME = 'fen';
 }
