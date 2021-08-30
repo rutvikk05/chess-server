@@ -4,6 +4,7 @@ namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
 use ChessServer\Mode\Analysis;
+use ChessServer\Mode\Fen;
 use ChessServer\Mode\PlayFriend;
 
 class Start extends AbstractCommand
@@ -15,13 +16,12 @@ class Start extends AbstractCommand
         $this->params = [
             'mode' => [
                 Analysis::NAME,
+                Fen::NAME,
                 PlayFriend::NAME,
             ],
-            'color' => [
-                Symbol::WHITE,
-                Symbol::BLACK,
-            ],
-            'min' => 'int',
+            'fen' => 'string',  // FEN mode
+            'jwt' => 'string',  // PlayFriend mode
+            'hash' => 'string', // PlayFriend  mode
         ];
     }
 
@@ -30,12 +30,11 @@ class Start extends AbstractCommand
         if (in_array($argv[1], $this->params['mode'])) {
             switch ($argv[1]) {
                 case Analysis::NAME:
-                    return count($argv) - 1 === count($this->params) - 2;
+                    return count($argv) - 1 === 1;
+                case Fen::NAME:
+                    return count($argv) - 1 === 2;
                 case PlayFriend::NAME:
-                    return count($argv) - 1 ===
-                      count($this->params) &&
-                      in_array($argv[2], $this->params['color']) &&
-                      is_numeric($argv[3]);
+                    return count($argv) - 1 === 3; 
                 default:
                     // do nothing
                     break;
