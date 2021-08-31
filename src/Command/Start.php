@@ -14,14 +14,23 @@ class Start extends AbstractCommand
         $this->name = '/start';
         $this->description = 'Starts a new game.';
         $this->params = [
+            // mandatory param
             'mode' => [
                 AnalysisMode::NAME,
                 FenMode::NAME,
                 PlayFriendMode::NAME,
             ],
-            'fen' => 'string',  // FEN mode
-            'jwt' => 'string',  // PlayFriend mode
-            'hash' => 'string', // PlayFriend  mode
+            // 'Load FEN' mode
+            // optional param
+            'fen' => 'string',
+            // PlayFriend mode
+            // optional param
+            'color' => [
+                Symbol::WHITE,
+                Symbol::BLACK,
+            ],
+            // optional param
+            'min' => 'int',
         ];
     }
 
