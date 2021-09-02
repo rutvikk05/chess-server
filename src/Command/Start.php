@@ -4,7 +4,7 @@ namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
 use ChessServer\Mode\AnalysisMode;
-use ChessServer\Mode\FenMode;
+use ChessServer\Mode\LoadFenMode;
 use ChessServer\Mode\PlayFriendMode;
 
 class Start extends AbstractCommand
@@ -17,7 +17,7 @@ class Start extends AbstractCommand
             // mandatory param
             'mode' => [
                 AnalysisMode::NAME,
-                FenMode::NAME,
+                LoadFenMode::NAME,
                 PlayFriendMode::NAME,
             ],
             // 'Load FEN' mode
@@ -40,7 +40,7 @@ class Start extends AbstractCommand
             switch ($argv[1]) {
                 case AnalysisMode::NAME:
                     return count($argv) - 1 === 1;
-                case FenMode::NAME:
+                case LoadFenMode::NAME:
                     return count($argv) - 1 === 2;
                 case PlayFriendMode::NAME:
                     return count($argv) - 1 === 3;

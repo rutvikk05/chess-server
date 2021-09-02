@@ -11,7 +11,7 @@ use ChessServer\Command\Quit;
 use ChessServer\Exception\ParserException;
 use ChessServer\Mode\AbstractMode;
 use ChessServer\Mode\AnalysisMode;
-use ChessServer\Mode\FenMode;
+use ChessServer\Mode\LoadFenMode;
 use ChessServer\Mode\PlayFriendMode;
 use ChessServer\Parser\CommandParser;
 use Dotenv\Dotenv;
@@ -104,20 +104,20 @@ class Socket implements MessageComponentInterface
                         ],
                     ];
                     break;
-                case FenMode::NAME:
+                case LoadFenMode::NAME:
                     // TODO:
                     // See https://github.com/programarivm/php-chess/issues/36
                     // FEN validation logic should be written in programarivm/php-chess rather than
                     // catching a Throwable object in the chess server.
                     try {
-                        $fenMode = new FenMode(new Game, [$from->resourceId]);
+                        $fenMode = new LoadFenMode(new Game, [$from->resourceId]);
                         $game = $fenMode->getGame();
                         $game->loadFen($this->parser->argv[2]);
                         $fenMode->setGame($game);
                         $this->modes[$from->resourceId] = $fenMode;
                         $res = [
                             $cmd->name => [
-                                'mode' => FenMode::NAME,
+                                'mode' => LoadFenMode::NAME,
                             ],
                         ];
                     } catch (\Throwable $e) {
