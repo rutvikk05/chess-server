@@ -14,26 +14,29 @@ Before starting the server for the first time, make sure to copy the `certificat
 
 Start the server:
 
-	$ php cli/ws-server.php
-    Welcome to PHP Chess Server
-    Commands available:
-    /accept {"id":"id"} Accepts a friend request to play a game.
-    /ascii Prints the ASCII representation of the game.
-    /castling Gets the castling status.
-    /captures Gets the pieces captured by both players.
-    /fen Prints the FEN string representation of the game.
-    /heuristicpicture Takes a balanced heuristic picture of the current game.
-    /history The current game's history.
-    /ischeck Finds out if the game is in check.
-    /ismate Finds out if the game is over.
-    /piece {"position":"string"} Gets a piece by its position on the board.
-    /pieces {"color":["w","b"]} Gets the pieces on the board by color.
-    /playfen {"fen":"string"} Plays a chess move in shortened FEN format.
-    /quit Quits a game.
-    /start {"mode":["analysis","fen","playfriend"],"fen":"string","color":["w","b"],"min":"int"} Starts a new game.
-    /status The current game status.
+```
+$ php cli/ws-server.php
+Welcome to PHP Chess Server
+Commands available:
+/accept {"id":"id"} Accepts a friend request to play a game.
+/ascii Prints the ASCII representation of the game.
+/castling Gets the castling status.
+/captures Gets the pieces captured by both players.
+/fen Prints the FEN string representation of the game.
+/heuristicpicture Takes a balanced heuristic picture of the current game.
+/history The current game's history.
+/ischeck Finds out if the game is in check.
+/ismate Finds out if the game is over.
+/piece {"position":"string"} Gets a piece by its position on the board.
+/pieces {"color":["w","b"]} Gets the pieces on the board by color.
+/playfen {"fen":"string"} Plays a chess move in shortened FEN format.
+/quit Quits a game.
+/start {"mode":["analysis","loadfen","playfriend"],"fen":"string","color":["w","b"],"min":"int"} Starts a new game.
+/status The current game status.
 
-    Listening to commands...
+Listening to commands...
+```
+
 
 Open a console in your favorite browser and run commands:
 
