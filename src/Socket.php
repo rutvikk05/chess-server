@@ -118,6 +118,7 @@ class Socket implements MessageComponentInterface
                         $res = [
                             $cmd->name => [
                                 'mode' => LoadFenMode::NAME,
+                                'fen' => $this->parser->argv[2],
                             ],
                         ];
                     } catch (\Throwable $e) {
