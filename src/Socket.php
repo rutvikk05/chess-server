@@ -105,10 +105,6 @@ class Socket implements MessageComponentInterface
                     ];
                     break;
                 case LoadFenMode::NAME:
-                    // TODO:
-                    // See https://github.com/programarivm/php-chess/issues/36
-                    // FEN validation logic should be written in programarivm/php-chess rather than
-                    // catching a Throwable object in the chess server.
                     try {
                         $fenMode = new LoadFenMode(new Game, [$from->resourceId]);
                         $game = $fenMode->getGame();
@@ -123,7 +119,10 @@ class Socket implements MessageComponentInterface
                         ];
                     } catch (\Throwable $e) {
                         $res = [
-                            $cmd->name => 'Whoops! This FEN string could not be loaded.',
+                            $cmd->name => [
+                                'mode' => LoadFenMode::NAME,
+                                'message' => 'This FEN string could not be loaded.',
+                            ],
                         ];
                     }
                     break;
