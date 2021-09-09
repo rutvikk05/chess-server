@@ -152,8 +152,8 @@ class Socket implements MessageComponentInterface
                 $cmd->name => 'A game needs to be started first for this command to be allowed.',
             ];
         } elseif (is_a($cmd, AcceptFriendRequest::class)) {
-            if ($gameMode = $this->findPlayFriendMode($this->parser->argv[1])) {
-                $this->syncModeWith($gameMode, $from);
+            if ($gameMode = $this->findGameMode($this->parser->argv[1])) {
+                $this->syncGameModeWith($gameMode, $from);
                 $jwt = $gameMode->getJwt();
                 $decoded = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
                 $res = [
@@ -191,7 +191,7 @@ class Socket implements MessageComponentInterface
         $this->log->info('Occurred an error', ['message' => $e->getMessage()]);
     }
 
-    protected function findPlayFriendMode(string $hash)
+    protected function findGameMode(string $hash)
     {
         foreach ($this->gameModes as $gameMode) {
             if ($hash === $gameMode->getHash()) {
@@ -202,7 +202,7 @@ class Socket implements MessageComponentInterface
         return null;
     }
 
-    protected function syncModeWith(AbstractMode $gameMode, ConnectionInterface $from)
+    protected function syncGameModeWith(AbstractMode $gameMode, ConnectionInterface $from)
     {
         $resourceIds = $gameMode->getResourceIds();
         $resourceIds[] = $from->resourceId;
