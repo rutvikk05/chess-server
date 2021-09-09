@@ -1,6 +1,6 @@
 <?php
 
-namespace ChessServer\Mode;
+namespace ChessServer\GameMode;
 
 use Chess\Game;
 use ChessServer\Command\Ascii;
@@ -22,18 +22,12 @@ abstract class AbstractMode
 
     protected $resourceIds;
 
-    protected $jwt;
-
     protected $hash;
 
-    public function __construct(Game $game, array $resourceIds, string $jwt=null)
+    public function __construct(Game $game, array $resourceIds)
     {
         $this->game = $game;
         $this->resourceIds = $resourceIds;
-        if ($jwt) {
-            $this->jwt = $jwt;
-            $this->hash = md5($jwt);
-        }
     }
 
     public function getGame()
@@ -58,11 +52,6 @@ abstract class AbstractMode
         $this->resourceIds = $resourceIds;
 
         return $this;
-    }
-
-    public function getJwt()
-    {
-        return $this->jwt;
     }
 
     public function getHash()
