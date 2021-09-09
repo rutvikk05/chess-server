@@ -2,7 +2,7 @@
 
 namespace ChessServer\Command;
 
-class IsCheck extends AbstractCommand
+class IsCheckCommand extends AbstractCommand
 {
     public function __construct()
     {

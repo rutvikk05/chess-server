@@ -2,7 +2,7 @@
 
 namespace ChessServer\Command;
 
-class History extends AbstractCommand
+class HistoryCommand extends AbstractCommand
 {
     public function __construct()
     {

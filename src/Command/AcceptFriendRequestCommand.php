@@ -4,7 +4,7 @@ namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
 
-class AcceptFriendRequest extends AbstractCommand
+class AcceptFriendRequestCommand extends AbstractCommand
 {
     public function __construct()
     {

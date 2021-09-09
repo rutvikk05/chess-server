@@ -2,7 +2,7 @@
 
 namespace ChessServer\Command;
 
-class Fen extends AbstractCommand
+class FenCommand extends AbstractCommand
 {
     public function __construct()
     {

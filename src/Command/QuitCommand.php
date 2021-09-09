@@ -2,7 +2,7 @@
 
 namespace ChessServer\Command;
 
-class Quit extends AbstractCommand
+class QuitCommand extends AbstractCommand
 {
     public function __construct()
     {

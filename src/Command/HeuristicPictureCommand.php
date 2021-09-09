@@ -2,7 +2,7 @@
 
 namespace ChessServer\Command;
 
-class HeuristicPicture extends AbstractCommand
+class HeuristicPictureCommand extends AbstractCommand
 {
     public function __construct()
     {

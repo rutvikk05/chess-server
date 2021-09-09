@@ -2,7 +2,7 @@
 
 namespace ChessServer\Command;
 
-class Ascii extends AbstractCommand
+class AsciiCommand extends AbstractCommand
 {
     public function __construct()
     {

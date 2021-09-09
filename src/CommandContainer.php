@@ -2,21 +2,21 @@
 
 namespace ChessServer;
 
-use ChessServer\Command\AcceptFriendRequest;
-use ChessServer\Command\Ascii;
-use ChessServer\Command\Castling;
-use ChessServer\Command\Captures;
-use ChessServer\Command\Fen;
-use ChessServer\Command\HeuristicPicture;
-use ChessServer\Command\History;
-use ChessServer\Command\IsCheck;
-use ChessServer\Command\IsMate;
-use ChessServer\Command\Piece;
-use ChessServer\Command\Pieces;
-use ChessServer\Command\PlayFen;
-use ChessServer\Command\Quit;
-use ChessServer\Command\Start;
-use ChessServer\Command\Status;
+use ChessServer\Command\AcceptFriendRequestCommand;
+use ChessServer\Command\AsciiCommand;
+use ChessServer\Command\CastlingCommand;
+use ChessServer\Command\CapturesCommand;
+use ChessServer\Command\FenCommand;
+use ChessServer\Command\HeuristicPictureCommand;
+use ChessServer\Command\HistoryCommand;
+use ChessServer\Command\IsCheckCommand;
+use ChessServer\Command\IsMateCommand;
+use ChessServer\Command\PieceCommand;
+use ChessServer\Command\PiecesCommand;
+use ChessServer\Command\PlayFenCommand;
+use ChessServer\Command\QuitCommand;
+use ChessServer\Command\StartCommand;
+use ChessServer\Command\StatusCommand;
 
 class CommandContainer
 {

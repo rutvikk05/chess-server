@@ -4,7 +4,7 @@ namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
 
-class PlayFen extends AbstractCommand
+class PlayFenCommand extends AbstractCommand
 {
     public function __construct()
     {

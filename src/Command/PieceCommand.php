@@ -2,7 +2,7 @@
 
 namespace ChessServer\Command;
 
-class Piece extends AbstractCommand
+class PieceCommand extends AbstractCommand
 {
     public function __construct()
     {

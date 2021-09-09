@@ -2,7 +2,7 @@
 
 namespace ChessServer\Command;
 
-class Status extends AbstractCommand
+class StatusCommand extends AbstractCommand
 {
     public function __construct()
     {
