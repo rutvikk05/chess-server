@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class Fen extends AbstractCommand
+class StatusCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/fen';
-        $this->description = "Prints the FEN string representation of the game.";
+        $this->name = '/status';
+        $this->description = 'The current game status.';
         $this->dependsOn = [
             Start::class,
         ];

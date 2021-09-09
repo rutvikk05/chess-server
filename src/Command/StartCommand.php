@@ -7,7 +7,7 @@ use ChessServer\GameMode\AnalysisMode;
 use ChessServer\GameMode\LoadFenMode;
 use ChessServer\GameMode\PlayFriendMode;
 
-class Start extends AbstractCommand
+class StartCommand extends AbstractCommand
 {
     public function __construct()
     {

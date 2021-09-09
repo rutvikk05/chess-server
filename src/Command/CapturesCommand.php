@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class IsCheck extends AbstractCommand
+class CapturesCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/ischeck';
-        $this->description = 'Finds out if the game is in check.';
+        $this->name = '/captures';
+        $this->description = 'Gets the pieces captured by both players.';
         $this->dependsOn = [
             Start::class,
         ];

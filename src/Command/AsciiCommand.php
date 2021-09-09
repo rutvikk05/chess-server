@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class Status extends AbstractCommand
+class AsciiCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/status';
-        $this->description = 'The current game status.';
+        $this->name = '/ascii';
+        $this->description = 'Prints the ASCII representation of the game.';
         $this->dependsOn = [
             Start::class,
         ];

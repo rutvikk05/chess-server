@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class Ascii extends AbstractCommand
+class IsCheckCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/ascii';
-        $this->description = 'Prints the ASCII representation of the game.';
+        $this->name = '/ischeck';
+        $this->description = 'Finds out if the game is in check.';
         $this->dependsOn = [
             Start::class,
         ];

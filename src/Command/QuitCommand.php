@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class IsMate extends AbstractCommand
+class QuitCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/ismate';
-        $this->description = 'Finds out if the game is over.';
+        $this->name = '/quit';
+        $this->description = 'Quits a game.';
         $this->dependsOn = [
             Start::class,
         ];

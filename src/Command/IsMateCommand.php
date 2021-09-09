@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class History extends AbstractCommand
+class IsMateCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/history';
-        $this->description = "The current game's history.";
+        $this->name = '/ismate';
+        $this->description = 'Finds out if the game is over.';
         $this->dependsOn = [
             Start::class,
         ];

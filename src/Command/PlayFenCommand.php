@@ -4,16 +4,18 @@ namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
 
-class AcceptFriendRequest extends AbstractCommand
+class PlayFenCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/accept';
-        $this->description = 'Accepts a friend request to play a game.';
+        $this->name = '/playfen';
+        $this->description = 'Plays a chess move in shortened FEN format.';
         $this->params = [
-            'id' => 'id',
+            'fen' => 'string',
         ];
-        $this->dependsOn = [];
+        $this->dependsOn = [
+            Start::class,
+        ];
     }
 
     public function validate(array $argv)

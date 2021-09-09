@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class HeuristicPicture extends AbstractCommand
+class FenCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/heuristicpicture';
-        $this->description = "Takes a balanced heuristic picture of the current game.";
+        $this->name = '/fen';
+        $this->description = "Prints the FEN string representation of the game.";
         $this->dependsOn = [
             Start::class,
         ];

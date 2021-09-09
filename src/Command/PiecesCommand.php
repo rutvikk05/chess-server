@@ -4,7 +4,7 @@ namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
 
-class Pieces extends AbstractCommand
+class PiecesCommand extends AbstractCommand
 {
     public function __construct()
     {

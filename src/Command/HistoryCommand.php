@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class Castling extends AbstractCommand
+class HistoryCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/castling';
-        $this->description = 'Gets the castling status.';
+        $this->name = '/history';
+        $this->description = "The current game's history.";
         $this->dependsOn = [
             Start::class,
         ];

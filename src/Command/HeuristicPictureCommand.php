@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class Captures extends AbstractCommand
+class HeuristicPictureCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/captures';
-        $this->description = 'Gets the pieces captured by both players.';
+        $this->name = '/heuristicpicture';
+        $this->description = "Takes a balanced heuristic picture of the current game.";
         $this->dependsOn = [
             Start::class,
         ];

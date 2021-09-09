@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class Quit extends AbstractCommand
+class CastlingCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/quit';
-        $this->description = 'Quits a game.';
+        $this->name = '/castling';
+        $this->description = 'Gets the castling status.';
         $this->dependsOn = [
             Start::class,
         ];
