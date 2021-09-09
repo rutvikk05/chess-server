@@ -25,21 +25,21 @@ class CommandContainer
     public function __construct()
     {
         $this->obj = new \SplObjectStorage;
-        $this->obj->attach(new AcceptFriendRequest());
-        $this->obj->attach(new Ascii());
-        $this->obj->attach(new Castling());
-        $this->obj->attach(new Captures());
-        $this->obj->attach(new Fen());
-        $this->obj->attach(new HeuristicPicture());
-        $this->obj->attach(new History());
-        $this->obj->attach(new IsCheck());
-        $this->obj->attach(new IsMate());
-        $this->obj->attach(new Piece());
-        $this->obj->attach(new Pieces());
-        $this->obj->attach(new PlayFen());
-        $this->obj->attach(new Quit());
-        $this->obj->attach(new Start());
-        $this->obj->attach(new Status());
+        $this->obj->attach(new AcceptFriendRequestCommand());
+        $this->obj->attach(new AsciiCommand());
+        $this->obj->attach(new CastlingCommand());
+        $this->obj->attach(new CapturesCommand());
+        $this->obj->attach(new FenCommand());
+        $this->obj->attach(new HeuristicPictureCommand());
+        $this->obj->attach(new HistoryCommand());
+        $this->obj->attach(new IsCheckCommand());
+        $this->obj->attach(new IsMateCommand());
+        $this->obj->attach(new PieceCommand());
+        $this->obj->attach(new PiecesCommand());
+        $this->obj->attach(new PlayFenCommand());
+        $this->obj->attach(new QuitCommand());
+        $this->obj->attach(new StartCommand());
+        $this->obj->attach(new StatusCommand());
     }
 
     public function findByName(string $name)
