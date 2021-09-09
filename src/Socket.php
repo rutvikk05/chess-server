@@ -25,7 +25,7 @@ class Socket implements MessageComponentInterface
 {
     private $clients = [];
 
-    private $modes = [];
+    private $gameModes = [];
 
     private $parser;
 
@@ -70,11 +70,13 @@ class Socket implements MessageComponentInterface
             return;
         }
 
-        isset($this->modes[$from->resourceId]) ? $mode = $this->modes[$from->resourceId] : $mode = null;
+        isset($this->gameModes[$from->resourceId])
+          ? $gameMode = $this->gameModes[$from->resourceId]
+          : $gameMode = null;
 
-        if ($mode) {
+        if ($gameMode) {
             if (is_a($cmd, Quit::class)) {
-                unset($this->modes[$from->resourceId]);
+                unset($this->gameModes[$from->resourceId]);
                 $res = [
                     $cmd->name => 'Good bye!',
                 ];
@@ -84,20 +86,20 @@ class Socket implements MessageComponentInterface
                 ];
             } elseif (
                 is_a($cmd, PlayFen::class) &&
-                is_a($this->modes[$from->resourceId], PlayFriendMode::class)
+                is_a($this->gameModes[$from->resourceId], PlayFriendMode::class)
             ) {
                 $this->sendToMany(
-                    $mode->getResourceIds(),
-                    $mode->res($this->parser->argv, $cmd)
+                    $gameMode->getResourceIds(),
+                    $gameMode->res($this->parser->argv, $cmd)
                 );
                 return;
             } else {
-                $res = $this->modes[$from->resourceId]->res($this->parser->argv, $cmd);
+                $res = $this->gameModes[$from->resourceId]->res($this->parser->argv, $cmd);
             }
         } elseif (is_a($cmd, Start::class)) {
             switch ($this->parser->argv[1]) {
                 case AnalysisMode::NAME:
-                    $this->modes[$from->resourceId] = new AnalysisMode(new Game, [$from->resourceId]);
+                    $this->gameModes[$from->resourceId] = new AnalysisMode(new Game, [$from->resourceId]);
                     $res = [
                         $cmd->name => [
                             'mode' => AnalysisMode::NAME,
@@ -110,7 +112,7 @@ class Socket implements MessageComponentInterface
                         $game = $fenMode->getGame();
                         $game->loadFen($this->parser->argv[2]);
                         $fenMode->setGame($game);
-                        $this->modes[$from->resourceId] = $fenMode;
+                        $this->gameModes[$from->resourceId] = $fenMode;
                         $res = [
                             $cmd->name => [
                                 'mode' => LoadFenMode::NAME,
@@ -135,7 +137,7 @@ class Socket implements MessageComponentInterface
                         'exp' => time() + 600 // ten minutes by default
                     ];
                     $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
-                    $this->modes[$from->resourceId] = new PlayFriendMode(new Game, [$from->resourceId], $jwt);
+                    $this->gameModes[$from->resourceId] = new PlayFriendMode(new Game, [$from->resourceId], $jwt);
                     $res = [
                         $cmd->name => [
                             'mode' => PlayFriendMode::NAME,
@@ -150,9 +152,9 @@ class Socket implements MessageComponentInterface
                 $cmd->name => 'A game needs to be started first for this command to be allowed.',
             ];
         } elseif (is_a($cmd, AcceptFriendRequest::class)) {
-            if ($mode = $this->findMode($this->parser->argv[1])) {
-                $this->syncModeWith($mode, $from);
-                $jwt = $mode->getJwt();
+            if ($gameMode = $this->findMode($this->parser->argv[1])) {
+                $this->syncModeWith($gameMode, $from);
+                $jwt = $gameMode->getJwt();
                 $decoded = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
                 $res = [
                     $cmd->name => [
@@ -160,7 +162,7 @@ class Socket implements MessageComponentInterface
                         'hash' => md5($jwt),
                     ],
                 ];
-                $this->sendToMany($mode->getResourceIds(), $res);
+                $this->sendToMany($gameMode->getResourceIds(), $res);
                 return;
             } else {
                 $res = [
@@ -191,22 +193,22 @@ class Socket implements MessageComponentInterface
 
     protected function findMode(string $hash)
     {
-        foreach ($this->modes as $mode) {
-            if ($hash === $mode->getHash()) {
-                return $mode;
+        foreach ($this->gameModes as $gameMode) {
+            if ($hash === $gameMode->getHash()) {
+                return $gameMode;
             }
         }
 
         return null;
     }
 
-    protected function syncModeWith(AbstractMode $mode, ConnectionInterface $from)
+    protected function syncModeWith(AbstractMode $gameMode, ConnectionInterface $from)
     {
-        $resourceIds = $mode->getResourceIds();
+        $resourceIds = $gameMode->getResourceIds();
         $resourceIds[] = $from->resourceId;
-        $mode->setResourceIds($resourceIds);
+        $gameMode->setResourceIds($resourceIds);
         foreach ($resourceIds as $resourceId) {
-            $this->modes[$resourceId] = $mode;
+            $this->gameModes[$resourceId] = $gameMode;
         }
     }
 
