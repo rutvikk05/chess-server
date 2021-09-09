@@ -2,6 +2,8 @@
 
 namespace ChessServer\GameMode;
 
+use Chess\Game;
+
 class PlayFriendMode extends AbstractMode
 {
     const NAME = 'playfriend';

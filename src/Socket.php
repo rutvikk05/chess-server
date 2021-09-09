@@ -36,10 +36,8 @@ class Socket implements MessageComponentInterface
         $dotenv = Dotenv::createImmutable(__DIR__.'/../');
         $dotenv->load();
 
-        // create a command parser
         $this->parser = new CommandParser;
 
-        // create a log channel
         $this->log = new Logger($_ENV['BASE_URL']);
         $this->log->pushHandler(new StreamHandler(__DIR__.'/../storage/pchess.log', Logger::INFO));
 
@@ -153,22 +151,25 @@ class Socket implements MessageComponentInterface
             ];
         } elseif (is_a($cmd, AcceptFriendRequest::class)) {
             if ($gameMode = $this->findGameMode($this->parser->argv[1])) {
-                $this->syncGameModeWith($gameMode, $from);
-                $jwt = $gameMode->getJwt();
-                $decoded = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
-                $res = [
-                    $cmd->name => [
-                        'jwt' => $jwt,
-                        'hash' => md5($jwt),
-                    ],
-                ];
-                $this->sendToMany($gameMode->getResourceIds(), $res);
-                return;
-            } else {
-                $res = [
-                    $cmd->name => "Friend request not found.",
-                ];
-            }
+                if ($this->syncGameModeWith($gameMode, $from)) {
+                    $jwt = $gameMode->getJwt();
+                    $decoded = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
+                    $res = [
+                        $cmd->name => [
+                            'jwt' => $jwt,
+                            'hash' => md5($jwt),
+                        ],
+                    ];
+                    $this->sendToMany($gameMode->getResourceIds(), $res);
+                    return;
+                }
+            } 
+            $res = [
+                $cmd->name => [
+                    'mode' => PlayFriendMode::NAME,
+                    'message' =>  'This friend request could not be accepted.',
+                ],
+            ];
         }
 
         $this->clients[$from->resourceId]->send(json_encode($res));
@@ -204,12 +205,18 @@ class Socket implements MessageComponentInterface
 
     protected function syncGameModeWith(AbstractMode $gameMode, ConnectionInterface $from)
     {
-        $resourceIds = $gameMode->getResourceIds();
-        $resourceIds[] = $from->resourceId;
-        $gameMode->setResourceIds($resourceIds);
-        foreach ($resourceIds as $resourceId) {
-            $this->gameModes[$resourceId] = $gameMode;
+        if ($resourceIds = $gameMode->getResourceIds()) {
+            if (count($resourceIds) === 1) {
+                $resourceIds[] = $from->resourceId;
+                $gameMode->setResourceIds($resourceIds);
+                foreach ($resourceIds as $resourceId) {
+                    $this->gameModes[$resourceId] = $gameMode;
+                }
+                return true;
+            }
         }
+
+        return false;
     }
 
     protected function sendToMany(array $resourceIds, array $res)
