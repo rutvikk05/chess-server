@@ -1,6 +1,6 @@
 <?php
 
-namespace ChessServer\Mode;
+namespace ChessServer\GameMode;
 
 use Chess\Game;
 use ChessServer\Command\Ascii;

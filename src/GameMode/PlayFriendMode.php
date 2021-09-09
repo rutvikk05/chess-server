@@ -1,6 +1,6 @@
 <?php
 
-namespace ChessServer\Mode;
+namespace ChessServer\GameMode;
 
 class PlayFriendMode extends AbstractMode
 {

@@ -3,9 +3,9 @@
 namespace ChessServer\Command;
 
 use Chess\PGN\Symbol;
-use ChessServer\Mode\AnalysisMode;
-use ChessServer\Mode\LoadFenMode;
-use ChessServer\Mode\PlayFriendMode;
+use ChessServer\GameMode\AnalysisMode;
+use ChessServer\GameMode\LoadFenMode;
+use ChessServer\GameMode\PlayFriendMode;
 
 class Start extends AbstractCommand
 {
