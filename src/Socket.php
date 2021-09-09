@@ -4,10 +4,10 @@ namespace ChessServer;
 
 use Chess\Game;
 use Chess\PGN\Symbol;
-use ChessServer\Command\AcceptFriendRequest;
-use ChessServer\Command\PlayFen;
-use ChessServer\Command\Start;
-use ChessServer\Command\Quit;
+use ChessServer\Command\AcceptFriendRequestCommand;
+use ChessServer\Command\PlayFenCommand;
+use ChessServer\Command\StartCommand;
+use ChessServer\Command\QuitCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\GameMode\AbstractMode;
 use ChessServer\GameMode\AnalysisMode;
@@ -71,17 +71,17 @@ class Socket implements MessageComponentInterface
           : $gameMode = null;
 
         if ($gameMode) {
-            if (is_a($cmd, Quit::class)) {
+            if (is_a($cmd, QuitCommand::class)) {
                 unset($this->gameModes[$from->resourceId]);
                 return $this->sendToOne($from->resourceId, [
                     $cmd->name => 'Good bye!',
                 ]);
-            } elseif (is_a($cmd, Start::class)) {
+            } elseif (is_a($cmd, StartCommand::class)) {
                 return $this->sendToOne($from->resourceId, [
                     $cmd->name => 'Game already started.',
                 ]);
             } elseif (
-                is_a($cmd, PlayFen::class) &&
+                is_a($cmd, PlayFenCommand::class) &&
                 is_a($this->gameModes[$from->resourceId], PlayFriendMode::class)
             ) {
                 return $this->sendToMany(
@@ -96,7 +96,7 @@ class Socket implements MessageComponentInterface
             }
         }
 
-        if (is_a($cmd, Start::class)) {
+        if (is_a($cmd, StartCommand::class)) {
             if (AnalysisMode::NAME === $this->parser->argv[1]) {
                 $this->gameModes[$from->resourceId] = new AnalysisMode(new Game, [$from->resourceId]);
                 $res = [
@@ -150,7 +150,7 @@ class Socket implements MessageComponentInterface
             ]);
         }
 
-        if (is_a($cmd, AcceptFriendRequest::class)) {
+        if (is_a($cmd, AcceptFriendRequestCommand::class)) {
             if ($gameMode = $this->findGameMode($this->parser->argv[1])) {
                 if ($this->syncGameModeWith($gameMode, $from)) {
                     $jwt = $gameMode->getJwt();
