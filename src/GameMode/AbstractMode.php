@@ -3,18 +3,18 @@
 namespace ChessServer\GameMode;
 
 use Chess\Game;
-use ChessServer\Command\Ascii;
-use ChessServer\Command\Castling;
-use ChessServer\Command\Captures;
-use ChessServer\Command\Fen;
-use ChessServer\Command\HeuristicPicture;
-use ChessServer\Command\History;
-use ChessServer\Command\IsCheck;
-use ChessServer\Command\IsMate;
-use ChessServer\Command\Piece;
-use ChessServer\Command\Pieces;
-use ChessServer\Command\PlayFen;
-use ChessServer\Command\Status;
+use ChessServer\Command\AsciiCommand;
+use ChessServer\Command\CastlingCommand;
+use ChessServer\Command\CapturesCommand;
+use ChessServer\Command\FenCommand;
+use ChessServer\Command\HeuristicPictureCommand;
+use ChessServer\Command\HistoryCommand;
+use ChessServer\Command\IsCheckCommand;
+use ChessServer\Command\IsMateCommand;
+use ChessServer\Command\PieceCommand;
+use ChessServer\Command\PiecesCommand;
+use ChessServer\Command\PlayFenCommand;
+use ChessServer\Command\StatusCommand;
 
 abstract class AbstractMode
 {
@@ -63,50 +63,50 @@ abstract class AbstractMode
     {
         try {
             switch (get_class($cmd)) {
-                case Ascii::class:
+                case AsciiCommand::class:
                     return [
                         $cmd->name => $this->game->ascii(),
                     ];
-                case Castling::class:
+                case CastlingCommand::class:
                     return [
                         $cmd->name => $this->game->castling(),
                     ];
-                case Captures::class:
+                case CapturesCommand::class:
                     return [
                         $cmd->name => $this->game->captures(),
                     ];
-                case Fen::class:
+                case FenCommand::class:
                     return [
                         $cmd->name => $this->game->fen(),
                     ];
-                case HeuristicPicture::class:
+                case HeuristicPictureCommand::class:
                     return [
                         $cmd->name => [
                             'dimensions' => (new \Chess\HeuristicPicture(''))->getDimensions(),
                             'balance' => $this->game->heuristicPicture(true),
                         ],
                     ];
-                case History::class:
+                case HistoryCommand::class:
                     return [
                         $cmd->name => $this->game->history(),
                     ];
-                case IsCheck::class:
+                case IsCheckCommand::class:
                     return [
                         $cmd->name => $this->game->isCheck(),
                     ];
-                case IsMate::class:
+                case IsMateCommand::class:
                     return [
                         $cmd->name => $this->game->isCheck(),
                     ];
-                case Piece::class:
+                case PieceCommand::class:
                     return [
                         $cmd->name => $this->game->piece($argv[1]),
                     ];
-                case Pieces::class:
+                case PiecesCommand::class:
                     return [
                         $cmd->name => $this->game->pieces($argv[1]),
                     ];
-                case PlayFen::class:
+                case PlayFenCommand::class:
                     return [
                         $cmd->name => [
                             'turn' => $this->game->status()->turn,
@@ -117,7 +117,7 @@ abstract class AbstractMode
                             'fen' => $this->game->fen(),
                         ],
                     ];
-                case Status::class:
+                case StatusCommand::class:
                     return [
                         $cmd->name => $this->game->status(),
                     ];
