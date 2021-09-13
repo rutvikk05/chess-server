@@ -1,6 +1,6 @@
 ## PHP Chess Server
 
-PHP Ratchet WebSocket server using [PHP Chess](https://github.com/programarivm/php-chess). The chess server is intended to connect to a [Redux Chess](https://github.com/programarivm/redux-chess) app.
+PHP Ratchet WebSocket server using [PHP Chess](https://github.com/chesslab/php-chess). The chess server is intended to connect to a [Redux Chess](https://github.com/chesslab/redux-chess) app.
 
 ### Setup
 
@@ -72,7 +72,7 @@ For further information you're all invited to read my learning journey:
 - [How to Test a Local React NPM Package With Ease](https://javascript.plainenglish.io/testing-a-local-react-npm-package-with-ease-7d0668676ddb)
 - [TDDing a React App With Jest the Easy Way](https://medium.com/geekculture/tdding-a-react-app-with-jest-the-easy-way-8ddb64aeaba6)
 - [How to Test React Components With Joy](https://javascript.plainenglish.io/looking-forward-to-testing-react-components-with-joy-5bb3f86c21d7)
-- [My First Integration Test in a Redux Hooked App](https://programarivm.medium.com/my-first-integration-test-in-a-redux-hooked-app-3b189addd46e)
+- [My First Integration Test in a Redux Hooked App](https://javascript.plainenglish.io/my-first-integration-test-in-a-redux-hooked-app-3b189addd46e)
 - [Creating a Local WebSocket Server With TLS/SSL Is Easy as Pie](https://medium.com/geekculture/creating-a-local-websocket-server-with-tls-ssl-is-easy-as-pie-de1a2ef058e0)
 - [A Simple Example of SSL/TLS WebSocket With ReactPHP and Ratchet](https://medium.com/geekculture/a-simple-example-of-ssl-tls-websocket-with-reactphp-and-ratchet-e03be973f521)
 - [Newbie Tutorial on How to Rate-Limit a WebSocket Server](https://medium.com/geekculture/newbie-tutorial-on-how-to-rate-limit-a-websocket-server-8e28642ad5ff)
