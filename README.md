@@ -8,8 +8,6 @@ Create an `.env` file:
 
     $ cp .env.example .env
 
-Before starting the server for the first time, make sure to copy the `certificate.crt` and `private.key` files into the `ssl` folder as explained in [A Simple Example of SSL/TLS WebSocket With ReactPHP and Ratchet](https://medium.com/geekculture/a-simple-example-of-ssl-tls-websocket-with-reactphp-and-ratchet-e03be973f521).
-
 ### WebSocket Server
 
 Start the server:
@@ -45,6 +43,8 @@ Open a console in your favorite browser and run commands:
     ws.send('/start analysis');
 
 ### Secure WebSocket Server
+
+> Before starting the secure WebSocket server for the first time, make sure to copy the `certificate.crt` and `private.key` files into the `ssl` folder as explained in [A Simple Example of SSL/TLS WebSocket With ReactPHP and Ratchet](https://medium.com/geekculture/a-simple-example-of-ssl-tls-websocket-with-reactphp-and-ratchet-e03be973f521).
 
 Start the server:
 
@@ -84,10 +84,8 @@ The MIT License.
 
 ### Contributions
 
-Would you help make this app better?
+- [How to Contribute to Chesslab](https://medium.com/geekculture/how-to-contribute-to-chesslab-cca73fefaf70)
 
-- Feel free to send a pull request
-- Drop an email at info@programarivm.com with the subject "PHP Chess Server"
-- Leave me a comment on [Twitter](https://twitter.com/programarivm)
+Happy learning and coding!
 
-Thank you.
+Thank you, and keep it up.
