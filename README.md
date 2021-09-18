@@ -1,6 +1,6 @@
 ## PHP Chess Server
 
-PHP Ratchet WebSocket server using [PHP Chess](https://github.com/chesslab/php-chess). The chess server is intended to connect to a [Redux Chess](https://github.com/chesslab/redux-chess) app.
+PHP Ratchet WebSocket server using [PHP Chess](https://github.com/chesslablab/php-chess). The chess server is intended to connect to a [Redux Chess](https://github.com/chesslablab/redux-chess) app.
 
 ### Setup
 
