@@ -12,7 +12,7 @@ class PieceCommand extends AbstractCommand
             'position' => 'string',
         ];
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 

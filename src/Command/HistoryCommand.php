@@ -9,7 +9,7 @@ class HistoryCommand extends AbstractCommand
         $this->name = '/history';
         $this->description = "The current game's history.";
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 

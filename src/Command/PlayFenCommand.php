@@ -14,7 +14,7 @@ class PlayFenCommand extends AbstractCommand
             'fen' => 'string',
         ];
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 

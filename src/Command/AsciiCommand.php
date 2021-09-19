@@ -9,7 +9,7 @@ class AsciiCommand extends AbstractCommand
         $this->name = '/ascii';
         $this->description = 'Prints the ASCII representation of the game.';
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 

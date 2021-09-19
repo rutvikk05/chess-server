@@ -17,7 +17,7 @@ class PiecesCommand extends AbstractCommand
             ],
         ];
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 

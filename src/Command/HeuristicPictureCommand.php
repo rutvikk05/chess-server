@@ -9,7 +9,7 @@ class HeuristicPictureCommand extends AbstractCommand
         $this->name = '/heuristicpicture';
         $this->description = "Takes a balanced heuristic picture of the current game.";
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 

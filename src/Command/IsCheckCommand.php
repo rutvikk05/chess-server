@@ -9,7 +9,7 @@ class IsCheckCommand extends AbstractCommand
         $this->name = '/ischeck';
         $this->description = 'Finds out if the game is in check.';
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 

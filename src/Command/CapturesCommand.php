@@ -9,7 +9,7 @@ class CapturesCommand extends AbstractCommand
         $this->name = '/captures';
         $this->description = 'Gets the pieces captured by both players.';
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 

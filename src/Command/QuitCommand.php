@@ -9,7 +9,7 @@ class QuitCommand extends AbstractCommand
         $this->name = '/quit';
         $this->description = 'Quits a game.';
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 
