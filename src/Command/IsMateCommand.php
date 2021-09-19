@@ -9,7 +9,7 @@ class IsMateCommand extends AbstractCommand
         $this->name = '/ismate';
         $this->description = 'Finds out if the game is over.';
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 

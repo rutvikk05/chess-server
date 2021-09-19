@@ -144,7 +144,7 @@ class Socket implements MessageComponentInterface
                 ];
             }
             return $this->sendToOne($from->resourceId, $res);
-        } elseif (in_array(Start::class, $cmd->dependsOn)) {
+        } elseif (in_array(StartCommand::class, $cmd->dependsOn)) {
             return $this->sendToOne($from->resourceId, [
                 $cmd->name => 'A game needs to be started first for this command to be allowed.',
             ]);

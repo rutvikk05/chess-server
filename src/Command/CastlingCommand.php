@@ -9,7 +9,7 @@ class CastlingCommand extends AbstractCommand
         $this->name = '/castling';
         $this->description = 'Gets the castling status.';
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 

@@ -9,7 +9,7 @@ class StatusCommand extends AbstractCommand
         $this->name = '/status';
         $this->description = 'The current game status.';
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 

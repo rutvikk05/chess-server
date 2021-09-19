@@ -9,7 +9,7 @@ class FenCommand extends AbstractCommand
         $this->name = '/fen';
         $this->description = "Prints the FEN string representation of the game.";
         $this->dependsOn = [
-            Start::class,
+            StartCommand::class,
         ];
     }
 
