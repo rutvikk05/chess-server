@@ -4,6 +4,14 @@ PHP Ratchet WebSocket server using [PHP Chess](https://github.com/chesslablab/ph
 
 ### Setup
 
+Clone the `chesslablab/chess-server` repo into your projects folder as it is described in the following example:
+
+    $ git clone git@github.com:chesslablab/chess-server.git
+
+Then `cd` the `chess-server` directory and install the Composer dependencies:
+
+    $ composer install
+
 Create an `.env` file:
 
     $ cp .env.example .env
