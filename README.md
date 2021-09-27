@@ -64,9 +64,19 @@ Open a console in your favorite browser and run commands:
     ws.onmessage = (res) => { console.log(res.data) };
     ws.send('/start analysis');
 
-### Documentation
+### License
 
-For further information you're all invited to read my learning journey:
+The MIT License.
+
+### Contributions
+
+See the [contributing guidelines](https://github.com/chesslablab/chess-server/blob/master/CONTRIBUTING.md).
+
+Happy learning and coding! Thank you, and keep it up.
+
+---
+
+For further information you're invited to read my learning journey:
 
 - [Demystifying AI Through a Human-Like Chess Engine](https://medium.com/geekculture/demystifying-ai-through-a-human-like-chess-engine-5f71e3896cc9)
 - [Two Things That My AI Project Required](https://medium.com/geekculture/two-things-that-my-ai-project-required-50000297053b)
@@ -85,15 +95,3 @@ For further information you're all invited to read my learning journey:
 - [A Simple Example of SSL/TLS WebSocket With ReactPHP and Ratchet](https://medium.com/geekculture/a-simple-example-of-ssl-tls-websocket-with-reactphp-and-ratchet-e03be973f521)
 - [Newbie Tutorial on How to Rate-Limit a WebSocket Server](https://medium.com/geekculture/newbie-tutorial-on-how-to-rate-limit-a-websocket-server-8e28642ad5ff)
 - [Visualizing Chess Openings Before MLP Classification](https://medium.com/geekculture/visualizing-chess-openings-before-mlp-classification-fd2a3e8c266)
-
-### License
-
-The MIT License.
-
-### Contributions
-
-- [How to Contribute to ChesslabLab](https://medium.com/geekculture/how-to-contribute-to-chesslab-cca73fefaf70)
-
-Happy learning and coding!
-
-Thank you, and keep it up.
