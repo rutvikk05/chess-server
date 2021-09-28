@@ -15,6 +15,7 @@ use ChessServer\Command\PieceCommand;
 use ChessServer\Command\PiecesCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\StatusCommand;
+use ChessServer\Command\UndoMoveCommand;
 
 abstract class AbstractMode
 {
@@ -120,6 +121,10 @@ abstract class AbstractMode
                 case StatusCommand::class:
                     return [
                         $cmd->name => $this->game->status(),
+                    ];
+                case UndoMoveCommand::class:
+                    return [
+                        $cmd->name => $this->game->undoMove(),
                     ];
                 default:
                     return null;
