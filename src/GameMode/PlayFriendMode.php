@@ -26,8 +26,6 @@ class PlayFriendMode extends AbstractMode
 
     public function res($argv, $cmd)
     {
-        parent::res($arg, $cmd);
-
         try {
             switch (get_class($cmd)) {
                 case TakebackCommand::class:
@@ -35,7 +33,7 @@ class PlayFriendMode extends AbstractMode
                         $cmd->name => $argv[1],
                     ];
                 default:
-                    return null;
+                    return parent::res($argv, $cmd);
             }
         } catch (\Exception $e) {
             return [

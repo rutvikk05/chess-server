@@ -8,6 +8,7 @@ use ChessServer\Command\AcceptFriendRequestCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\StartCommand;
 use ChessServer\Command\QuitCommand;
+use ChessServer\Command\TakebackCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\GameMode\AbstractMode;
 use ChessServer\GameMode\AnalysisMode;
@@ -66,37 +67,43 @@ class Socket implements MessageComponentInterface
             ]);
         }
 
-        isset($this->gameModes[$from->resourceId])
-          ? $gameMode = $this->gameModes[$from->resourceId]
-          : $gameMode = null;
+        $gameMode = $this->gameModes[$from->resourceId] ?? null;
 
-        if ($gameMode) {
-            if (is_a($cmd, QuitCommand::class)) {
+        if (is_a($cmd, AcceptFriendRequestCommand::class)) {
+            if ($gameMode = $this->findGameMode($this->parser->argv[1])) {
+                if ($this->syncGameModeWith($gameMode, $from)) {
+                    $jwt = $gameMode->getJwt();
+                    $decoded = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
+                    return $this->sendToMany($gameMode->getResourceIds(), [
+                        $cmd->name => [
+                            'jwt' => $jwt,
+                            'hash' => md5($jwt),
+                        ],
+                    ]);
+                }
+            }
+            return $this->sendToOne($from->resourceId, [
+                $cmd->name => [
+                    'mode' => PlayFriendMode::NAME,
+                    'message' =>  'This friend request could not be accepted.',
+                ],
+            ]);
+        } elseif (is_a($cmd, QuitCommand::class)) {
+            if ($gameMode) {
                 unset($this->gameModes[$from->resourceId]);
                 return $this->sendToOne($from->resourceId, [
                     $cmd->name => 'Good bye!',
                 ]);
-            } elseif (is_a($cmd, StartCommand::class)) {
+            }
+            return $this->sendToOne($from->resourceId, [
+                $cmd->name => 'A game needs to be started first for this command to be allowed.',
+            ]);
+        } elseif (is_a($cmd, StartCommand::class)) {
+            if ($gameMode) {
                 return $this->sendToOne($from->resourceId, [
                     $cmd->name => 'Game already started.',
                 ]);
-            } elseif (
-                is_a($cmd, PlayFenCommand::class) &&
-                is_a($this->gameModes[$from->resourceId], PlayFriendMode::class)
-            ) {
-                return $this->sendToMany(
-                    $gameMode->getResourceIds(),
-                    $gameMode->res($this->parser->argv, $cmd)
-                );
-            } else {
-                return $this->sendToOne(
-                    $from->resourceId,
-                    $this->gameModes[$from->resourceId]->res($this->parser->argv, $cmd)
-                );
             }
-        }
-
-        if (is_a($cmd, StartCommand::class)) {
             if (AnalysisMode::NAME === $this->parser->argv[1]) {
                 $this->gameModes[$from->resourceId] = new AnalysisMode(new Game, [$from->resourceId]);
                 $res = [
@@ -144,31 +151,30 @@ class Socket implements MessageComponentInterface
                 ];
             }
             return $this->sendToOne($from->resourceId, $res);
-        } elseif (in_array(StartCommand::class, $cmd->dependsOn)) {
-            return $this->sendToOne($from->resourceId, [
-                $cmd->name => 'A game needs to be started first for this command to be allowed.',
-            ]);
-        }
-
-        if (is_a($cmd, AcceptFriendRequestCommand::class)) {
-            if ($gameMode = $this->findGameMode($this->parser->argv[1])) {
-                if ($this->syncGameModeWith($gameMode, $from)) {
-                    $jwt = $gameMode->getJwt();
-                    $decoded = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
-                    return $this->sendToMany($gameMode->getResourceIds(), [
-                        $cmd->name => [
-                            'jwt' => $jwt,
-                            'hash' => md5($jwt),
-                        ],
-                    ]);
-                }
+        } elseif (is_a($cmd, PlayFenCommand::class)) {
+            if (is_a($gameMode, PlayFriendMode::class)) {
+                return $this->sendToMany(
+                    $gameMode->getResourceIds(),
+                    $gameMode->res($this->parser->argv, $cmd)
+                );
+            } elseif ($gameMode) {
+                return $this->sendToOne(
+                    $from->resourceId,
+                    $this->gameModes[$from->resourceId]->res($this->parser->argv, $cmd)
+                );
             }
-            return $this->sendToOne($from->resourceId, [
-                $cmd->name => [
-                    'mode' => PlayFriendMode::NAME,
-                    'message' =>  'This friend request could not be accepted.',
-                ],
-            ]);
+        } elseif (is_a($cmd, TakebackCommand::class)) {
+            if (is_a($gameMode, PlayFriendMode::class)) {
+                return $this->sendToMany(
+                    $gameMode->getResourceIds(),
+                    $gameMode->res($this->parser->argv, $cmd)
+                );
+            }
+        } elseif ($gameMode) {
+            return $this->sendToOne(
+                $from->resourceId,
+                $this->gameModes[$from->resourceId]->res($this->parser->argv, $cmd)
+            );
         }
     }
 
