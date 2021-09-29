@@ -2,7 +2,7 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\Start;
+use ChessServer\Command\StartCommand;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class StartTest extends CommandTestCase
@@ -13,7 +13,7 @@ class StartTest extends CommandTestCase
     public function validate_start_analysis()
     {
         $this->assertInstanceOf(
-            Start::class,
+            StartCommand::class,
             self::$parser->validate('/start analysis')
         );
     }

@@ -17,6 +17,8 @@ use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
 use ChessServer\Command\StartCommand;
 use ChessServer\Command\StatusCommand;
+use ChessServer\Command\TakebackCommand;
+use ChessServer\Command\UndoMoveCommand;
 
 class CommandContainer
 {
@@ -40,6 +42,8 @@ class CommandContainer
         $this->obj->attach(new QuitCommand());
         $this->obj->attach(new StartCommand());
         $this->obj->attach(new StatusCommand());
+        $this->obj->attach(new TakebackCommand());
+        $this->obj->attach(new UndoMoveCommand());
     }
 
     public function findByName(string $name)

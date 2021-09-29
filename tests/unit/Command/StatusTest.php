@@ -2,7 +2,7 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\Status;
+use ChessServer\Command\StatusCommand;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class StatusTest extends CommandTestCase
@@ -13,7 +13,7 @@ class StatusTest extends CommandTestCase
     public function validate_status()
     {
         $this->assertInstanceOf(
-            Status::class,
+            StatusCommand::class,
             self::$parser->validate('/status')
         );
     }

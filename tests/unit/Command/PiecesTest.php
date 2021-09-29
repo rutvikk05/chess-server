@@ -2,7 +2,7 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\Pieces;
+use ChessServer\Command\PiecesCommand;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class PiecesTest extends CommandTestCase
@@ -13,7 +13,7 @@ class PiecesTest extends CommandTestCase
     public function validate_pieces_w()
     {
         $this->assertInstanceOf(
-            Pieces::class,
+            PiecesCommand::class,
             self::$parser->validate('/pieces w')
         );
     }
@@ -24,7 +24,7 @@ class PiecesTest extends CommandTestCase
     public function validate_pieces_b()
     {
         $this->assertInstanceOf(
-            Pieces::class,
+            PiecesCommand::class,
             self::$parser->validate('/pieces b')
         );
     }

@@ -3,6 +3,7 @@
 namespace ChessServer\GameMode;
 
 use Chess\Game;
+use ChessServer\Command\TakebackCommand;
 
 class PlayFriendMode extends AbstractMode
 {
@@ -21,5 +22,23 @@ class PlayFriendMode extends AbstractMode
     public function getJwt()
     {
         return $this->jwt;
+    }
+
+    public function res($argv, $cmd)
+    {
+        try {
+            switch (get_class($cmd)) {
+                case TakebackCommand::class:
+                    return [
+                        $cmd->name => $argv[1],
+                    ];
+                default:
+                    return parent::res($argv, $cmd);
+            }
+        } catch (\Exception $e) {
+            return [
+                'error' => $e->getMessage(),
+            ];
+        }
     }
 }

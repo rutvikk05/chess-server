@@ -2,7 +2,7 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\IsCheck;
+use ChessServer\Command\IsCheckCommand;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class IsCheckTest extends CommandTestCase
@@ -13,7 +13,7 @@ class IsCheckTest extends CommandTestCase
     public function validate_ischeck()
     {
         $this->assertInstanceOf(
-            IsCheck::class,
+            IsCheckCommand::class,
             self::$parser->validate('/ischeck')
         );
     }
