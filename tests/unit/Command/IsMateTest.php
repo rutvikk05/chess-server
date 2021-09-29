@@ -2,7 +2,7 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\IsMate;
+use ChessServer\Command\IsMateCommand;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class IsMateTest extends CommandTestCase
@@ -13,7 +13,7 @@ class IsMateTest extends CommandTestCase
     public function validate_ismate()
     {
         $this->assertInstanceOf(
-            IsMate::class,
+            IsMateCommand::class,
             self::$parser->validate('/ismate')
         );
     }

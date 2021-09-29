@@ -2,7 +2,7 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\Takeback;
+use ChessServer\Command\TakebackCommand;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class TakebackTest extends CommandTestCase
@@ -13,7 +13,7 @@ class TakebackTest extends CommandTestCase
     public function validate_takeback_accept()
     {
         $this->assertInstanceOf(
-            Takeback::class,
+            TakebackCommand::class,
             self::$parser->validate('/takeback accept')
         );
     }
@@ -24,7 +24,7 @@ class TakebackTest extends CommandTestCase
     public function validate_takeback_decline()
     {
         $this->assertInstanceOf(
-            Takeback::class,
+            TakebackCommand::class,
             self::$parser->validate('/takeback decline')
         );
     }
@@ -35,7 +35,7 @@ class TakebackTest extends CommandTestCase
     public function validate_takeback_proposes()
     {
         $this->assertInstanceOf(
-            Takeback::class,
+            TakebackCommand::class,
             self::$parser->validate('/takeback propose')
         );
     }

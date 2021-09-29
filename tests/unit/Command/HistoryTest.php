@@ -2,7 +2,7 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\History;
+use ChessServer\Command\HistoryCommand;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class HistoryTest extends CommandTestCase
@@ -13,7 +13,7 @@ class HistoryTest extends CommandTestCase
     public function validate_history()
     {
         $this->assertInstanceOf(
-            History::class,
+            HistoryCommand::class,
             self::$parser->validate('/history')
         );
     }

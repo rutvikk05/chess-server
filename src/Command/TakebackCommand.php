@@ -27,7 +27,7 @@ class TakebackCommand extends AbstractCommand
     public function validate(array $argv)
     {
         if (in_array($argv[1], $this->params['action'])) {
-            return count($argv) - 1 === 1;
+            return count($argv) - 1 === count($this->params);
         }
 
         return false;

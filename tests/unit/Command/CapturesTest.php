@@ -2,7 +2,7 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\Captures;
+use ChessServer\Command\CapturesCommand;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class CapturesTest extends CommandTestCase
@@ -13,7 +13,7 @@ class CapturesTest extends CommandTestCase
     public function validate_captures()
     {
         $this->assertInstanceOf(
-            Captures::class,
+            CapturesCommand::class,
             self::$parser->validate('/captures')
         );
     }

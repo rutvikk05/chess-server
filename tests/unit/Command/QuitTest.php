@@ -2,7 +2,7 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\Quit;
+use ChessServer\Command\QuitCommand;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class QuitTest extends CommandTestCase
@@ -13,7 +13,7 @@ class QuitTest extends CommandTestCase
     public function validate_quit()
     {
         $this->assertInstanceOf(
-            Quit::class,
+            QuitCommand::class,
             self::$parser->validate('/quit')
         );
     }
