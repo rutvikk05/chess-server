@@ -39,6 +39,8 @@ Commands available:
 /quit Quits a game.
 /start {"mode":["analysis","loadfen","playfriend"],"fen":"string","color":["w","b"],"min":"int"} Starts a new game.
 /status The current game status.
+/takeback {"action":["accept","decline","propose"]} Allows to manage a takeback.
+/undomove Undoes the last move.
 
 Listening to commands...
 ```
