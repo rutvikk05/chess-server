@@ -16,6 +16,10 @@ Create an `.env` file:
 
     $ cp .env.example .env
 
+Run all the tests
+
+    $ composer test
+
 ### WebSocket Server
 
 Start the server:
