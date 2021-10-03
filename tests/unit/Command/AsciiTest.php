@@ -10,7 +10,7 @@ class AsciiTest extends CommandTestCase
     /**
      * @test
      */
-    public function validate_captures()
+    public function validate_ascii()
     {
         $this->assertInstanceOf(
             AsciiCommand::class,
@@ -22,7 +22,7 @@ class AsciiTest extends CommandTestCase
      * @test
      * @expectedException ChessServer\Exception\ParserException
      */
-    public function validate_captures_foo()
+    public function validate_ascii_foo()
     {
         self::$parser->validate('/ascii foo');
     }
