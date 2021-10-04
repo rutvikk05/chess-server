@@ -6,6 +6,7 @@ use ChessServer\Command\AcceptFriendRequestCommand;
 use ChessServer\Command\AsciiCommand;
 use ChessServer\Command\CastlingCommand;
 use ChessServer\Command\CapturesCommand;
+use ChessServer\Command\EventCommand;
 use ChessServer\Command\FenCommand;
 use ChessServer\Command\HeuristicPictureCommand;
 use ChessServer\Command\HistoryCommand;
@@ -31,6 +32,7 @@ class CommandContainer
         $this->obj->attach(new AsciiCommand());
         $this->obj->attach(new CastlingCommand());
         $this->obj->attach(new CapturesCommand());
+        $this->obj->attach(new EventCommand());
         $this->obj->attach(new FenCommand());
         $this->obj->attach(new HeuristicPictureCommand());
         $this->obj->attach(new HistoryCommand());
