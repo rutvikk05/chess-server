@@ -9,7 +9,7 @@ class CommandTestCase extends TestCase
 {
     protected static $parser;
 
-    public function setUp()
+    public function setUp(): void
     {
         self::$parser = new CommandParser();
     }

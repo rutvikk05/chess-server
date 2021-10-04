@@ -3,6 +3,7 @@
 namespace ChessServer\Tests\Unit\Command;
 
 use ChessServer\Command\TakebackCommand;
+use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class TakebackTest extends CommandTestCase
@@ -42,28 +43,28 @@ class TakebackTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_takeback_foo()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/takeback foo');
     }
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_takeback_bar()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/takeback bar');
     }
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_takeback_accept_foo()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/takeback accept foo');
     }
 }

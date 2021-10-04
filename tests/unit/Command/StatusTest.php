@@ -3,6 +3,7 @@
 namespace ChessServer\Tests\Unit\Command;
 
 use ChessServer\Command\StatusCommand;
+use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class StatusTest extends CommandTestCase
@@ -20,10 +21,10 @@ class StatusTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_status_foo()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/status foo');
     }
 }

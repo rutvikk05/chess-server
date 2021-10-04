@@ -10,3 +10,4 @@
 /ssl/*.key
 
 /storage/*.log
+/.phpunit.result.cache

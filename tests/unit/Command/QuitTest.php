@@ -3,6 +3,7 @@
 namespace ChessServer\Tests\Unit\Command;
 
 use ChessServer\Command\QuitCommand;
+use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class QuitTest extends CommandTestCase
@@ -20,10 +21,10 @@ class QuitTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_quit_foo()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/quit foo');
     }
 }

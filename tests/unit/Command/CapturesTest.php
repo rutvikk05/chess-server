@@ -3,6 +3,7 @@
 namespace ChessServer\Tests\Unit\Command;
 
 use ChessServer\Command\CapturesCommand;
+use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class CapturesTest extends CommandTestCase
@@ -20,10 +21,10 @@ class CapturesTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_captures_foo()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/captures foo');
     }
 }

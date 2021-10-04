@@ -3,6 +3,7 @@
 namespace ChessServer\Tests\Unit\Command;
 
 use ChessServer\Command\AsciiCommand;
+use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
 class AsciiTest extends CommandTestCase
@@ -20,10 +21,10 @@ class AsciiTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_ascii_foo()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/ascii foo');
     }
 }
