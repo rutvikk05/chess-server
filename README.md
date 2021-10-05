@@ -42,6 +42,7 @@ Commands available:
 /pieces {"color":["w","b"]} Gets the pieces on the board by color.
 /playfen {"fen":"string"} Plays a chess move in shortened FEN format.
 /quit Quits a game.
+/resign {"action":["accept"]} Allows to resign a game.
 /start {"mode":["analysis","loadfen","playfriend"],"fen":"string","color":["w","b"],"min":"int"} Starts a new game.
 /status The current game status.
 /takeback {"action":["accept","decline","propose"]} Allows to manage a takeback.

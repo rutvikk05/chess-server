@@ -8,6 +8,7 @@ use ChessServer\Command\AcceptFriendRequestCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
+use ChessServer\Command\ResignCommand;
 use ChessServer\Command\StartCommand;
 use ChessServer\Command\TakebackCommand;
 use ChessServer\Exception\ParserException;
@@ -172,6 +173,13 @@ class Socket implements MessageComponentInterface
                 );
             }
         } elseif (is_a($cmd, DrawCommand::class)) {
+            if (is_a($gameMode, PlayFriendMode::class)) {
+                return $this->sendToMany(
+                    $gameMode->getResourceIds(),
+                    $gameMode->res($this->parser->argv, $cmd)
+                );
+            }
+        } elseif (is_a($cmd, ResignCommand::class)) {
             if (is_a($gameMode, PlayFriendMode::class)) {
                 return $this->sendToMany(
                     $gameMode->getResourceIds(),
