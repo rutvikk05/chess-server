@@ -6,7 +6,7 @@ use ChessServer\Command\PiecesCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class PiecesTest extends CommandTestCase
+class PiecesCommandTest extends CommandTestCase
 {
     /**
      * @test

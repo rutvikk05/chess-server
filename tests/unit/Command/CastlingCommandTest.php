@@ -2,29 +2,29 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\AsciiCommand;
+use ChessServer\Command\CastlingCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class AsciiTest extends CommandTestCase
+class CastlingCommandTest extends CommandTestCase
 {
     /**
      * @test
      */
-    public function validate_ascii()
+    public function validate_castling()
     {
         $this->assertInstanceOf(
-            AsciiCommand::class,
-            self::$parser->validate('/ascii')
+            CastlingCommand::class,
+            self::$parser->validate('/castling')
         );
     }
 
     /**
      * @test
      */
-    public function validate_ascii_foo()
+    public function validate_castling_foo()
     {
         $this->expectException(ParserException::class);
-        self::$parser->validate('/ascii foo');
+        self::$parser->validate('/castling foo');
     }
 }

@@ -2,29 +2,29 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\EventsCommand;
+use ChessServer\Command\CapturesCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class EventsTest extends CommandTestCase
+class CapturesCommandTest extends CommandTestCase
 {
     /**
      * @test
      */
-    public function validate_events()
+    public function validate_captures()
     {
         $this->assertInstanceOf(
-            EventsCommand::class,
-            self::$parser->validate('/events')
+            CapturesCommand::class,
+            self::$parser->validate('/captures')
         );
     }
 
     /**
      * @test
      */
-    public function validate_events_foo()
+    public function validate_captures_foo()
     {
         $this->expectException(ParserException::class);
-        self::$parser->validate('/events foo');
+        self::$parser->validate('/captures foo');
     }
 }

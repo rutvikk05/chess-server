@@ -2,29 +2,29 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\HistoryCommand;
+use ChessServer\Command\IsMateCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class HistoryTest extends CommandTestCase
+class IsMateCommandTest extends CommandTestCase
 {
     /**
      * @test
      */
-    public function validate_history()
+    public function validate_ismate()
     {
         $this->assertInstanceOf(
-            HistoryCommand::class,
-            self::$parser->validate('/history')
+            IsMateCommand::class,
+            self::$parser->validate('/ismate')
         );
     }
 
     /**
      * @test
      */
-    public function validate_history_foo()
+    public function validate_ismate_foo()
     {
         $this->expectException(ParserException::class);
-        self::$parser->validate('/history foo');
+        self::$parser->validate('/ismate foo');
     }
 }

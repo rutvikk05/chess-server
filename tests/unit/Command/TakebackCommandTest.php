@@ -6,7 +6,7 @@ use ChessServer\Command\TakebackCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class TakebackTest extends CommandTestCase
+class TakebackCommandTest extends CommandTestCase
 {
     /**
      * @test

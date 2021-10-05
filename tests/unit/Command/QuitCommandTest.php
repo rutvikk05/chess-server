@@ -2,29 +2,29 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\IsMateCommand;
+use ChessServer\Command\QuitCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class IsMateTest extends CommandTestCase
+class QuitCommandTest extends CommandTestCase
 {
     /**
      * @test
      */
-    public function validate_ismate()
+    public function validate_quit()
     {
         $this->assertInstanceOf(
-            IsMateCommand::class,
-            self::$parser->validate('/ismate')
+            QuitCommand::class,
+            self::$parser->validate('/quit')
         );
     }
 
     /**
      * @test
      */
-    public function validate_ismate_foo()
+    public function validate_quit_foo()
     {
         $this->expectException(ParserException::class);
-        self::$parser->validate('/ismate foo');
+        self::$parser->validate('/quit foo');
     }
 }

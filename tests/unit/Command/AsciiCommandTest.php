@@ -2,29 +2,29 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\IsCheckCommand;
+use ChessServer\Command\AsciiCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class IsCheckTest extends CommandTestCase
+class AsciiCommandTest extends CommandTestCase
 {
     /**
      * @test
      */
-    public function validate_ischeck()
+    public function validate_ascii()
     {
         $this->assertInstanceOf(
-            IsCheckCommand::class,
-            self::$parser->validate('/ischeck')
+            AsciiCommand::class,
+            self::$parser->validate('/ascii')
         );
     }
 
     /**
      * @test
      */
-    public function validate_ischeck_foo()
+    public function validate_ascii_foo()
     {
         $this->expectException(ParserException::class);
-        self::$parser->validate('/ischeck foo');
+        self::$parser->validate('/ascii foo');
     }
 }

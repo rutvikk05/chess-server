@@ -2,29 +2,29 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\CapturesCommand;
+use ChessServer\Command\StatusCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class CapturesTest extends CommandTestCase
+class StatusCommandTest extends CommandTestCase
 {
     /**
      * @test
      */
-    public function validate_captures()
+    public function validate_status()
     {
         $this->assertInstanceOf(
-            CapturesCommand::class,
-            self::$parser->validate('/captures')
+            StatusCommand::class,
+            self::$parser->validate('/status')
         );
     }
 
     /**
      * @test
      */
-    public function validate_captures_foo()
+    public function validate_status_foo()
     {
         $this->expectException(ParserException::class);
-        self::$parser->validate('/captures foo');
+        self::$parser->validate('/status foo');
     }
 }

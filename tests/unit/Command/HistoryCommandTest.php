@@ -2,29 +2,29 @@
 
 namespace ChessServer\Tests\Unit\Command;
 
-use ChessServer\Command\CastlingCommand;
+use ChessServer\Command\HistoryCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class CastlingTest extends CommandTestCase
+class HistoryCommandTest extends CommandTestCase
 {
     /**
      * @test
      */
-    public function validate_castling()
+    public function validate_history()
     {
         $this->assertInstanceOf(
-            CastlingCommand::class,
-            self::$parser->validate('/castling')
+            HistoryCommand::class,
+            self::$parser->validate('/history')
         );
     }
 
     /**
      * @test
      */
-    public function validate_castling_foo()
+    public function validate_history_foo()
     {
         $this->expectException(ParserException::class);
-        self::$parser->validate('/castling foo');
+        self::$parser->validate('/history foo');
     }
 }
