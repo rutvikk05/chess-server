@@ -6,7 +6,7 @@ use ChessServer\Command\UndoMoveCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class UndoMoveTest extends CommandTestCase
+class UndoMoveCommandTest extends CommandTestCase
 {
     /**
      * @test
