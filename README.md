@@ -32,6 +32,7 @@ Commands available:
 /ascii Prints the ASCII representation of the game.
 /castling Gets the castling status.
 /captures Gets the pieces captured by both players.
+/draw {"action":["accept","decline","propose"]} Allows to offer a draw.
 /fen Prints the FEN string representation of the game.
 /heuristicpicture Takes a balanced heuristic picture of the current game.
 /history The current game's history.
