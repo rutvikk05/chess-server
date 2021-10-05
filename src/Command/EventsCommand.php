@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class EventCommand extends AbstractCommand
+class EventsCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/event';
-        $this->description = 'Fetches the event happening in the game.';
+        $this->name = '/events';
+        $this->description = 'Gets the events taking place on the game.';
         $this->dependsOn = [
             StartCommand::class,
         ];
