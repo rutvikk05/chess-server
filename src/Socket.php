@@ -54,7 +54,7 @@ class Socket implements MessageComponentInterface
     {
         $this->clients[$conn->resourceId] = $conn;
 
-        $this->log->info('New connection', ['id' => $conn->resourceId]);
+        $this->log->info('New connection', ['id' => $conn->resourceId, 'n' => count($this->clients)]);
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
