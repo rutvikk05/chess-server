@@ -180,6 +180,10 @@ class Socket implements MessageComponentInterface
 
     public function onClose(ConnectionInterface $conn)
     {
+        if(isset($this->clients[$conn->resourceId])) {
+            unset($this->clients[$conn->resourceId]);
+        }
+
         $this->log->info('Closed connection', ['id' => $conn->resourceId]);
     }
 
