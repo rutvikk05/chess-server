@@ -90,6 +90,25 @@ class Socket implements MessageComponentInterface
                     'message' =>  'This friend request could not be accepted.',
                 ],
             ]);
+        } elseif (is_a($cmd, DrawCommand::class)) {
+            if (is_a($gameMode, PlayFriendMode::class)) {
+                return $this->sendToMany(
+                    $gameMode->getResourceIds(),
+                    $gameMode->res($this->parser->argv, $cmd)
+                );
+            }
+        } elseif (is_a($cmd, PlayFenCommand::class)) {
+            if (is_a($gameMode, PlayFriendMode::class)) {
+                return $this->sendToMany(
+                    $gameMode->getResourceIds(),
+                    $gameMode->res($this->parser->argv, $cmd)
+                );
+            } elseif ($gameMode) {
+                return $this->sendToOne(
+                    $from->resourceId,
+                    $this->gameModes[$from->resourceId]->res($this->parser->argv, $cmd)
+                );
+            }
         } elseif (is_a($cmd, QuitCommand::class)) {
             if ($gameMode) {
                 unset($this->gameModes[$from->resourceId]);
@@ -100,6 +119,13 @@ class Socket implements MessageComponentInterface
             return $this->sendToOne($from->resourceId, [
                 $cmd->name => 'A game needs to be started first for this command to be allowed.',
             ]);
+        } elseif (is_a($cmd, ResignCommand::class)) {
+            if (is_a($gameMode, PlayFriendMode::class)) {
+                return $this->sendToMany(
+                    $gameMode->getResourceIds(),
+                    $gameMode->res($this->parser->argv, $cmd)
+                );
+            }
         } elseif (is_a($cmd, StartCommand::class)) {
             if ($gameMode) {
                 return $this->sendToOne($from->resourceId, [
@@ -153,33 +179,7 @@ class Socket implements MessageComponentInterface
                 ];
             }
             return $this->sendToOne($from->resourceId, $res);
-        } elseif (is_a($cmd, PlayFenCommand::class)) {
-            if (is_a($gameMode, PlayFriendMode::class)) {
-                return $this->sendToMany(
-                    $gameMode->getResourceIds(),
-                    $gameMode->res($this->parser->argv, $cmd)
-                );
-            } elseif ($gameMode) {
-                return $this->sendToOne(
-                    $from->resourceId,
-                    $this->gameModes[$from->resourceId]->res($this->parser->argv, $cmd)
-                );
-            }
         } elseif (is_a($cmd, TakebackCommand::class)) {
-            if (is_a($gameMode, PlayFriendMode::class)) {
-                return $this->sendToMany(
-                    $gameMode->getResourceIds(),
-                    $gameMode->res($this->parser->argv, $cmd)
-                );
-            }
-        } elseif (is_a($cmd, DrawCommand::class)) {
-            if (is_a($gameMode, PlayFriendMode::class)) {
-                return $this->sendToMany(
-                    $gameMode->getResourceIds(),
-                    $gameMode->res($this->parser->argv, $cmd)
-                );
-            }
-        } elseif (is_a($cmd, ResignCommand::class)) {
             if (is_a($gameMode, PlayFriendMode::class)) {
                 return $this->sendToMany(
                     $gameMode->getResourceIds(),
