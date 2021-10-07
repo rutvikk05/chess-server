@@ -3,9 +3,10 @@
 namespace ChessServer\Tests\Unit\Command;
 
 use ChessServer\Command\IsCheckCommand;
+use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class IsCheckTest extends CommandTestCase
+class IsCheckCommandTest extends CommandTestCase
 {
     /**
      * @test
@@ -20,10 +21,10 @@ class IsCheckTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_ischeck_foo()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/ischeck foo');
     }
 }

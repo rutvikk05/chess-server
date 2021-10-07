@@ -3,9 +3,10 @@
 namespace ChessServer\Tests\Unit\Command;
 
 use ChessServer\Command\HistoryCommand;
+use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class HistoryTest extends CommandTestCase
+class HistoryCommandTest extends CommandTestCase
 {
     /**
      * @test
@@ -20,10 +21,10 @@ class HistoryTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_history_foo()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/history foo');
     }
 }

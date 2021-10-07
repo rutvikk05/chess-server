@@ -3,6 +3,8 @@
 namespace ChessServer\GameMode;
 
 use Chess\Game;
+use ChessServer\Command\DrawCommand;
+use ChessServer\Command\ResignCommand;
 use ChessServer\Command\TakebackCommand;
 
 class PlayFriendMode extends AbstractMode
@@ -28,6 +30,14 @@ class PlayFriendMode extends AbstractMode
     {
         try {
             switch (get_class($cmd)) {
+                case DrawCommand::class:
+                    return [
+                        $cmd->name => $argv[1],
+                    ];
+                case ResignCommand::class:
+                    return [
+                        $cmd->name => $argv[1],
+                    ];
                 case TakebackCommand::class:
                     return [
                         $cmd->name => $argv[1],

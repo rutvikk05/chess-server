@@ -3,9 +3,10 @@
 namespace ChessServer\Tests\Unit\Command;
 
 use ChessServer\Command\StartCommand;
+use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class StartTest extends CommandTestCase
+class StartCommandTest extends CommandTestCase
 {
     /**
      * @test
@@ -20,28 +21,28 @@ class StartTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_start_analysis_w()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/start analysis w');
     }
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_start_foo()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/start foo');
     }
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_start_bar()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/start bar');
     }
 }

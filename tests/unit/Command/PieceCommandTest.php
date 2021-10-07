@@ -3,9 +3,10 @@
 namespace ChessServer\Tests\Unit\Command;
 
 use ChessServer\Command\PieceCommand;
+use ChessServer\Exception\ParserException;
 use ChessServer\Tests\Unit\CommandTestCase;
 
-class PieceTest extends CommandTestCase
+class PieceCommandTest extends CommandTestCase
 {
     /**
      * @test
@@ -31,10 +32,10 @@ class PieceTest extends CommandTestCase
 
     /**
      * @test
-     * @expectedException ChessServer\Exception\ParserException
      */
     public function validate_piece_e4_e5()
     {
+        $this->expectException(ParserException::class);
         self::$parser->validate('/piece e4 e5');
     }
 }
