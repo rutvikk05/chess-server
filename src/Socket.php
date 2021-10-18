@@ -11,6 +11,7 @@ use ChessServer\Command\QuitCommand;
 use ChessServer\Command\ResignCommand;
 use ChessServer\Command\StartCommand;
 use ChessServer\Command\TakebackCommand;
+use ChessServer\Command\UndoMoveCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\GameMode\AbstractMode;
 use ChessServer\GameMode\AnalysisMode;
@@ -180,6 +181,13 @@ class Socket implements MessageComponentInterface
             }
             return $this->sendToOne($from->resourceId, $res);
         } elseif (is_a($cmd, TakebackCommand::class)) {
+            if (is_a($gameMode, PlayFriendMode::class)) {
+                return $this->sendToMany(
+                    $gameMode->getResourceIds(),
+                    $gameMode->res($this->parser->argv, $cmd)
+                );
+            }
+        } elseif (is_a($cmd, UndoMoveCommand::class)) {
             if (is_a($gameMode, PlayFriendMode::class)) {
                 return $this->sendToMany(
                     $gameMode->getResourceIds(),
