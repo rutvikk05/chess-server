@@ -187,13 +187,6 @@ class Socket implements MessageComponentInterface
                     $gameMode->res($this->parser->argv, $cmd)
                 );
             }
-        } elseif (is_a($cmd, UndoMoveCommand::class)) {
-            if (is_a($gameMode, PlayFriendMode::class)) {
-                return $this->sendToMany(
-                    $gameMode->getResourceIds(),
-                    $gameMode->res($this->parser->argv, $cmd)
-                );
-            }
         } elseif ($gameMode) {
             return $this->sendToOne(
                 $from->resourceId,
