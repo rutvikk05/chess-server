@@ -142,7 +142,7 @@ class Socket implements MessageComponentInterface
                 ];
             } elseif (LoadFenMode::NAME === $this->parser->argv[1]) {
                 try {
-                    $fenMode = new LoadFenMode(new Game, [$from->resourceId]);
+                    $fenMode = new LoadFenMode(new Game(Game::MODE_LOAD_FEN), [$from->resourceId]);
                     $game = $fenMode->getGame();
                     $game->loadFen($this->parser->argv[2]);
                     $fenMode->setGame($game);
