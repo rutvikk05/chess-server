@@ -134,7 +134,10 @@ class Socket implements MessageComponentInterface
                 ]);
             }
             if (AnalysisMode::NAME === $this->parser->argv[1]) {
-                $this->gameModes[$from->resourceId] = new AnalysisMode(new Game, [$from->resourceId]);
+                $this->gameModes[$from->resourceId] = new AnalysisMode(
+                    new Game(Game::MODE_ANALYSIS),
+                    [$from->resourceId]
+                );
                 $res = [
                     $cmd->name => [
                         'mode' => AnalysisMode::NAME,
@@ -142,7 +145,10 @@ class Socket implements MessageComponentInterface
                 ];
             } elseif (LoadFenMode::NAME === $this->parser->argv[1]) {
                 try {
-                    $fenMode = new LoadFenMode(new Game(Game::MODE_LOAD_FEN), [$from->resourceId]);
+                    $fenMode = new LoadFenMode(
+                        new Game(Game::MODE_LOAD_FEN),
+                        [$from->resourceId]
+                    );
                     $game = $fenMode->getGame();
                     $game->loadFen($this->parser->argv[2]);
                     $fenMode->setGame($game);
@@ -170,7 +176,11 @@ class Socket implements MessageComponentInterface
                     'exp' => time() + 600 // ten minutes by default
                 ];
                 $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
-                $this->gameModes[$from->resourceId] = new PlayFriendMode(new Game, [$from->resourceId], $jwt);
+                $this->gameModes[$from->resourceId] = new PlayFriendMode(
+                    new Game(Game::MODE_PLAY_FRIEND),
+                    [$from->resourceId],
+                    $jwt
+                );
                 $res = [
                     $cmd->name => [
                         'mode' => PlayFriendMode::NAME,
