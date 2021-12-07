@@ -31,6 +31,8 @@ class StartCommand extends AbstractCommand
             ],
             // optional param
             'min' => 'int',
+            // optional param
+            'increment' => 'int',
         ];
     }
 
@@ -43,7 +45,7 @@ class StartCommand extends AbstractCommand
                 case LoadFenMode::NAME:
                     return count($argv) - 1 === 2;
                 case PlayFriendMode::NAME:
-                    return count($argv) - 1 === 3;
+                    return count($argv) - 1 === 4;
                 default:
                     // do nothing
                     break;

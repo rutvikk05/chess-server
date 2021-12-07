@@ -173,6 +173,7 @@ class Socket implements MessageComponentInterface
                     'iat' => time(),
                     'color' => $this->parser->argv[2],
                     'min' => $this->parser->argv[3],
+                    'increment' => $this->parser->argv[4],
                     'exp' => time() + 600 // ten minutes by default
                 ];
                 $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
