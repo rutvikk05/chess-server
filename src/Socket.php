@@ -8,6 +8,7 @@ use ChessServer\Command\AcceptFriendRequestCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
+use ChessServer\Command\RematchCommand;
 use ChessServer\Command\ResignCommand;
 use ChessServer\Command\StartCommand;
 use ChessServer\Command\TakebackCommand;
@@ -120,6 +121,13 @@ class Socket implements MessageComponentInterface
             return $this->sendToOne($from->resourceId, [
                 $cmd->name => 'A game needs to be started first for this command to be allowed.',
             ]);
+        } elseif (is_a($cmd, RematchCommand::class)) {
+            if (is_a($gameMode, PlayFriendMode::class)) {
+                return $this->sendToMany(
+                    $gameMode->getResourceIds(),
+                    $gameMode->res($this->parser->argv, $cmd)
+                );
+            }
         } elseif (is_a($cmd, ResignCommand::class)) {
             if (is_a($gameMode, PlayFriendMode::class)) {
                 return $this->sendToMany(
