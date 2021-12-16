@@ -10,6 +10,7 @@ use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
 use ChessServer\Command\RematchCommand;
 use ChessServer\Command\ResignCommand;
+use ChessServer\Command\RestartCommand;
 use ChessServer\Command\StartCommand;
 use ChessServer\Command\TakebackCommand;
 use ChessServer\Command\UndoMoveCommand;
@@ -77,7 +78,6 @@ class Socket implements MessageComponentInterface
             if ($gameMode = $this->findGameMode($this->parser->argv[1])) {
                 if ($this->syncGameModeWith($gameMode, $from)) {
                     $jwt = $gameMode->getJwt();
-                    $decoded = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
                     return $this->sendToMany($gameMode->getResourceIds(), [
                         $cmd->name => [
                             'jwt' => $jwt,
@@ -135,6 +135,28 @@ class Socket implements MessageComponentInterface
                     $gameMode->res($this->parser->argv, $cmd)
                 );
             }
+        } elseif (is_a($cmd, RestartCommand::class)) {
+            if ($gameMode = $this->findGameMode($this->parser->argv[1])) {
+                $jwt = $gameMode->getJwt();
+                $decoded = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
+                $decoded->iat = time();
+                $decoded->exp = time() + 3600; // one hour by default
+                $newJwt = JWT::encode($decoded, $_ENV['JWT_SECRET']);
+                $resourceIds = $gameMode->getResourceIds();
+                $newGameMode = new PlayFriendMode(
+                    new Game(Game::MODE_PLAY_FRIEND),
+                    [$resourceIds[0], $resourceIds[1]],
+                    $newJwt
+                );
+                $this->gameModes[$resourceIds[0]] = $newGameMode;
+                $this->gameModes[$resourceIds[1]] = $newGameMode;
+                return $this->sendToMany($newGameMode->getResourceIds(), [
+                    $cmd->name => [
+                        'jwt' => $newJwt,
+                        'hash' => md5($newJwt),
+                    ],
+                ]);
+            }
         } elseif (is_a($cmd, StartCommand::class)) {
             if ($gameMode) {
                 return $this->sendToOne($from->resourceId, [
@@ -182,7 +204,7 @@ class Socket implements MessageComponentInterface
                     'color' => $this->parser->argv[2],
                     'min' => $this->parser->argv[3],
                     'increment' => $this->parser->argv[4],
-                    'exp' => time() + 600 // ten minutes by default
+                    'exp' => time() + 3600 // one hour by default
                 ];
                 $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
                 $this->gameModes[$from->resourceId] = new PlayFriendMode(
