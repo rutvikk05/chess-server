@@ -18,6 +18,7 @@ use ChessServer\Exception\ParserException;
 use ChessServer\GameMode\AbstractMode;
 use ChessServer\GameMode\AnalysisMode;
 use ChessServer\GameMode\LoadFenMode;
+use ChessServer\GameMode\LoadPgnMode;
 use ChessServer\GameMode\PlayFriendMode;
 use ChessServer\Parser\CommandParser;
 use Dotenv\Dotenv;
@@ -194,6 +195,31 @@ class Socket implements MessageComponentInterface
                         $cmd->name => [
                             'mode' => LoadFenMode::NAME,
                             'message' => 'This FEN string could not be loaded.',
+                        ],
+                    ];
+                }
+            } elseif (LoadPgnMode::NAME === $this->parser->argv[1]) {
+                try {
+                    $pgnMode = new LoadPgnMode(
+                        new Game(Game::MODE_LOAD_PGN),
+                        [$from->resourceId]
+                    );
+                    $game = $pgnMode->getGame();
+                    $game->loadPgn($this->parser->argv[2]);
+                    $pgnMode->setGame($game);
+                    $this->gameModes[$from->resourceId] = $pgnMode;
+                    $res = [
+                        $cmd->name => [
+                            'mode' => LoadPgnMode::NAME,
+                            'fen' => $game->fen(),
+                            'movetext' => $this->parser->argv[2],
+                        ],
+                    ];
+                } catch (\Throwable $e) {
+                    $res = [
+                        $cmd->name => [
+                            'mode' => LoadPgnMode::NAME,
+                            'message' => 'This PGN movetext could not be loaded.',
                         ],
                     ];
                 }

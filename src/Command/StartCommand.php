@@ -5,6 +5,7 @@ namespace ChessServer\Command;
 use Chess\PGN\Symbol;
 use ChessServer\GameMode\AnalysisMode;
 use ChessServer\GameMode\LoadFenMode;
+use ChessServer\GameMode\LoadPgnMode;
 use ChessServer\GameMode\PlayFriendMode;
 
 class StartCommand extends AbstractCommand
@@ -18,12 +19,16 @@ class StartCommand extends AbstractCommand
             'mode' => [
                 AnalysisMode::NAME,
                 LoadFenMode::NAME,
+                LoadPgnMode::NAME,
                 PlayFriendMode::NAME,
             ],
-            // 'Load FEN' mode
+            // LoadFenMode
             // optional param
             'fen' => 'string',
-            // PlayFriend mode
+            // LoadPgnMode
+            // optional param
+            'movetext' => 'string',
+            // PlayFriendMode
             // optional param
             'color' => [
                 Symbol::WHITE,
@@ -43,6 +48,8 @@ class StartCommand extends AbstractCommand
                 case AnalysisMode::NAME:
                     return count($argv) - 1 === 1;
                 case LoadFenMode::NAME:
+                    return count($argv) - 1 === 2;
+                case LoadPgnMode::NAME:
                     return count($argv) - 1 === 2;
                 case PlayFriendMode::NAME:
                     return count($argv) - 1 === 4;
