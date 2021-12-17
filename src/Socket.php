@@ -6,6 +6,7 @@ use Chess\Ascii;
 use Chess\Board;
 use Chess\Game;
 use Chess\PGN\Symbol;
+use Chess\PGN\Validate;
 use ChessServer\Command\AcceptFriendRequestCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\PlayFenCommand;
@@ -202,17 +203,18 @@ class Socket implements MessageComponentInterface
                 }
             } elseif (LoadPgnMode::NAME === $this->parser->argv[1]) {
                 try {
+                    $movetext = Validate::movetext($this->parser->argv[2]);
                     $pgnMode = new LoadPgnMode(
                         new Game(Game::MODE_LOAD_PGN),
                         [$from->resourceId]
                     );
                     $game = $pgnMode->getGame();
-                    $game->loadPgn($this->parser->argv[2]);
+                    $game->loadPgn($movetext);
                     $pgnMode->setGame($game);
                     $this->gameModes[$from->resourceId] = $pgnMode;
                     $board = new Board();
                     $history = [];
-                    $moves = explode(' ', $this->parser->argv[2]);
+                    $moves = explode(' ', $movetext);
                     foreach ($moves as $key => $move) {
                         if ($key % 2 === 0) {
                             $exploded = explode('.', $move);
@@ -227,7 +229,7 @@ class Socket implements MessageComponentInterface
                         $cmd->name => [
                             'mode' => LoadPgnMode::NAME,
                             'turn' => $game->status()->turn,
-                            'movetext' => $this->parser->argv[2],
+                            'movetext' => $movetext,
                             'history' => $history
                         ],
                     ];
