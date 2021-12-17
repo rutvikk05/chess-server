@@ -2,6 +2,8 @@
 
 namespace ChessServer;
 
+use Chess\Ascii;
+use Chess\Board;
 use Chess\Game;
 use Chess\PGN\Symbol;
 use ChessServer\Command\AcceptFriendRequestCommand;
@@ -208,11 +210,25 @@ class Socket implements MessageComponentInterface
                     $game->loadPgn($this->parser->argv[2]);
                     $pgnMode->setGame($game);
                     $this->gameModes[$from->resourceId] = $pgnMode;
+                    $board = new Board();
+                    $history = [];
+                    $moves = explode(' ', $this->parser->argv[2]);
+                    foreach ($moves as $key => $move) {
+                        if ($key % 2 === 0) {
+                            $exploded = explode('.', $move);
+                            $board->play('w', $exploded[1]);
+                        } else {
+                            $board->play('b', $move);
+                        }
+                        $array = (new Ascii())->toArray($board, $flip = false);
+                        $history[] = array_values($array);
+                    }
                     $res = [
                         $cmd->name => [
                             'mode' => LoadPgnMode::NAME,
-                            'fen' => $game->fen(),
+                            'turn' => $game->status()->turn,
                             'movetext' => $this->parser->argv[2],
+                            'history' => $history
                         ],
                     ];
                 } catch (\Throwable $e) {
