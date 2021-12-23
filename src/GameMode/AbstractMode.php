@@ -6,7 +6,6 @@ use Chess\Game;
 use ChessServer\Command\AsciiCommand;
 use ChessServer\Command\CastlingCommand;
 use ChessServer\Command\CapturesCommand;
-use ChessServer\Command\EventsCommand;
 use ChessServer\Command\FenCommand;
 use ChessServer\Command\HeuristicPictureCommand;
 use ChessServer\Command\HistoryCommand;
@@ -76,10 +75,6 @@ abstract class AbstractMode
                 case CapturesCommand::class:
                     return [
                         $cmd->name => $this->game->captures(),
-                    ];
-                case EventsCommand::class:
-                    return [
-                        $cmd->name => $this->game->events(),
                     ];
                 case FenCommand::class:
                     return [

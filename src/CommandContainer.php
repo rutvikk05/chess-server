@@ -7,7 +7,6 @@ use ChessServer\Command\AsciiCommand;
 use ChessServer\Command\CastlingCommand;
 use ChessServer\Command\CapturesCommand;
 use ChessServer\Command\DrawCommand;
-use ChessServer\Command\EventsCommand;
 use ChessServer\Command\FenCommand;
 use ChessServer\Command\HeuristicPictureCommand;
 use ChessServer\Command\HistoryCommand;
@@ -37,7 +36,6 @@ class CommandContainer
         $this->obj->attach(new CastlingCommand());
         $this->obj->attach(new CapturesCommand());
         $this->obj->attach(new DrawCommand());
-        $this->obj->attach(new EventsCommand());
         $this->obj->attach(new FenCommand());
         $this->obj->attach(new HeuristicPictureCommand());
         $this->obj->attach(new HistoryCommand());
