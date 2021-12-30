@@ -124,7 +124,13 @@ abstract class AbstractMode
                     if ($response) {
                         $this->game->play($this->game->status()->turn, $response);
                         return [
-                            $cmd->name => $this->game->fen(),
+                            $cmd->name => [
+                                'turn' => $this->game->status()->turn,
+                                'check' => $this->game->isCheck(),
+                                'mate' => $this->game->isMate(),
+                                'movetext' => $this->game->movetext(),
+                                'fen' => $this->game->fen(),
+                            ],
                         ];
                     }
                     return [
