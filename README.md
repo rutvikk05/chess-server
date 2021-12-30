@@ -1,6 +1,12 @@
 ## PHP Chess Server
 
-PHP Ratchet WebSocket server using [PHP Chess](https://github.com/chesslablab/php-chess). The chess server is intended to connect to a [Redux Chess](https://github.com/chesslablab/redux-chess) app.
+PHP Ratchet WebSocket server using [PHP Chess](https://github.com/chesslablab/php-chess).
+
+### Demo
+
+Check out [this demo](https://programarivm.github.io/demo-redux-chess).
+
+> Please note the sandbox server might not be up and running all the time.
 
 ### Setup
 
@@ -15,10 +21,6 @@ Then `cd` the `chess-server` directory and install the Composer dependencies:
 Create an `.env` file:
 
     $ cp .env.example .env
-
-Run all the tests
-
-    $ composer test
 
 ### WebSocket Server
 
@@ -44,8 +46,9 @@ Commands available:
 /quit Quits a game.
 /rematch {"action":["accept","decline","propose"]} Allows to offer a rematch.
 /resign {"action":["accept"]} Allows to resign a game.
+/response Returns a computer response to the current position.
 /restart {"hash":"string"} Restarts a game.
-/start {"mode":["analysis","loadfen","loadpgn","playfriend"],"fen":"string","movetext":"string","color":["w","b"],"min":"int","increment":"int"} Starts a new game.
+/start {"mode":["analysis","grandmaster","loadfen","loadpgn","playfriend"],"fen":"string","movetext":"string","color":["w","b"],"min":"int","increment":"int"} Starts a new game.
 /status The current game status.
 /takeback {"action":["accept","decline","propose"]} Allows to manage a takeback.
 /undomove Undoes the last move.

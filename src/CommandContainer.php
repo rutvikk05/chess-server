@@ -18,6 +18,7 @@ use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
 use ChessServer\Command\RematchCommand;
 use ChessServer\Command\ResignCommand;
+use ChessServer\Command\ResponseCommand;
 use ChessServer\Command\RestartCommand;
 use ChessServer\Command\StartCommand;
 use ChessServer\Command\StatusCommand;
@@ -47,6 +48,7 @@ class CommandContainer
         $this->obj->attach(new QuitCommand());
         $this->obj->attach(new RematchCommand());
         $this->obj->attach(new ResignCommand());
+        $this->obj->attach(new ResponseCommand());
         $this->obj->attach(new RestartCommand());
         $this->obj->attach(new StartCommand());
         $this->obj->attach(new StatusCommand());

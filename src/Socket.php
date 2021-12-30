@@ -20,6 +20,7 @@ use ChessServer\Command\UndoMoveCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\GameMode\AbstractMode;
 use ChessServer\GameMode\AnalysisMode;
+use ChessServer\GameMode\GrandmasterMode;
 use ChessServer\GameMode\LoadFenMode;
 use ChessServer\GameMode\LoadPgnMode;
 use ChessServer\GameMode\PlayFriendMode;
@@ -175,6 +176,16 @@ class Socket implements MessageComponentInterface
                 $res = [
                     $cmd->name => [
                         'mode' => AnalysisMode::NAME,
+                    ],
+                ];
+            } elseif (GrandmasterMode::NAME === $this->parser->argv[1]) {
+                $this->gameModes[$from->resourceId] = new GrandmasterMode(
+                    new Game(Game::MODE_GRANDMASTER),
+                    [$from->resourceId]
+                );
+                $res = [
+                    $cmd->name => [
+                        'mode' => GrandmasterMode::NAME,
                     ],
                 ];
             } elseif (LoadFenMode::NAME === $this->parser->argv[1]) {
