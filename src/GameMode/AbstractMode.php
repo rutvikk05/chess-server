@@ -14,6 +14,7 @@ use ChessServer\Command\IsMateCommand;
 use ChessServer\Command\PieceCommand;
 use ChessServer\Command\PiecesCommand;
 use ChessServer\Command\PlayFenCommand;
+use ChessServer\Command\ResponseCommand;
 use ChessServer\Command\StatusCommand;
 use ChessServer\Command\UndoMoveCommand;
 
@@ -117,6 +118,17 @@ abstract class AbstractMode
                             'movetext' => $this->game->movetext(),
                             'fen' => $this->game->fen(),
                         ],
+                    ];
+                case ResponseCommand::class:
+                    $response = $this->game->response();
+                    if ($response) {
+                        $this->game->play($this->game->status()->turn, $response);
+                        return [
+                            $cmd->name => $this->game->fen(),
+                        ];
+                    }
+                    return [
+                        $cmd->name => null,
                     ];
                 case StatusCommand::class:
                     return [
