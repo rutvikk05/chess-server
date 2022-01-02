@@ -186,6 +186,7 @@ class Socket implements MessageComponentInterface
                 $res = [
                     $cmd->name => [
                         'mode' => GrandmasterMode::NAME,
+                        'color' => $this->parser->argv[2],
                     ],
                 ];
             } elseif (LoadFenMode::NAME === $this->parser->argv[1]) {
