@@ -30,7 +30,7 @@ class StartCommand extends AbstractCommand
             // LoadPgnMode
             // optional param
             'movetext' => 'string',
-            // PlayFriendMode
+            // GrandmasterMode, PlayFriendMode
             // optional param
             'color' => [
                 Symbol::WHITE,
@@ -50,7 +50,7 @@ class StartCommand extends AbstractCommand
                 case AnalysisMode::NAME:
                     return count($argv) - 1 === 1;
                 case GrandmasterMode::NAME:
-                    return count($argv) - 1 === 1;
+                    return count($argv) - 1 === 2;
                 case LoadFenMode::NAME:
                     return count($argv) - 1 === 2;
                 case LoadPgnMode::NAME:
