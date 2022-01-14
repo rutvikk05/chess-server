@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  php_fpm:
+      build: .
+      container_name: chess_server_php_fpm
+      networks:
+          - chess_server
+      restart: always
+      volumes:
+          - ./:/usr/share/chess-server
+          - ./docker/php/8.0/cli/php.ini:/usr/local/etc/php/php.ini
+      working_dir: /usr/share/chess-server
+networks:
+  chess_server:
+    driver: bridge
