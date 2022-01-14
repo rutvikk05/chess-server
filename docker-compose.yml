@@ -6,6 +6,8 @@ services:
       container_name: chess_server_php_fpm
       networks:
           - chess_server
+      ports:
+          - 8443:8443
       restart: always
       volumes:
           - ./:/usr/share/chess-server
