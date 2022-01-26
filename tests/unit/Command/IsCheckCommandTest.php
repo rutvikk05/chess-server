@@ -11,20 +11,20 @@ class IsCheckCommandTest extends CommandTestCase
     /**
      * @test
      */
-    public function validate_ischeck()
+    public function validate_is_check()
     {
         $this->assertInstanceOf(
             IsCheckCommand::class,
-            self::$parser->validate('/ischeck')
+            self::$parser->validate('/is_check')
         );
     }
 
     /**
      * @test
      */
-    public function validate_ischeck_foo()
+    public function validate_is_check_foo()
     {
         $this->expectException(ParserException::class);
-        self::$parser->validate('/ischeck foo');
+        self::$parser->validate('/is_check foo');
     }
 }

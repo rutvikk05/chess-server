@@ -11,20 +11,20 @@ class IsMateCommandTest extends CommandTestCase
     /**
      * @test
      */
-    public function validate_ismate()
+    public function validate_is_mate()
     {
         $this->assertInstanceOf(
             IsMateCommand::class,
-            self::$parser->validate('/ismate')
+            self::$parser->validate('/is_mate')
         );
     }
 
     /**
      * @test
      */
-    public function validate_ismate_foo()
+    public function validate_is_mate_foo()
     {
         $this->expectException(ParserException::class);
-        self::$parser->validate('/ismate foo');
+        self::$parser->validate('/is_mate foo');
     }
 }

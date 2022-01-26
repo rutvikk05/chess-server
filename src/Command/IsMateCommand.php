@@ -6,7 +6,7 @@ class IsMateCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/ismate';
+        $this->name = '/is_mate';
         $this->description = 'Finds out if the game is over.';
         $this->dependsOn = [
             StartCommand::class,

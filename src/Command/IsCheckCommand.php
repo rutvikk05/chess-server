@@ -6,7 +6,7 @@ class IsCheckCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/ischeck';
+        $this->name = '/is_check';
         $this->description = 'Finds out if the game is in check.';
         $this->dependsOn = [
             StartCommand::class,
