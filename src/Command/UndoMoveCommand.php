@@ -6,7 +6,7 @@ class UndoMoveCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/undomove';
+        $this->name = '/undo_move';
         $this->description = 'Undoes the last move.';
         $this->dependsOn = [
             StartCommand::class,

@@ -8,7 +8,7 @@ class PlayFenCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/playfen';
+        $this->name = '/play_fen';
         $this->description = 'Plays a chess move in shortened FEN format.';
         $this->params = [
             'fen' => 'string',
