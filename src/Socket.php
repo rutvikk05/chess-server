@@ -242,6 +242,7 @@ class Socket implements MessageComponentInterface
                             'mode' => LoadPgnMode::NAME,
                             'turn' => $game->status()->turn,
                             'movetext' => $movetext,
+                            'fen' => $game->fen(),
                             'history' => $history
                         ],
                     ];
