@@ -193,7 +193,8 @@ class Socket implements MessageComponentInterface
                 try {
                     $fenMode = new LoadFenMode(
                         new Game(Game::MODE_LOAD_FEN),
-                        [$from->resourceId]
+                        [$from->resourceId],
+                        $this->parser->argv[2]
                     );
                     $game = $fenMode->getGame();
                     $game->loadFen($this->parser->argv[2]);
