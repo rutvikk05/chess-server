@@ -226,7 +226,9 @@ class Socket implements MessageComponentInterface
                     $pgnMode->setGame($game);
                     $this->gameModes[$from->resourceId] = $pgnMode;
                     $board = new Board();
-                    $history = [];
+                    $history = [
+                      array_values((new Ascii())->toArray($board, $flip = false)),
+                    ];
                     $moves = explode(' ', $movetext);
                     foreach ($moves as $key => $move) {
                         if ($key % 2 === 0) {
