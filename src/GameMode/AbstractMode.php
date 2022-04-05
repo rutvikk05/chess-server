@@ -3,7 +3,6 @@
 namespace ChessServer\GameMode;
 
 use Chess\Game;
-use ChessServer\Command\AsciiCommand;
 use ChessServer\Command\CapturesCommand;
 use ChessServer\Command\FenCommand;
 use ChessServer\Command\HeuristicsCommand;
@@ -64,10 +63,6 @@ abstract class AbstractMode
     {
         try {
             switch (get_class($cmd)) {
-                case AsciiCommand::class:
-                    return [
-                        $cmd->name => $this->game->ascii(),
-                    ];
                 case CapturesCommand::class:
                     return [
                         $cmd->name => $this->game->captures(),
