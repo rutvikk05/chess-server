@@ -6,7 +6,7 @@ class HeuristicsCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/heuristic_picture';
+        $this->name = '/heuristics';
         $this->description = "Takes a balanced heuristic picture of the current game.";
         $this->dependsOn = [
             StartCommand::class,
