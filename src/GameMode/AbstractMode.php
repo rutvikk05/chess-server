@@ -4,7 +4,6 @@ namespace ChessServer\GameMode;
 
 use Chess\Game;
 use ChessServer\Command\CapturesCommand;
-use ChessServer\Command\FenCommand;
 use ChessServer\Command\HeuristicsCommand;
 use ChessServer\Command\PieceCommand;
 use ChessServer\Command\PlayFenCommand;
@@ -62,10 +61,6 @@ abstract class AbstractMode
                 case CapturesCommand::class:
                     return [
                         $cmd->name => $this->game->captures(),
-                    ];
-                case FenCommand::class:
-                    return [
-                        $cmd->name => $this->game->fen(),
                     ];
                 case HeuristicsCommand::class:
                     return [
