@@ -3,7 +3,7 @@
 namespace ChessServer\GameMode;
 
 use Chess\Game;
-use ChessServer\Command\HeuristicPictureCommand;
+use ChessServer\Command\HeuristicsCommand;
 
 class LoadFenMode extends AbstractMode
 {
@@ -27,11 +27,11 @@ class LoadFenMode extends AbstractMode
     {
         try {
             switch (get_class($cmd)) {
-                case HeuristicPictureCommand::class:
+                case HeuristicsCommand::class:
                     return [
                         $cmd->name => [
-                            'dimensions' => (new \Chess\HeuristicPicture(''))->getDimensions(),
-                            'balance' => $this->game->heuristicPicture(true, $this->fen),
+                            'dimensions' => (new \Chess\Heuristics(''))->getDimensions(),
+                            'balance' => $this->game->heuristics(true, $this->fen),
                         ],
                     ];
                 default:

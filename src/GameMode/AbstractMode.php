@@ -7,7 +7,7 @@ use ChessServer\Command\AsciiCommand;
 use ChessServer\Command\CastlingCommand;
 use ChessServer\Command\CapturesCommand;
 use ChessServer\Command\FenCommand;
-use ChessServer\Command\HeuristicPictureCommand;
+use ChessServer\Command\HeuristicsCommand;
 use ChessServer\Command\HistoryCommand;
 use ChessServer\Command\IsCheckCommand;
 use ChessServer\Command\IsMateCommand;
@@ -81,11 +81,11 @@ abstract class AbstractMode
                     return [
                         $cmd->name => $this->game->fen(),
                     ];
-                case HeuristicPictureCommand::class:
+                case HeuristicsCommand::class:
                     return [
                         $cmd->name => [
-                            'dimensions' => (new \Chess\HeuristicPicture(''))->getDimensions(),
-                            'balance' => $this->game->heuristicPicture(true),
+                            'dimensions' => (new \Chess\Heuristics(''))->getDimensions(),
+                            'balance' => $this->game->heuristics(true),
                         ],
                     ];
                 case HistoryCommand::class:

@@ -8,7 +8,7 @@ use ChessServer\Command\CastlingCommand;
 use ChessServer\Command\CapturesCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\FenCommand;
-use ChessServer\Command\HeuristicPictureCommand;
+use ChessServer\Command\HeuristicsCommand;
 use ChessServer\Command\HistoryCommand;
 use ChessServer\Command\IsCheckCommand;
 use ChessServer\Command\IsMateCommand;
@@ -38,7 +38,7 @@ class CommandContainer
         $this->obj->attach(new CapturesCommand());
         $this->obj->attach(new DrawCommand());
         $this->obj->attach(new FenCommand());
-        $this->obj->attach(new HeuristicPictureCommand());
+        $this->obj->attach(new HeuristicsCommand());
         $this->obj->attach(new HistoryCommand());
         $this->obj->attach(new IsCheckCommand());
         $this->obj->attach(new IsMateCommand());
