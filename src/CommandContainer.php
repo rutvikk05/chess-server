@@ -11,7 +11,6 @@ use ChessServer\Command\HistoryCommand;
 use ChessServer\Command\IsCheckCommand;
 use ChessServer\Command\IsMateCommand;
 use ChessServer\Command\PieceCommand;
-use ChessServer\Command\PiecesCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
 use ChessServer\Command\RematchCommand;
@@ -39,7 +38,6 @@ class CommandContainer
         $this->obj->attach(new IsCheckCommand());
         $this->obj->attach(new IsMateCommand());
         $this->obj->attach(new PieceCommand());
-        $this->obj->attach(new PiecesCommand());
         $this->obj->attach(new PlayFenCommand());
         $this->obj->attach(new QuitCommand());
         $this->obj->attach(new RematchCommand());

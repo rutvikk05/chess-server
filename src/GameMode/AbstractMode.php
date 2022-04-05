@@ -10,7 +10,6 @@ use ChessServer\Command\HistoryCommand;
 use ChessServer\Command\IsCheckCommand;
 use ChessServer\Command\IsMateCommand;
 use ChessServer\Command\PieceCommand;
-use ChessServer\Command\PiecesCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\ResponseCommand;
 use ChessServer\Command\StatusCommand;
@@ -93,10 +92,6 @@ abstract class AbstractMode
                 case PieceCommand::class:
                     return [
                         $cmd->name => $this->game->piece($argv[1]),
-                    ];
-                case PiecesCommand::class:
-                    return [
-                        $cmd->name => $this->game->pieces($argv[1]),
                     ];
                 case PlayFenCommand::class:
                     return [
