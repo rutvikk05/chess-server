@@ -3,7 +3,6 @@
 namespace ChessServer;
 
 use ChessServer\Command\AcceptFriendRequestCommand;
-use ChessServer\Command\CapturesCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\HeuristicsCommand;
 use ChessServer\Command\PieceCommand;
@@ -26,7 +25,6 @@ class CommandContainer
     {
         $this->obj = new \SplObjectStorage;
         $this->obj->attach(new AcceptFriendRequestCommand());
-        $this->obj->attach(new CapturesCommand());
         $this->obj->attach(new DrawCommand());
         $this->obj->attach(new HeuristicsCommand());
         $this->obj->attach(new PieceCommand());
