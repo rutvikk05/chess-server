@@ -7,7 +7,6 @@ use ChessServer\Command\CapturesCommand;
 use ChessServer\Command\FenCommand;
 use ChessServer\Command\HeuristicsCommand;
 use ChessServer\Command\HistoryCommand;
-use ChessServer\Command\IsCheckCommand;
 use ChessServer\Command\IsMateCommand;
 use ChessServer\Command\PieceCommand;
 use ChessServer\Command\PlayFenCommand;
@@ -80,10 +79,6 @@ abstract class AbstractMode
                 case HistoryCommand::class:
                     return [
                         $cmd->name => $this->game->history(),
-                    ];
-                case IsCheckCommand::class:
-                    return [
-                        $cmd->name => $this->game->isCheck(),
                     ];
                 case IsMateCommand::class:
                     return [
