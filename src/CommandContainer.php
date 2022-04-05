@@ -4,7 +4,6 @@ namespace ChessServer;
 
 use ChessServer\Command\AcceptFriendRequestCommand;
 use ChessServer\Command\AsciiCommand;
-use ChessServer\Command\CastlingCommand;
 use ChessServer\Command\CapturesCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\FenCommand;
@@ -34,7 +33,6 @@ class CommandContainer
         $this->obj = new \SplObjectStorage;
         $this->obj->attach(new AcceptFriendRequestCommand());
         $this->obj->attach(new AsciiCommand());
-        $this->obj->attach(new CastlingCommand());
         $this->obj->attach(new CapturesCommand());
         $this->obj->attach(new DrawCommand());
         $this->obj->attach(new FenCommand());

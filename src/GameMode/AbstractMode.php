@@ -4,7 +4,6 @@ namespace ChessServer\GameMode;
 
 use Chess\Game;
 use ChessServer\Command\AsciiCommand;
-use ChessServer\Command\CastlingCommand;
 use ChessServer\Command\CapturesCommand;
 use ChessServer\Command\FenCommand;
 use ChessServer\Command\HeuristicsCommand;
@@ -68,10 +67,6 @@ abstract class AbstractMode
                 case AsciiCommand::class:
                     return [
                         $cmd->name => $this->game->ascii(),
-                    ];
-                case CastlingCommand::class:
-                    return [
-                        $cmd->name => $this->game->castling(),
                     ];
                 case CapturesCommand::class:
                     return [
