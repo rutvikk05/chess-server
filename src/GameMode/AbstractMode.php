@@ -6,7 +6,6 @@ use Chess\Game;
 use ChessServer\Command\CapturesCommand;
 use ChessServer\Command\FenCommand;
 use ChessServer\Command\HeuristicsCommand;
-use ChessServer\Command\HistoryCommand;
 use ChessServer\Command\PieceCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\ResponseCommand;
@@ -74,10 +73,6 @@ abstract class AbstractMode
                             'dimensions' => (new \Chess\Heuristics(''))->getDimensions(),
                             'balance' => $this->game->heuristics(true),
                         ],
-                    ];
-                case HistoryCommand::class:
-                    return [
-                        $cmd->name => $this->game->history(),
                     ];
                 case PieceCommand::class:
                     return [
