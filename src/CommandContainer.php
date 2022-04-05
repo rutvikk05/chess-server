@@ -8,7 +8,6 @@ use ChessServer\Command\DrawCommand;
 use ChessServer\Command\FenCommand;
 use ChessServer\Command\HeuristicsCommand;
 use ChessServer\Command\HistoryCommand;
-use ChessServer\Command\IsMateCommand;
 use ChessServer\Command\PieceCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
@@ -34,7 +33,6 @@ class CommandContainer
         $this->obj->attach(new FenCommand());
         $this->obj->attach(new HeuristicsCommand());
         $this->obj->attach(new HistoryCommand());
-        $this->obj->attach(new IsMateCommand());
         $this->obj->attach(new PieceCommand());
         $this->obj->attach(new PlayFenCommand());
         $this->obj->attach(new QuitCommand());
