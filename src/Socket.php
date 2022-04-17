@@ -2,10 +2,9 @@
 
 namespace ChessServer;
 
-use Chess\Ascii;
 use Chess\Board;
 use Chess\Game;
-use Chess\PGN\Validate;
+use Chess\Movetext;
 use ChessServer\Command\AcceptFriendRequestCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\PlayFenCommand;
@@ -215,7 +214,7 @@ class Socket implements MessageComponentInterface
                 }
             } elseif (LoadPgnMode::NAME === $this->parser->argv[1]) {
                 try {
-                    $movetext = Validate::movetext($this->parser->argv[2]);
+                    $movetext = (new Movetext($this->parser->argv[2]))->validate();
                     $pgnMode = new LoadPgnMode(
                         new Game(Game::MODE_LOAD_PGN),
                         [$from->resourceId]
@@ -226,7 +225,7 @@ class Socket implements MessageComponentInterface
                     $this->gameModes[$from->resourceId] = $pgnMode;
                     $board = new Board();
                     $history = [
-                      array_values((new Ascii())->toArray($board, $flip = false)),
+                        array_values($board->toAsciiArray()),
                     ];
                     $moves = explode(' ', $movetext);
                     foreach ($moves as $key => $move) {
@@ -236,15 +235,14 @@ class Socket implements MessageComponentInterface
                         } else {
                             $board->play('b', $move);
                         }
-                        $array = (new Ascii())->toArray($board, $flip = false);
-                        $history[] = array_values($array);
+                        $history[] = array_values($board->toAsciiArray());
                     }
                     $res = [
                         $cmd->name => [
                             'mode' => LoadPgnMode::NAME,
-                            'turn' => $game->status()->turn,
+                            'turn' => $game->state()->turn,
                             'movetext' => $movetext,
-                            'fen' => $game->fen(),
+                            'fen' => $game->state()->fen,
                             'history' => $history
                         ],
                     ];

@@ -70,26 +70,20 @@ abstract class AbstractMode
                 case PlayFenCommand::class:
                     return [
                         $cmd->name => [
-                            'turn' => $this->game->status()->turn,
+                            'turn' => $this->game->state()->turn,
                             'legal' => $this->game->playFen($argv[1]),
-                            'check' => $this->game->isCheck(),
-                            'mate' => $this->game->isMate(),
-                            'movetext' => $this->game->movetext(),
-                            'fen' => $this->game->fen(),
+                            'check' => $this->game->state()->isCheck,
+                            'mate' => $this->game->state()->isMate,
+                            'movetext' => $this->game->state()->movetext,
+                            'fen' => $this->game->state()->fen,
                         ],
                     ];
                 case ResponseCommand::class:
                     $response = $this->game->response();
                     if ($response) {
-                        $this->game->play($this->game->status()->turn, $response);
+                        $this->game->play($this->game->state()->turn, $response);
                         return [
-                            $cmd->name => [
-                                'turn' => $this->game->status()->turn,
-                                'check' => $this->game->isCheck(),
-                                'mate' => $this->game->isMate(),
-                                'movetext' => $this->game->movetext(),
-                                'fen' => $this->game->fen(),
-                            ],
+                            $cmd->name => $this->game->state(),
                         ];
                     }
                     return [
