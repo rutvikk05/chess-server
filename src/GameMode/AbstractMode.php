@@ -71,9 +71,9 @@ abstract class AbstractMode
                     return [
                         $cmd->name => [
                             'turn' => $this->game->state()->turn,
-                            'legal' => $this->game->playFen($argv[1]),
-                            'check' => $this->game->state()->isCheck,
-                            'mate' => $this->game->state()->isMate,
+                            'isLegal' => $this->game->playFen($argv[1]),
+                            'isCheck' => $this->game->state()->isCheck,
+                            'isMate' => $this->game->state()->isMate,
                             'movetext' => $this->game->state()->movetext,
                             'fen' => $this->game->state()->fen,
                         ],
