@@ -2,7 +2,7 @@
 
 namespace ChessServer\Command;
 
-use Chess\PGN\Symbol;
+use Chess\PGN\AN\Color;
 use ChessServer\GameMode\AnalysisMode;
 use ChessServer\GameMode\GrandmasterMode;
 use ChessServer\GameMode\LoadFenMode;
@@ -33,8 +33,8 @@ class StartCommand extends AbstractCommand
             // GrandmasterMode, PlayFriendMode
             // optional param
             'color' => [
-                Symbol::WHITE,
-                Symbol::BLACK,
+                Color::W,
+                Color::B,
             ],
             // optional param
             'min' => 'int',

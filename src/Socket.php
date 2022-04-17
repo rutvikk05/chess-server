@@ -5,7 +5,6 @@ namespace ChessServer;
 use Chess\Ascii;
 use Chess\Board;
 use Chess\Game;
-use Chess\PGN\Symbol;
 use Chess\PGN\Validate;
 use ChessServer\Command\AcceptFriendRequestCommand;
 use ChessServer\Command\DrawCommand;
