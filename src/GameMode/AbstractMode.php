@@ -59,7 +59,7 @@ abstract class AbstractMode
                 case HeuristicsCommand::class:
                     return [
                         $cmd->name => [
-                            'dimensions' => (new \Chess\Heuristics(''))->getDimensions(),
+                            'dimensions' => (new \Chess\Heuristics())->getDimensions(),
                             'balance' => $this->game->heuristics(true),
                         ],
                     ];

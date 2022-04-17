@@ -30,7 +30,7 @@ class LoadFenMode extends AbstractMode
                 case HeuristicsCommand::class:
                     return [
                         $cmd->name => [
-                            'dimensions' => (new \Chess\Heuristics(''))->getDimensions(),
+                            'dimensions' => (new \Chess\Heuristics())->getDimensions(),
                             'balance' => $this->game->heuristics(true, $this->fen),
                         ],
                     ];
