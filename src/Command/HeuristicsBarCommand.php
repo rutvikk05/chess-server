@@ -2,11 +2,11 @@
 
 namespace ChessServer\Command;
 
-class HeuristicsExpandedCommand extends AbstractCommand
+class HeuristicsBarCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/heuristics_expanded';
+        $this->name = '/heuristics_bar';
         $this->description = "Takes an expanded heuristic picture of the current game.";
         $this->dependsOn = [
             StartCommand::class,
