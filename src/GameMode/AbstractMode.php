@@ -67,7 +67,7 @@ abstract class AbstractMode
                     ];
                 case PieceCommand::class:
                     return [
-                        $cmd->name => $this->game->getBoard()->legalMoves($argv[1]),
+                        $cmd->name => $this->game->getBoard()->legalMovesBySq($argv[1]),
                     ];
                 case PlayFenCommand::class:
                     return [
