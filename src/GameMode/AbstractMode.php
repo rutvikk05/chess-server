@@ -4,7 +4,9 @@ namespace ChessServer\GameMode;
 
 use Chess\Game;
 use Chess\Heuristics;
+use Chess\ML\Supervised\Regression\ExpandedFormLabeller;
 use ChessServer\Command\HeuristicsCommand;
+use ChessServer\Command\HeuristicsExpandedCommand;
 use ChessServer\Command\LegalSqsCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\ResponseCommand;
@@ -63,6 +65,16 @@ abstract class AbstractMode
                         $cmd->name => [
                             'dimensions' => (new Heuristics())->getDimensions(),
                             'balance' => (new Heuristics($movetext))->getBalance(),
+                        ],
+                    ];
+                case HeuristicsExpandedCommand::class:
+                    $movetext = $this->game->getBoard()->getMovetext();
+                    $balance = (new Heuristics($movetext))->getResizedBalance(0, 1);
+                    $end = end($balance);
+                    return [
+                        $cmd->name => [
+                            'dimensions' => (new Heuristics())->getDimensions(),
+                            'balance' => (new ExpandedFormLabeller())->label($end),
                         ],
                     ];
                 case LegalSqsCommand::class:
