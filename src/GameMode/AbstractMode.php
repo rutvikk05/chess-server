@@ -3,6 +3,7 @@
 namespace ChessServer\GameMode;
 
 use Chess\Game;
+use Chess\Heuristics;
 use ChessServer\Command\HeuristicsCommand;
 use ChessServer\Command\PieceCommand;
 use ChessServer\Command\PlayFenCommand;
@@ -57,10 +58,11 @@ abstract class AbstractMode
         try {
             switch (get_class($cmd)) {
                 case HeuristicsCommand::class:
+                    $movetext = $this->game->getBoard()->getMovetext();
                     return [
                         $cmd->name => [
-                            'dimensions' => (new \Chess\Heuristics())->getDimensions(),
-                            'balance' => $this->game->heuristics(true),
+                            'dimensions' => (new Heuristics())->getDimensions(),
+                            'balance' => (new Heuristics($movetext))->getBalance(),
                         ],
                     ];
                 case PieceCommand::class:

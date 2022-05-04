@@ -3,6 +3,8 @@
 namespace ChessServer\GameMode;
 
 use Chess\Game;
+use Chess\Heuristics;
+use Chess\FEN\StrToBoard;
 use ChessServer\Command\HeuristicsCommand;
 
 class LoadFenMode extends AbstractMode
@@ -28,10 +30,12 @@ class LoadFenMode extends AbstractMode
         try {
             switch (get_class($cmd)) {
                 case HeuristicsCommand::class:
+                    $movetext = $this->game->getBoard()->getMovetext();
+                    $board = (new StrToBoard($this->fen))->create();
                     return [
                         $cmd->name => [
-                            'dimensions' => (new \Chess\Heuristics())->getDimensions(),
-                            'balance' => $this->game->heuristics(true, $this->fen),
+                            'dimensions' => (new Heuristics())->getDimensions(),
+                            'balance' => (new Heuristics($movetext, $board))->getBalance(),
                         ],
                     ];
                 default:
