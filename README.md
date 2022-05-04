@@ -4,7 +4,7 @@ PHP Ratchet WebSocket server using [PHP Chess](https://github.com/chesslablab/ph
 
 ### Demo
 
-Check out [this demo](https://programarivm.github.io/demo-redux-chess).
+Check out [this demo](https://www.chesslablab.com).
 
 > Please note the sandbox server might not be up and running all the time.
 
