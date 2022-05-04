@@ -90,6 +90,7 @@ abstract class AbstractMode
                             'isMate' => $this->game->state()->isMate,
                             'movetext' => $this->game->state()->movetext,
                             'fen' => $this->game->state()->fen,
+                            'pgn' => $this->game->state()->pgn
                         ],
                     ];
                 case ResponseCommand::class:
