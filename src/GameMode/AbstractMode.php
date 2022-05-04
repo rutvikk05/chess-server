@@ -5,7 +5,7 @@ namespace ChessServer\GameMode;
 use Chess\Game;
 use Chess\Heuristics;
 use ChessServer\Command\HeuristicsCommand;
-use ChessServer\Command\PieceCommand;
+use ChessServer\Command\LegalSqsCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\ResponseCommand;
 use ChessServer\Command\UndoMoveCommand;
@@ -65,7 +65,7 @@ abstract class AbstractMode
                             'balance' => (new Heuristics($movetext))->getBalance(),
                         ],
                     ];
-                case PieceCommand::class:
+                case LegalSqsCommand::class:
                     return [
                         $cmd->name => $this->game->getBoard()->legalSqs($argv[1]),
                     ];

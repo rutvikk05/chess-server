@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class PieceCommand extends AbstractCommand
+class LegalSqsCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/piece';
-        $this->description = 'Gets a piece by its position on the board.';
+        $this->name = '/legal_sqs';
+        $this->description = 'Returns the legal squares of a piece.';
         $this->params = [
             'position' => 'string',
         ];

@@ -5,7 +5,7 @@ namespace ChessServer;
 use ChessServer\Command\AcceptFriendRequestCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\HeuristicsCommand;
-use ChessServer\Command\PieceCommand;
+use ChessServer\Command\LegalSqsCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
 use ChessServer\Command\RematchCommand;
@@ -26,7 +26,7 @@ class CommandContainer
         $this->obj->attach(new AcceptFriendRequestCommand());
         $this->obj->attach(new DrawCommand());
         $this->obj->attach(new HeuristicsCommand());
-        $this->obj->attach(new PieceCommand());
+        $this->obj->attach(new LegalSqsCommand());
         $this->obj->attach(new PlayFenCommand());
         $this->obj->attach(new QuitCommand());
         $this->obj->attach(new RematchCommand());
