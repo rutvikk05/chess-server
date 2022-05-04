@@ -65,7 +65,7 @@ abstract class AbstractMode
                     ];
                 case PieceCommand::class:
                     return [
-                        $cmd->name => $this->game->piece($argv[1]),
+                        $cmd->name => $this->game->getBoard()->legalMoves($argv[1]),
                     ];
                 case PlayFenCommand::class:
                     return [
@@ -90,8 +90,13 @@ abstract class AbstractMode
                         $cmd->name => null,
                     ];
                 case UndoMoveCommand::class:
+                    $board = $this->game->getBoard();
+                    if ($board->getHistory()) {
+                        $board->undoMove($board->getCastlingAbility());
+                        $this->game->setBoard($board);
+                    }
                     return [
-                        $cmd->name => $this->game->undoMove(),
+                        $cmd->name => $this->game->state(),
                     ];
                 default:
                     return null;
