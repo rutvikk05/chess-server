@@ -6,7 +6,6 @@ use Chess\Game;
 use Chess\Heuristics;
 use Chess\HeuristicsByFenString;
 use ChessServer\Command\HeuristicsCommand;
-use ChessServer\Command\HeuristicsBarCommand;
 use ChessServer\Command\HeuristicsBarByFenStringCommand;
 use ChessServer\Command\LegalSqsCommand;
 use ChessServer\Command\PlayFenCommand;
@@ -66,15 +65,6 @@ abstract class AbstractMode
                         $cmd->name => [
                             'dimensions' => (new Heuristics())->getDimensions(),
                             'balance' => (new Heuristics($movetext))->getBalance(),
-                        ],
-                    ];
-                case HeuristicsBarCommand::class:
-                    $movetext = $this->game->getBoard()->getMovetext();
-                    $balance = (new Heuristics($movetext))->getBalance();
-                    return [
-                        $cmd->name => [
-                            'dimensions' => (new Heuristics())->getDimensions(),
-                            'balance' => end($balance),
                         ],
                     ];
                 case HeuristicsBarByFenStringCommand::class:
