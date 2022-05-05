@@ -2,12 +2,15 @@
 
 namespace ChessServer\Command;
 
-class HeuristicsBarCommand extends AbstractCommand
+class HeuristicsBarByFenStringCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/heuristics_bar';
+        $this->name = '/heuristics_bar_fen';
         $this->description = "Takes an expanded heuristic picture of the current position.";
+        $this->params = [
+            'fen' => 'string',
+        ];
         $this->dependsOn = [
             StartCommand::class,
         ];
@@ -15,6 +18,6 @@ class HeuristicsBarCommand extends AbstractCommand
 
     public function validate(array $argv)
     {
-        return count($argv) - 1 === 0;
+        return count($argv) - 1 === count($this->params);
     }
 }

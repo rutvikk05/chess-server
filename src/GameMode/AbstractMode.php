@@ -4,8 +4,10 @@ namespace ChessServer\GameMode;
 
 use Chess\Game;
 use Chess\Heuristics;
+use Chess\HeuristicsByFenString;
 use ChessServer\Command\HeuristicsCommand;
 use ChessServer\Command\HeuristicsBarCommand;
+use ChessServer\Command\HeuristicsBarByFenStringCommand;
 use ChessServer\Command\LegalSqsCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\ResponseCommand;
@@ -73,6 +75,14 @@ abstract class AbstractMode
                         $cmd->name => [
                             'dimensions' => (new Heuristics())->getDimensions(),
                             'balance' => end($balance),
+                        ],
+                    ];
+                case HeuristicsBarByFenStringCommand::class:
+                    $balance = (new HeuristicsByFenString($argv[1]))->getBalance();
+                    return [
+                        $cmd->name => [
+                            'dimensions' => (new Heuristics())->getDimensions(),
+                            'balance' => $balance,
                         ],
                     ];
                 case LegalSqsCommand::class:
