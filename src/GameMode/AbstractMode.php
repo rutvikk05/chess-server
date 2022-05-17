@@ -63,7 +63,7 @@ abstract class AbstractMode
                     $movetext = $this->game->getBoard()->getMovetext();
                     return [
                         $cmd->name => [
-                            'dimensions' => (new Heuristics())->getDimensions(),
+                            'dimensions' => (new Heuristics())->getDimensionsNames(),
                             'balance' => (new Heuristics($movetext))->getBalance(),
                         ],
                     ];
@@ -71,7 +71,7 @@ abstract class AbstractMode
                     $balance = (new HeuristicsByFenString($argv[1]))->getBalance();
                     return [
                         $cmd->name => [
-                            'dimensions' => (new Heuristics())->getDimensions(),
+                            'dimensions' => (new Heuristics())->getDimensionsNames(),
                             'balance' => $balance,
                         ],
                     ];

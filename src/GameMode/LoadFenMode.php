@@ -34,7 +34,7 @@ class LoadFenMode extends AbstractMode
                     $board = (new StrToBoard($this->fen))->create();
                     return [
                         $cmd->name => [
-                            'dimensions' => (new Heuristics())->getDimensions(),
+                            'dimensions' => (new Heuristics())->getDimensionsNames(),
                             'balance' => (new Heuristics($movetext, $board))->getBalance(),
                         ],
                     ];
