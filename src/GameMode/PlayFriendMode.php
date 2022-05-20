@@ -10,7 +10,7 @@ use ChessServer\Command\TakebackCommand;
 
 class PlayFriendMode extends AbstractMode
 {
-    const NAME = 'playfriend';
+    const NAME = 'play';
 
     protected $jwt;
 
