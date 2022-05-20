@@ -30,16 +30,15 @@ class StartCommand extends AbstractCommand
             // LoadPgnMode
             // optional param
             'movetext' => 'string',
-            // GrandmasterMode, PlayMode
+            // GrandmasterMode
             // optional param
             'color' => [
                 Color::W,
                 Color::B,
             ],
-            // optional param
-            'min' => 'int',
-            // optional param
-            'increment' => 'int',
+            // PlayMode
+            // mandatory param
+            'settings' => 'string',
         ];
     }
 
@@ -56,7 +55,7 @@ class StartCommand extends AbstractCommand
                 case LoadPgnMode::NAME:
                     return count($argv) - 1 === 2;
                 case PlayMode::NAME:
-                    return count($argv) - 1 === 4;
+                    return count($argv) - 1 === 2;
                 default:
                     // do nothing
                     break;

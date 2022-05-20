@@ -255,12 +255,13 @@ class Socket implements MessageComponentInterface
                     ];
                 }
             } elseif (PlayMode::NAME === $this->parser->argv[1]) {
+                $settings = json_decode($this->parser->argv[2]);
                 $payload = [
                     'iss' => $_ENV['JWT_ISS'],
                     'iat' => time(),
-                    'color' => $this->parser->argv[2],
-                    'min' => $this->parser->argv[3],
-                    'increment' => $this->parser->argv[4],
+                    'color' => $settings->color,
+                    'min' => $settings->min,
+                    'increment' => $settings->increment,
                     'exp' => time() + 3600 // one hour by default
                 ];
                 $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
