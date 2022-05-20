@@ -8,7 +8,7 @@ use ChessServer\Command\RematchCommand;
 use ChessServer\Command\ResignCommand;
 use ChessServer\Command\TakebackCommand;
 
-class PlayFriendMode extends AbstractMode
+class PlayMode extends AbstractMode
 {
     const NAME = 'play';
 

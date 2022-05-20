@@ -21,7 +21,7 @@ use ChessServer\GameMode\AnalysisMode;
 use ChessServer\GameMode\GrandmasterMode;
 use ChessServer\GameMode\LoadFenMode;
 use ChessServer\GameMode\LoadPgnMode;
-use ChessServer\GameMode\PlayFriendMode;
+use ChessServer\GameMode\PlayMode;
 use ChessServer\Parser\CommandParser;
 use Dotenv\Dotenv;
 use Firebase\JWT\JWT;
@@ -91,19 +91,19 @@ class Socket implements MessageComponentInterface
             }
             return $this->sendToOne($from->resourceId, [
                 $cmd->name => [
-                    'mode' => PlayFriendMode::NAME,
+                    'mode' => PlayMode::NAME,
                     'message' =>  'This friend request could not be accepted.',
                 ],
             ]);
         } elseif (is_a($cmd, DrawCommand::class)) {
-            if (is_a($gameMode, PlayFriendMode::class)) {
+            if (is_a($gameMode, PlayMode::class)) {
                 return $this->sendToMany(
                     $gameMode->getResourceIds(),
                     $gameMode->res($this->parser->argv, $cmd)
                 );
             }
         } elseif (is_a($cmd, PlayFenCommand::class)) {
-            if (is_a($gameMode, PlayFriendMode::class)) {
+            if (is_a($gameMode, PlayMode::class)) {
                 return $this->sendToMany(
                     $gameMode->getResourceIds(),
                     $gameMode->res($this->parser->argv, $cmd)
@@ -125,14 +125,14 @@ class Socket implements MessageComponentInterface
                 $cmd->name => 'A game needs to be started first for this command to be allowed.',
             ]);
         } elseif (is_a($cmd, RematchCommand::class)) {
-            if (is_a($gameMode, PlayFriendMode::class)) {
+            if (is_a($gameMode, PlayMode::class)) {
                 return $this->sendToMany(
                     $gameMode->getResourceIds(),
                     $gameMode->res($this->parser->argv, $cmd)
                 );
             }
         } elseif (is_a($cmd, ResignCommand::class)) {
-            if (is_a($gameMode, PlayFriendMode::class)) {
+            if (is_a($gameMode, PlayMode::class)) {
                 return $this->sendToMany(
                     $gameMode->getResourceIds(),
                     $gameMode->res($this->parser->argv, $cmd)
@@ -146,7 +146,7 @@ class Socket implements MessageComponentInterface
                 $decoded->exp = time() + 3600; // one hour by default
                 $newJwt = JWT::encode($decoded, $_ENV['JWT_SECRET']);
                 $resourceIds = $gameMode->getResourceIds();
-                $newGameMode = new PlayFriendMode(
+                $newGameMode = new PlayMode(
                     new Game(Game::MODE_PLAY_FRIEND),
                     [$resourceIds[0], $resourceIds[1]],
                     $newJwt
@@ -254,7 +254,7 @@ class Socket implements MessageComponentInterface
                         ],
                     ];
                 }
-            } elseif (PlayFriendMode::NAME === $this->parser->argv[1]) {
+            } elseif (PlayMode::NAME === $this->parser->argv[1]) {
                 $payload = [
                     'iss' => $_ENV['JWT_ISS'],
                     'iat' => time(),
@@ -264,14 +264,14 @@ class Socket implements MessageComponentInterface
                     'exp' => time() + 3600 // one hour by default
                 ];
                 $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
-                $this->gameModes[$from->resourceId] = new PlayFriendMode(
+                $this->gameModes[$from->resourceId] = new PlayMode(
                     new Game(Game::MODE_PLAY_FRIEND),
                     [$from->resourceId],
                     $jwt
                 );
                 $res = [
                     $cmd->name => [
-                        'mode' => PlayFriendMode::NAME,
+                        'mode' => PlayMode::NAME,
                         'jwt' => $jwt,
                         'hash' => md5($jwt),
                     ],
@@ -279,14 +279,14 @@ class Socket implements MessageComponentInterface
             }
             return $this->sendToOne($from->resourceId, $res);
         } elseif (is_a($cmd, TakebackCommand::class)) {
-            if (is_a($gameMode, PlayFriendMode::class)) {
+            if (is_a($gameMode, PlayMode::class)) {
                 return $this->sendToMany(
                     $gameMode->getResourceIds(),
                     $gameMode->res($this->parser->argv, $cmd)
                 );
             }
         } elseif (is_a($cmd, UndoMoveCommand::class)) {
-            if (is_a($gameMode, PlayFriendMode::class)) {
+            if (is_a($gameMode, PlayMode::class)) {
                 return $this->sendToMany(
                     $gameMode->getResourceIds(),
                     $gameMode->res($this->parser->argv, $cmd)
