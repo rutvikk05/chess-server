@@ -147,7 +147,7 @@ class Socket implements MessageComponentInterface
                 $newJwt = JWT::encode($decoded, $_ENV['JWT_SECRET']);
                 $resourceIds = $gameMode->getResourceIds();
                 $newGameMode = new PlayMode(
-                    new Game(Game::MODE_PLAY_FRIEND),
+                    new Game(Game::MODE_PLAY),
                     [$resourceIds[0], $resourceIds[1]],
                     $newJwt
                 );
@@ -266,7 +266,7 @@ class Socket implements MessageComponentInterface
                 ];
                 $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
                 $this->gameModes[$from->resourceId] = new PlayMode(
-                    new Game(Game::MODE_PLAY_FRIEND),
+                    new Game(Game::MODE_PLAY),
                     [$from->resourceId],
                     $jwt
                 );
