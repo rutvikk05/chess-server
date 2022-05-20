@@ -41,7 +41,7 @@ Commands available:
 /resign {"action":["accept"]} Allows to resign a game.
 /response Returns a computer response to the current position.
 /restart {"hash":"string"} Restarts a game.
-/start {"mode":["analysis","grandmaster","loadfen","loadpgn","playfriend"],"fen":"string","movetext":"string","color":["w","b"],"min":"int","increment":"int"} Starts a new game.
+/start {"mode":["analysis","grandmaster","loadfen","loadpgn","play"],"fen":"string","movetext":"string","color":["w","b"],"min":"int","increment":"int"} Starts a new game.
 /takeback {"action":["accept","decline","propose"]} Allows to manage a takeback.
 /undo_move Undoes the last move.
 
