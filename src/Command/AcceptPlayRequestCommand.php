@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class AcceptFriendRequestCommand extends AbstractCommand
+class AcceptPlayRequestCommand extends AbstractCommand
 {
     public function __construct()
     {
         $this->name = '/accept';
-        $this->description = 'Accepts a friend request to play a game.';
+        $this->description = 'Accepts a request to play a game.';
         $this->params = [
             'id' => 'id',
         ];

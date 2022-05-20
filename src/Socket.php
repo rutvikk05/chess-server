@@ -5,7 +5,7 @@ namespace ChessServer;
 use Chess\Board;
 use Chess\Game;
 use Chess\Movetext;
-use ChessServer\Command\AcceptFriendRequestCommand;
+use ChessServer\Command\AcceptPlayRequestCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
@@ -77,7 +77,7 @@ class Socket implements MessageComponentInterface
 
         $gameMode = $this->gameModes[$from->resourceId] ?? null;
 
-        if (is_a($cmd, AcceptFriendRequestCommand::class)) {
+        if (is_a($cmd, AcceptPlayRequestCommand::class)) {
             if ($gameMode = $this->findGameMode($this->parser->argv[1])) {
                 if ($this->syncGameModeWith($gameMode, $from)) {
                     $jwt = $gameMode->getJwt();
