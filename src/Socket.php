@@ -339,8 +339,9 @@ class Socket implements MessageComponentInterface
         $onlineGames = [];
         foreach ($this->gameModes as $gameMode) {
           if (is_a($gameMode, PlayMode::class)) {
-            $jwt = $gameMode->getJwt();
-            $onlineGames[] = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
+            $decoded = JWT::decode($gameMode->getJwt(), $_ENV['JWT_SECRET'], array('HS256'));
+            $decoded->hash = $gameMode->getHash();
+            $onlineGames[] = $decoded;
           }
         }
 
