@@ -80,6 +80,7 @@ class Socket implements MessageComponentInterface
 
         if (is_a($cmd, AcceptPlayRequestCommand::class)) {
             if ($gameMode = $this->gameModeByHash($this->parser->argv[1])) {
+                $gameMode->setState(PlayMode::STATE_ACCEPTED);
                 if ($this->syncGameModeWith($gameMode, $from)) {
                     $jwt = $gameMode->getJwt();
                     return $this->sendToMany($gameMode->getResourceIds(), [
@@ -105,7 +106,7 @@ class Socket implements MessageComponentInterface
             }
         } elseif (is_a($cmd, OnlineGamesCommand::class)) {
             return $this->sendToOne($from->resourceId, [
-                $cmd->name => $this->playModesArray(),
+                $cmd->name => $this->playModesArray(PlayMode::STATE_PENDING),
             ]);
         } elseif (is_a($cmd, PlayFenCommand::class)) {
             if (is_a($gameMode, PlayMode::class)) {
@@ -334,14 +335,16 @@ class Socket implements MessageComponentInterface
         return null;
     }
 
-    protected function playModesArray()
+    protected function playModesArray(string $state)
     {
         $result = [];
         foreach ($this->gameModes as $gameMode) {
           if (is_a($gameMode, PlayMode::class)) {
-            $decoded = JWT::decode($gameMode->getJwt(), $_ENV['JWT_SECRET'], array('HS256'));
-            $decoded->hash = $gameMode->getHash();
-            $result[] = $decoded;
+            if ($gameMode->getState() === $state) {
+                $decoded = JWT::decode($gameMode->getJwt(), $_ENV['JWT_SECRET'], array('HS256'));
+                $decoded->hash = $gameMode->getHash();
+                $result[] = $decoded;
+            }
           }
         }
 
@@ -365,7 +368,7 @@ class Socket implements MessageComponentInterface
             $resourceIds = $gameMode->getResourceIds();
             if ($resourceIds[0] !== $conn->resourceId) {
                 $id = $resourceIds[0];
-            } elseif ($resourceIds[1] !== $conn->resourceId) {
+            } elseif (isset($resourceIds[1]) && $resourceIds[1] !== $conn->resourceId) {
                 $id = $resourceIds[1];
             }
             if ($id) {
