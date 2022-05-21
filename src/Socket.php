@@ -262,6 +262,7 @@ class Socket implements MessageComponentInterface
                     'color' => $settings->color,
                     'min' => $settings->min,
                     'increment' => $settings->increment,
+                    'submode' => $settings->submode,
                     'exp' => time() + 3600 // one hour by default
                 ];
                 $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
