@@ -7,6 +7,7 @@ use Chess\Game;
 use Chess\Movetext;
 use ChessServer\Command\AcceptPlayRequestCommand;
 use ChessServer\Command\DrawCommand;
+use ChessServer\Command\OnlineGamesCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
 use ChessServer\Command\RematchCommand;
@@ -102,6 +103,10 @@ class Socket implements MessageComponentInterface
                     $gameMode->res($this->parser->argv, $cmd)
                 );
             }
+        } elseif (is_a($cmd, OnlineGamesCommand::class)) {
+            return $this->sendToOne($from->resourceId, [
+                $cmd->name => $this->findOnlineGames(),
+            ]);
         } elseif (is_a($cmd, PlayFenCommand::class)) {
             if (is_a($gameMode, PlayMode::class)) {
                 return $this->sendToMany(
@@ -327,6 +332,19 @@ class Socket implements MessageComponentInterface
         }
 
         return null;
+    }
+
+    protected function findOnlineGames()
+    {
+        $onlineGames = [];
+        foreach ($this->gameModes as $gameMode) {
+          if (is_a($gameMode, PlayMode::class)) {
+            $jwt = $gameMode->getJwt();
+            $onlineGames[] = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
+          }
+        }
+
+        return $onlineGames;
     }
 
     protected function syncGameModeWith(AbstractMode $gameMode, ConnectionInterface $from)
