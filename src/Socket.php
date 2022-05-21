@@ -79,7 +79,7 @@ class Socket implements MessageComponentInterface
         $gameMode = $this->gameModes[$from->resourceId] ?? null;
 
         if (is_a($cmd, AcceptPlayRequestCommand::class)) {
-            if ($gameMode = $this->findGameMode($this->parser->argv[1])) {
+            if ($gameMode = $this->gameModeByHash($this->parser->argv[1])) {
                 if ($this->syncGameModeWith($gameMode, $from)) {
                     $jwt = $gameMode->getJwt();
                     return $this->sendToMany($gameMode->getResourceIds(), [
@@ -105,7 +105,7 @@ class Socket implements MessageComponentInterface
             }
         } elseif (is_a($cmd, OnlineGamesCommand::class)) {
             return $this->sendToOne($from->resourceId, [
-                $cmd->name => $this->findOnlineGames(),
+                $cmd->name => $this->playModesArray(),
             ]);
         } elseif (is_a($cmd, PlayFenCommand::class)) {
             if (is_a($gameMode, PlayMode::class)) {
@@ -144,7 +144,7 @@ class Socket implements MessageComponentInterface
                 );
             }
         } elseif (is_a($cmd, RestartCommand::class)) {
-            if ($gameMode = $this->findGameMode($this->parser->argv[1])) {
+            if ($gameMode = $this->gameModeByHash($this->parser->argv[1])) {
                 $jwt = $gameMode->getJwt();
                 $decoded = JWT::decode($jwt, $_ENV['JWT_SECRET'], array('HS256'));
                 $decoded->iat = time();
@@ -309,9 +309,9 @@ class Socket implements MessageComponentInterface
 
     public function onClose(ConnectionInterface $conn)
     {
-        if(isset($this->clients[$conn->resourceId])) {
-            unset($this->clients[$conn->resourceId]);
-        }
+        $this->leaveGame($conn);
+        $this->deleteGameModes($conn);
+        $this->deleteClient($conn);
 
         $this->log->info('Closed connection', ['id' => $conn->resourceId]);
     }
@@ -323,7 +323,7 @@ class Socket implements MessageComponentInterface
         $this->log->info('Occurred an error', ['message' => $e->getMessage()]);
     }
 
-    protected function findGameMode(string $hash)
+    protected function gameModeByHash(string $hash)
     {
         foreach ($this->gameModes as $gameMode) {
             if ($hash === $gameMode->getHash()) {
@@ -334,18 +334,68 @@ class Socket implements MessageComponentInterface
         return null;
     }
 
-    protected function findOnlineGames()
+    protected function playModesArray()
     {
-        $onlineGames = [];
+        $result = [];
         foreach ($this->gameModes as $gameMode) {
           if (is_a($gameMode, PlayMode::class)) {
             $decoded = JWT::decode($gameMode->getJwt(), $_ENV['JWT_SECRET'], array('HS256'));
             $decoded->hash = $gameMode->getHash();
-            $onlineGames[] = $decoded;
+            $result[] = $decoded;
           }
         }
 
-        return $onlineGames;
+        return $result;
+    }
+
+    protected function gameModeByResourceId(int $id)
+    {
+        foreach ($this->gameModes as $key => $val) {
+            if ($key === $id) {
+                return $val;
+            }
+        }
+
+        return null;
+    }
+
+    protected function leaveGame(ConnectionInterface $conn)
+    {
+        if ($gameMode = $this->gameModeByResourceId($conn->resourceId)) {
+            $resourceIds = $gameMode->getResourceIds();
+            if ($resourceIds[0] !== $conn->resourceId) {
+                $id = $resourceIds[0];
+            } elseif ($resourceIds[1] !== $conn->resourceId) {
+                $id = $resourceIds[1];
+            }
+            if ($id) {
+                $this->sendToOne($id, ['/leave' => 'accept']);
+            }
+        }
+    }
+
+    protected function deleteGameModes(ConnectionInterface $conn)
+    {
+        if ($gameMode = $this->gameModeByResourceId($conn->resourceId)) {
+            $resourceIds = $gameMode->getResourceIds();
+            if (isset($resourceIds[0])) {
+                if (isset($this->gameModes[$resourceIds[0]])) {
+                    unset($this->gameModes[$resourceIds[0]]);
+                }
+            }
+            if (isset($resourceIds[1])) {
+                if (isset($this->gameModes[$resourceIds[1]])) {
+                    unset($this->gameModes[$resourceIds[1]]);
+                }
+            }
+        }
+    }
+
+    protected function deleteClient(ConnectionInterface $conn)
+    {
+        if (isset($this->clients[$conn->resourceId])) {
+            unset($this->clients[$conn->resourceId]);
+        }
     }
 
     protected function syncGameModeWith(AbstractMode $gameMode, ConnectionInterface $from)

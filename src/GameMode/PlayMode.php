@@ -12,7 +12,15 @@ class PlayMode extends AbstractMode
 {
     const NAME = 'play';
 
+    const STATE_PENDING = 'pending';
+
+    const STATE_ACCEPTED = 'accepted';
+
+    const STATE_FINISHED = 'finished';
+
     protected $jwt;
+
+    protected $state;
 
     public function __construct(Game $game, array $resourceIds, string $jwt)
     {
@@ -20,11 +28,24 @@ class PlayMode extends AbstractMode
 
         $this->jwt = $jwt;
         $this->hash = md5($jwt);
+        $this->state = self::STATE_PENDING;
     }
 
     public function getJwt()
     {
         return $this->jwt;
+    }
+
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state)
+    {
+        $this->state = $state;
+
+        return $this;
     }
 
     public function res($argv, $cmd)
