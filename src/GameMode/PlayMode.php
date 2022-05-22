@@ -17,8 +17,6 @@ class PlayMode extends AbstractMode
 
     const STATE_ACCEPTED = 'accepted';
 
-    const STATE_FINISHED = 'finished';
-
     protected $jwt;
 
     protected $state;
