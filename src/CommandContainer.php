@@ -6,6 +6,7 @@ use ChessServer\Command\AcceptPlayRequestCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\HeuristicsCommand;
 use ChessServer\Command\HeuristicsBarCommand;
+use ChessServer\Command\LeaveCommand;
 use ChessServer\Command\LegalSqsCommand;
 use ChessServer\Command\OnlineGamesCommand;
 use ChessServer\Command\PlayFenCommand;
@@ -29,6 +30,7 @@ class CommandContainer
         $this->obj->attach(new DrawCommand());
         $this->obj->attach(new HeuristicsCommand());
         $this->obj->attach(new HeuristicsBarCommand());
+        $this->obj->attach(new LeaveCommand());
         $this->obj->attach(new LegalSqsCommand());
         $this->obj->attach(new OnlineGamesCommand());
         $this->obj->attach(new PlayFenCommand());

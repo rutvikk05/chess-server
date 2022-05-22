@@ -7,6 +7,7 @@ use Chess\Game;
 use Chess\Movetext;
 use ChessServer\Command\AcceptPlayRequestCommand;
 use ChessServer\Command\DrawCommand;
+use ChessServer\Command\LeaveCommand;
 use ChessServer\Command\OnlineGamesCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
@@ -157,6 +158,7 @@ class Socket implements MessageComponentInterface
                     [$resourceIds[0], $resourceIds[1]],
                     $newJwt
                 );
+                $newGameMode->setState(PlayMode::STATE_ACCEPTED);
                 $this->gameModes[$resourceIds[0]] = $newGameMode;
                 $this->gameModes[$resourceIds[1]] = $newGameMode;
                 return $this->sendToMany($newGameMode->getResourceIds(), [
@@ -365,14 +367,15 @@ class Socket implements MessageComponentInterface
     protected function leaveGame(ConnectionInterface $conn)
     {
         if ($gameMode = $this->gameModeByResourceId($conn->resourceId)) {
+            $resourceId = null;
             $resourceIds = $gameMode->getResourceIds();
             if ($resourceIds[0] !== $conn->resourceId) {
-                $id = $resourceIds[0];
+                $resourceId = $resourceIds[0];
             } elseif (isset($resourceIds[1]) && $resourceIds[1] !== $conn->resourceId) {
-                $id = $resourceIds[1];
+                $resourceId = $resourceIds[1];
             }
-            if ($id) {
-                $this->sendToOne($id, ['/leave' => 'accept']);
+            if ($resourceId) {
+                $this->sendToOne($resourceId, ['/leave' => LeaveCommand::ACTION_ACCEPT]);
             }
         }
     }

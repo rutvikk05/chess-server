@@ -4,6 +4,7 @@ namespace ChessServer\GameMode;
 
 use Chess\Game;
 use ChessServer\Command\DrawCommand;
+use ChessServer\Command\LeaveCommand;
 use ChessServer\Command\RematchCommand;
 use ChessServer\Command\ResignCommand;
 use ChessServer\Command\TakebackCommand;
@@ -53,6 +54,10 @@ class PlayMode extends AbstractMode
         try {
             switch (get_class($cmd)) {
                 case DrawCommand::class:
+                    return [
+                        $cmd->name => $argv[1],
+                    ];
+                case LeaveCommand::class:
                     return [
                         $cmd->name => $argv[1],
                     ];
