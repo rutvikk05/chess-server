@@ -107,7 +107,7 @@ class Socket implements MessageComponentInterface
             }
         } elseif (is_a($cmd, OnlineGamesCommand::class)) {
             return $this->sendToOne($from->resourceId, [
-                $cmd->name => $this->playModesArray(PlayMode::STATE_PENDING),
+                $cmd->name => $this->playModesArrayByState(PlayMode::STATE_PENDING),
             ]);
         } elseif (is_a($cmd, PlayFenCommand::class)) {
             if (is_a($gameMode, PlayMode::class)) {
@@ -337,7 +337,7 @@ class Socket implements MessageComponentInterface
         return null;
     }
 
-    protected function playModesArray(string $state)
+    protected function playModesArrayByState(string $state)
     {
         $result = [];
         foreach ($this->gameModes as $gameMode) {
