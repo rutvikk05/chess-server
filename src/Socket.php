@@ -432,12 +432,14 @@ class Socket implements MessageComponentInterface
 
     protected function sendToOne(int $resourceId, array $res)
     {
-        $this->clients[$resourceId]->send(json_encode($res));
+        if (isset($this->clients[$resourceId])) {
+            $this->clients[$resourceId]->send(json_encode($res));
 
-        $this->log->info('Sent message', [
-            'id' => $resourceId,
-            'res' => $res,
-        ]);
+            $this->log->info('Sent message', [
+                'id' => $resourceId,
+                'res' => $res,
+            ]);
+        }
     }
 
     protected function sendToMany(array $resourceIds, array $res)
