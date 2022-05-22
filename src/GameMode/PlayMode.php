@@ -17,6 +17,10 @@ class PlayMode extends AbstractMode
 
     const STATE_ACCEPTED = 'accepted';
 
+    const SUBMODE_FRIEND = 'friend';
+
+    const SUBMODE_ONLINE = 'online';
+
     protected $jwt;
 
     protected $state;

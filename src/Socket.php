@@ -352,8 +352,10 @@ class Socket implements MessageComponentInterface
           if (is_a($gameMode, PlayMode::class)) {
             if ($gameMode->getState() === $state) {
                 $decoded = JWT::decode($gameMode->getJwt(), $_ENV['JWT_SECRET'], array('HS256'));
-                $decoded->hash = $gameMode->getHash();
-                $result[] = $decoded;
+                if ($decoded->submode === PlayMode::SUBMODE_ONLINE) {
+                    $decoded->hash = $gameMode->getHash();
+                    $result[] = $decoded;
+                }
             }
           }
         }
