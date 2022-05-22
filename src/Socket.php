@@ -105,6 +105,14 @@ class Socket implements MessageComponentInterface
                     $gameMode->res($this->parser->argv, $cmd)
                 );
             }
+        } elseif (is_a($cmd, LeaveCommand::class)) {
+            if (is_a($gameMode, PlayMode::class)) {
+                $this->deleteGameModes($from->resourceId);
+                return $this->sendToMany(
+                    $gameMode->getResourceIds(),
+                    $gameMode->res($this->parser->argv, $cmd)
+                );
+            }
         } elseif (is_a($cmd, OnlineGamesCommand::class)) {
             return $this->sendToOne($from->resourceId, [
                 $cmd->name => $this->playModesArrayByState(PlayMode::STATE_PENDING),
@@ -312,9 +320,9 @@ class Socket implements MessageComponentInterface
 
     public function onClose(ConnectionInterface $conn)
     {
-        $this->leaveGame($conn);
-        $this->deleteGameModes($conn);
-        $this->deleteClient($conn);
+        $this->leaveGame($conn->resourceId);
+        $this->deleteGameModes($conn->resourceId);
+        $this->deleteClient($conn->resourceId);
 
         $this->log->info('Closed connection', ['id' => $conn->resourceId]);
     }
@@ -364,25 +372,25 @@ class Socket implements MessageComponentInterface
         return null;
     }
 
-    protected function leaveGame(ConnectionInterface $conn)
+    protected function leaveGame(int $resourceId)
     {
-        if ($gameMode = $this->gameModeByResourceId($conn->resourceId)) {
-            $resourceId = null;
+        if ($gameMode = $this->gameModeByResourceId($resourceId)) {
+            $toId = null;
             $resourceIds = $gameMode->getResourceIds();
-            if ($resourceIds[0] !== $conn->resourceId) {
-                $resourceId = $resourceIds[0];
-            } elseif (isset($resourceIds[1]) && $resourceIds[1] !== $conn->resourceId) {
-                $resourceId = $resourceIds[1];
+            if ($resourceIds[0] !== $resourceId) {
+                $toId = $resourceIds[0];
+            } elseif (isset($resourceIds[1]) && $resourceIds[1] !== $resourceId) {
+                $toId = $resourceIds[1];
             }
-            if ($resourceId) {
-                $this->sendToOne($resourceId, ['/leave' => LeaveCommand::ACTION_ACCEPT]);
+            if ($toId) {
+                $this->sendToOne($toId, ['/leave' => LeaveCommand::ACTION_ACCEPT]);
             }
         }
     }
 
-    protected function deleteGameModes(ConnectionInterface $conn)
+    protected function deleteGameModes(int $resourceId)
     {
-        if ($gameMode = $this->gameModeByResourceId($conn->resourceId)) {
+        if ($gameMode = $this->gameModeByResourceId($resourceId)) {
             $resourceIds = $gameMode->getResourceIds();
             if (isset($resourceIds[0])) {
                 if (isset($this->gameModes[$resourceIds[0]])) {
@@ -397,10 +405,10 @@ class Socket implements MessageComponentInterface
         }
     }
 
-    protected function deleteClient(ConnectionInterface $conn)
+    protected function deleteClient(int $resourceId)
     {
-        if (isset($this->clients[$conn->resourceId])) {
-            unset($this->clients[$conn->resourceId]);
+        if (isset($this->clients[$resourceId])) {
+            unset($this->clients[$resourceId]);
         }
     }
 
