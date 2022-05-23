@@ -148,28 +148,30 @@ class Socket implements MessageComponentInterface
                 $tournaments = json_decode($json, true);
                 shuffle($tournaments);
                 $rand = $tournaments[0];
+                $movetext = $rand['movetext'];
                 $pgnMode = new LoadPgnMode(
                     new Game(Game::MODE_LOAD_PGN),
                     [$from->resourceId]
                 );
                 $game = $pgnMode->getGame();
-                $game->loadPgn($rand['movetext']);
+                $game->loadPgn($movetext);
                 $pgnMode->setGame($game);
                 $this->gameModes[$from->resourceId] = $pgnMode;
                 $board = new Board();
                 $history = [array_values($board->toAsciiArray())];
-                $moves = (new Movetext($rand['movetext']))->getMovetext()->moves;
+                $moves = (new Movetext($movetext))->getMovetext()->moves;
                 foreach ($moves as $key => $move) {
                     $key % 2 === 0
                         ? $board->play('w', $move)
                         : $board->play('b', $move);
                     $history[] = array_values($board->toAsciiArray());
                 }
+                unset($rand['movetext']);
                 $res = [
                     $cmd->name => [
                         'mode' => LoadPgnMode::NAME,
                         'turn' => $game->state()->turn,
-                        'movetext' => $rand['movetext'],
+                        'movetext' => $movetext,
                         'fen' => $game->state()->fen,
                         'history' => $history,
                         'game' => $rand,
