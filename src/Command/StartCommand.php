@@ -7,7 +7,7 @@ use ChessServer\GameMode\AnalysisMode;
 use ChessServer\GameMode\GrandmasterMode;
 use ChessServer\GameMode\LoadFenMode;
 use ChessServer\GameMode\LoadPgnMode;
-use ChessServer\GameMode\PlayFriendMode;
+use ChessServer\GameMode\PlayMode;
 
 class StartCommand extends AbstractCommand
 {
@@ -22,7 +22,7 @@ class StartCommand extends AbstractCommand
                 GrandmasterMode::NAME,
                 LoadFenMode::NAME,
                 LoadPgnMode::NAME,
-                PlayFriendMode::NAME,
+                PlayMode::NAME,
             ],
             // LoadFenMode
             // optional param
@@ -30,16 +30,15 @@ class StartCommand extends AbstractCommand
             // LoadPgnMode
             // optional param
             'movetext' => 'string',
-            // GrandmasterMode, PlayFriendMode
+            // GrandmasterMode
             // optional param
             'color' => [
                 Color::W,
                 Color::B,
             ],
-            // optional param
-            'min' => 'int',
-            // optional param
-            'increment' => 'int',
+            // PlayMode
+            // mandatory param
+            'settings' => 'string',
         ];
     }
 
@@ -55,8 +54,8 @@ class StartCommand extends AbstractCommand
                     return count($argv) - 1 === 2;
                 case LoadPgnMode::NAME:
                     return count($argv) - 1 === 2;
-                case PlayFriendMode::NAME:
-                    return count($argv) - 1 === 4;
+                case PlayMode::NAME:
+                    return count($argv) - 1 === 2;
                 default:
                     // do nothing
                     break;

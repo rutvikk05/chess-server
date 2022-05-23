@@ -4,15 +4,26 @@ namespace ChessServer\GameMode;
 
 use Chess\Game;
 use ChessServer\Command\DrawCommand;
+use ChessServer\Command\LeaveCommand;
 use ChessServer\Command\RematchCommand;
 use ChessServer\Command\ResignCommand;
 use ChessServer\Command\TakebackCommand;
 
-class PlayFriendMode extends AbstractMode
+class PlayMode extends AbstractMode
 {
-    const NAME = 'playfriend';
+    const NAME = 'play';
+
+    const STATE_PENDING = 'pending';
+
+    const STATE_ACCEPTED = 'accepted';
+
+    const SUBMODE_FRIEND = 'friend';
+
+    const SUBMODE_ONLINE = 'online';
 
     protected $jwt;
+
+    protected $state;
 
     public function __construct(Game $game, array $resourceIds, string $jwt)
     {
@@ -20,6 +31,7 @@ class PlayFriendMode extends AbstractMode
 
         $this->jwt = $jwt;
         $this->hash = md5($jwt);
+        $this->state = self::STATE_PENDING;
     }
 
     public function getJwt()
@@ -27,11 +39,27 @@ class PlayFriendMode extends AbstractMode
         return $this->jwt;
     }
 
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
     public function res($argv, $cmd)
     {
         try {
             switch (get_class($cmd)) {
                 case DrawCommand::class:
+                    return [
+                        $cmd->name => $argv[1],
+                    ];
+                case LeaveCommand::class:
                     return [
                         $cmd->name => $argv[1],
                     ];
