@@ -11,6 +11,7 @@ use ChessServer\Command\LegalSqsCommand;
 use ChessServer\Command\OnlineGamesCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
+use ChessServer\Command\RandomGameCommand;
 use ChessServer\Command\RematchCommand;
 use ChessServer\Command\ResignCommand;
 use ChessServer\Command\ResponseCommand;
@@ -35,6 +36,7 @@ class CommandContainer
         $this->obj->attach(new OnlineGamesCommand());
         $this->obj->attach(new PlayFenCommand());
         $this->obj->attach(new QuitCommand());
+        $this->obj->attach(new RandomGameCommand());
         $this->obj->attach(new RematchCommand());
         $this->obj->attach(new ResignCommand());
         $this->obj->attach(new ResponseCommand());

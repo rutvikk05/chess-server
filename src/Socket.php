@@ -11,6 +11,7 @@ use ChessServer\Command\LeaveCommand;
 use ChessServer\Command\OnlineGamesCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
+use ChessServer\Command\RandomGameCommand;
 use ChessServer\Command\RematchCommand;
 use ChessServer\Command\ResignCommand;
 use ChessServer\Command\RestartCommand;
@@ -34,6 +35,8 @@ use Ratchet\ConnectionInterface;
 
 class Socket implements MessageComponentInterface
 {
+    const DATA_FOLDER = __DIR__.'/../data';
+
     private $clients = [];
 
     private $gameModes = [];
@@ -139,6 +142,47 @@ class Socket implements MessageComponentInterface
             return $this->sendToOne($from->resourceId, [
                 $cmd->name => 'A game needs to be started first for this command to be allowed.',
             ]);
+        } elseif (is_a($cmd, RandomGameCommand::class)) {
+            try {
+                $json = file_get_contents(self::DATA_FOLDER.'/tournaments.json');
+                $tournaments = json_decode($json, true);
+                shuffle($tournaments);
+                $rand = $tournaments[0];
+                $pgnMode = new LoadPgnMode(
+                    new Game(Game::MODE_LOAD_PGN),
+                    [$from->resourceId]
+                );
+                $game = $pgnMode->getGame();
+                $game->loadPgn($rand['movetext']);
+                $pgnMode->setGame($game);
+                $this->gameModes[$from->resourceId] = $pgnMode;
+                $board = new Board();
+                $history = [array_values($board->toAsciiArray())];
+                $moves = (new Movetext($rand['movetext']))->getMovetext()->moves;
+                foreach ($moves as $key => $move) {
+                    $key % 2 === 0
+                        ? $board->play('w', $move)
+                        : $board->play('b', $move);
+                    $history[] = array_values($board->toAsciiArray());
+                }
+                $res = [
+                    $cmd->name => [
+                        'mode' => LoadPgnMode::NAME,
+                        'turn' => $game->state()->turn,
+                        'movetext' => $rand['movetext'],
+                        'fen' => $game->state()->fen,
+                        'history' => $history,
+                        'game' => $rand,
+                    ],
+                ];
+            } catch (\Throwable $e) {
+                $res = [
+                    $cmd->name => [
+                        'message' => 'A random game could not be loaded.',
+                    ],
+                ];
+            }
+            return $this->sendToOne($from->resourceId, $res);
         } elseif (is_a($cmd, RematchCommand::class)) {
             if (is_a($gameMode, PlayMode::class)) {
                 return $this->sendToMany(
@@ -240,17 +284,12 @@ class Socket implements MessageComponentInterface
                     $pgnMode->setGame($game);
                     $this->gameModes[$from->resourceId] = $pgnMode;
                     $board = new Board();
-                    $history = [
-                        array_values($board->toAsciiArray()),
-                    ];
-                    $moves = explode(' ', $movetext);
+                    $history = [array_values($board->toAsciiArray())];
+                    $moves = (new Movetext($movetext))->getMovetext()->moves;
                     foreach ($moves as $key => $move) {
-                        if ($key % 2 === 0) {
-                            $exploded = explode('.', $move);
-                            $board->play('w', $exploded[1]);
-                        } else {
-                            $board->play('b', $move);
-                        }
+                        $key % 2 === 0
+                            ? $board->play('w', $move)
+                            : $board->play('b', $move);
                         $history[] = array_values($board->toAsciiArray());
                     }
                     $res = [
