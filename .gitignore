@@ -4,6 +4,9 @@
 /composer.lock
 /vendor/
 
+/data/players.json
+/data/tournaments.json
+
 /ssl/*.pem
 /ssl/*.csr
 /ssl/*.crt

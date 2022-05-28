@@ -240,7 +240,7 @@ class Socket implements MessageComponentInterface
                 ];
             } elseif (GrandmasterMode::NAME === $this->parser->argv[1]) {
                 $this->gameModes[$from->resourceId] = new GrandmasterMode(
-                    new Game(Game::MODE_GRANDMASTER),
+                    new Game(Game::MODE_GRANDMASTER, __DIR__.'/../data/players.json'),
                     [$from->resourceId]
                 );
                 $res = [

@@ -94,7 +94,7 @@ abstract class AbstractMode
                 case ResponseCommand::class:
                     $response = $this->game->response();
                     if ($response) {
-                        $this->game->play($this->game->state()->turn, $response);
+                        $this->game->play($this->game->state()->turn, $response->move);
                         return [
                             $cmd->name => $this->game->state(),
                         ];
