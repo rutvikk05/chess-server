@@ -95,9 +95,11 @@ abstract class AbstractMode
                     $response = $this->game->response();
                     if ($response) {
                         $this->game->play($this->game->state()->turn, $response->move);
+                        $game = (array) $response->game;
+                        unset($game['movetext']);
                         return [
                             $cmd->name => [
-                                'game' => $response->game,
+                                'game' => (object) $game,
                                 'move' => $response->move,
                                 'state' => $this->game->state(),
                             ],

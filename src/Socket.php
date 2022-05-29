@@ -4,6 +4,7 @@ namespace ChessServer;
 
 use Chess\Board;
 use Chess\Game;
+use Chess\Grandmaster;
 use Chess\Movetext;
 use ChessServer\Command\AcceptPlayRequestCommand;
 use ChessServer\Command\DrawCommand;
@@ -37,23 +38,26 @@ class Socket implements MessageComponentInterface
 {
     const DATA_FOLDER = __DIR__.'/../data';
 
-    private $clients = [];
-
-    private $gameModes = [];
+    private $log;
 
     private $parser;
 
-    private $log;
+    private $grandmaster;
+
+    private $clients = [];
+
+    private $gameModes = [];
 
     public function __construct()
     {
         $dotenv = Dotenv::createImmutable(__DIR__.'/../');
         $dotenv->load();
 
-        $this->parser = new CommandParser;
-
         $this->log = new Logger($_ENV['BASE_URL']);
         $this->log->pushHandler(new StreamHandler(__DIR__.'/../storage/pchess.log', Logger::INFO));
+
+        $this->parser = new CommandParser;
+        $this->grandmaster = new Grandmaster(self::DATA_FOLDER.'/players.json');
 
         echo "Welcome to PHP Chess Server" . PHP_EOL;
         echo "Commands available:" . PHP_EOL;
@@ -66,8 +70,10 @@ class Socket implements MessageComponentInterface
     public function onOpen(ConnectionInterface $conn)
     {
         $this->clients[$conn->resourceId] = $conn;
-
-        $this->log->info('New connection', ['id' => $conn->resourceId, 'n' => count($this->clients)]);
+        $this->log->info('New connection', [
+            'id' => $conn->resourceId,
+            'n' => count($this->clients)
+        ]);
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
@@ -240,7 +246,7 @@ class Socket implements MessageComponentInterface
                 ];
             } elseif (GrandmasterMode::NAME === $this->parser->argv[1]) {
                 $this->gameModes[$from->resourceId] = new GrandmasterMode(
-                    new Game(Game::MODE_GRANDMASTER, __DIR__.'/../data/players.json'),
+                    new Game(Game::MODE_GRANDMASTER, $this->grandmaster),
                     [$from->resourceId]
                 );
                 $res = [
