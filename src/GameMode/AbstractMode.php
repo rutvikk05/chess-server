@@ -97,7 +97,8 @@ abstract class AbstractMode
                         $this->game->play($this->game->state()->turn, $response->move);
                         return [
                             $cmd->name => [
-                                'response' => $response,
+                                'game' => $response->game,
+                                'move' => $response->move,
                                 'state' => $this->game->state(),
                             ],
                         ];
