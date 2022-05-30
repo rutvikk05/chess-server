@@ -356,6 +356,11 @@ class Socket implements MessageComponentInterface
                     $gameMode->getResourceIds(),
                     $gameMode->res($this->parser->argv, $cmd)
                 );
+            } elseif (is_a($gameMode, GrandmasterMode::class)) {
+                return $this->sendToOne(
+                    $from->resourceId,
+                    $gameMode->res($this->parser->argv, $cmd)
+                );
             }
         } elseif ($gameMode) {
             return $this->sendToOne(
