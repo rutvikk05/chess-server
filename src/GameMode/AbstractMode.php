@@ -9,7 +9,7 @@ use ChessServer\Command\HeuristicsCommand;
 use ChessServer\Command\HeuristicsBarCommand;
 use ChessServer\Command\LegalSqsCommand;
 use ChessServer\Command\PlayFenCommand;
-use ChessServer\Command\ResponseCommand;
+use ChessServer\Command\GrandmasterCommand;
 use ChessServer\Command\UndoMoveCommand;
 
 abstract class AbstractMode
@@ -91,16 +91,16 @@ abstract class AbstractMode
                             'pgn' => $this->game->state()->pgn
                         ],
                     ];
-                case ResponseCommand::class:
-                    $response = $this->game->response();
-                    if ($response) {
-                        $this->game->play($this->game->state()->turn, $response->move);
-                        $game = (array) $response->game;
+                case GrandmasterCommand::class:
+                    $ai = $this->game->ai();
+                    if ($ai) {
+                        $this->game->play($this->game->state()->turn, $ai->move);
+                        $game = (array) $ai->game;
                         unset($game['movetext']);
                         return [
                             $cmd->name => [
                                 'game' => (object) $game,
-                                'move' => $response->move,
+                                'move' => $ai->move,
                                 'state' => $this->game->state(),
                             ],
                         ];

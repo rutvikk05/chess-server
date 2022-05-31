@@ -2,12 +2,12 @@
 
 namespace ChessServer\Command;
 
-class ResponseCommand extends AbstractCommand
+class GrandmasterCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/response';
-        $this->description = 'Returns a computer response to the current position.';
+        $this->name = '/grandmaster';
+        $this->description = 'Returns a computer generated response to the current position.';
         $this->dependsOn = [
             StartCommand::class,
         ];

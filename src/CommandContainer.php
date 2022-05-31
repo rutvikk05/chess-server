@@ -14,7 +14,7 @@ use ChessServer\Command\QuitCommand;
 use ChessServer\Command\RandomGameCommand;
 use ChessServer\Command\RematchCommand;
 use ChessServer\Command\ResignCommand;
-use ChessServer\Command\ResponseCommand;
+use ChessServer\Command\GrandmasterCommand;
 use ChessServer\Command\RestartCommand;
 use ChessServer\Command\StartCommand;
 use ChessServer\Command\TakebackCommand;
@@ -39,7 +39,7 @@ class CommandContainer
         $this->obj->attach(new RandomGameCommand());
         $this->obj->attach(new RematchCommand());
         $this->obj->attach(new ResignCommand());
-        $this->obj->attach(new ResponseCommand());
+        $this->obj->attach(new GrandmasterCommand());
         $this->obj->attach(new RestartCommand());
         $this->obj->attach(new StartCommand());
         $this->obj->attach(new TakebackCommand());
