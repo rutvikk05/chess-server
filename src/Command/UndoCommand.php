@@ -2,11 +2,11 @@
 
 namespace ChessServer\Command;
 
-class UndoMoveCommand extends AbstractCommand
+class UndoCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/undo_move';
+        $this->name = '/undo';
         $this->description = 'Undoes the last move.';
         $this->dependsOn = [
             StartCommand::class,

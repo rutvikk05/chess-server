@@ -10,7 +10,7 @@ use ChessServer\Command\HeuristicsBarCommand;
 use ChessServer\Command\LegalSqsCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\GrandmasterCommand;
-use ChessServer\Command\UndoMoveCommand;
+use ChessServer\Command\UndoCommand;
 
 abstract class AbstractMode
 {
@@ -108,11 +108,10 @@ abstract class AbstractMode
                     return [
                         $cmd->name => null,
                     ];
-                case UndoMoveCommand::class:
+                case UndoCommand::class:
                     $board = $this->game->getBoard();
                     if ($board->getHistory()) {
-                        $board->undoMove($board->getCastlingAbility());
-                        $this->game->setBoard($board);
+                        $this->game->setBoard($board->undo());
                     }
                     return [
                         $cmd->name => $this->game->state(),
