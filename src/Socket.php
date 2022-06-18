@@ -22,9 +22,9 @@ use ChessServer\Command\UndoCommand;
 use ChessServer\Exception\ParserException;
 use ChessServer\GameMode\AbstractMode;
 use ChessServer\GameMode\AnalysisMode;
-use ChessServer\GameMode\GrandmasterMode;
-use ChessServer\GameMode\LoadFenMode;
-use ChessServer\GameMode\LoadPgnMode;
+use ChessServer\GameMode\GmMode;
+use ChessServer\GameMode\FenMode;
+use ChessServer\GameMode\PgnMode;
 use ChessServer\GameMode\PlayMode;
 use ChessServer\Parser\CommandParser;
 use Dotenv\Dotenv;
@@ -42,7 +42,7 @@ class Socket implements MessageComponentInterface
 
     private $parser;
 
-    private $grandmaster;
+    private $gm;
 
     private $clients = [];
 
@@ -57,7 +57,7 @@ class Socket implements MessageComponentInterface
         $this->log->pushHandler(new StreamHandler(__DIR__.'/../storage/pchess.log', Logger::INFO));
 
         $this->parser = new CommandParser;
-        $this->grandmaster = new Grandmaster(self::DATA_FOLDER.'/players.json');
+        $this->gm = new Grandmaster(self::DATA_FOLDER.'/players.json');
 
         echo "Welcome to PHP Chess Server" . PHP_EOL;
         echo "Commands available:" . PHP_EOL;
@@ -155,8 +155,8 @@ class Socket implements MessageComponentInterface
                 shuffle($tournaments);
                 $rand = $tournaments[0];
                 $movetext = $rand['movetext'];
-                $pgnMode = new LoadPgnMode(
-                    new Game(Game::MODE_LOAD_PGN),
+                $pgnMode = new PgnMode(
+                    new Game(Game::MODE_PGN),
                     [$from->resourceId]
                 );
                 $game = $pgnMode->getGame();
@@ -175,7 +175,7 @@ class Socket implements MessageComponentInterface
                 unset($rand['movetext']);
                 $res = [
                     $cmd->name => [
-                        'mode' => LoadPgnMode::NAME,
+                        'mode' => PgnMode::NAME,
                         'turn' => $game->state()->turn,
                         'movetext' => $movetext,
                         'fen' => $game->state()->fen,
@@ -244,21 +244,21 @@ class Socket implements MessageComponentInterface
                         'mode' => AnalysisMode::NAME,
                     ],
                 ];
-            } elseif (GrandmasterMode::NAME === $this->parser->argv[1]) {
-                $this->gameModes[$from->resourceId] = new GrandmasterMode(
-                    new Game(Game::MODE_GRANDMASTER, $this->grandmaster),
+            } elseif (GmMode::NAME === $this->parser->argv[1]) {
+                $this->gameModes[$from->resourceId] = new GmMode(
+                    new Game(Game::MODE_GM, $this->gm),
                     [$from->resourceId]
                 );
                 $res = [
                     $cmd->name => [
-                        'mode' => GrandmasterMode::NAME,
+                        'mode' => GmMode::NAME,
                         'color' => $this->parser->argv[2],
                     ],
                 ];
-            } elseif (LoadFenMode::NAME === $this->parser->argv[1]) {
+            } elseif (FenMode::NAME === $this->parser->argv[1]) {
                 try {
-                    $fenMode = new LoadFenMode(
-                        new Game(Game::MODE_LOAD_FEN),
+                    $fenMode = new FenMode(
+                        new Game(Game::MODE_FEN),
                         [$from->resourceId],
                         $this->parser->argv[2]
                     );
@@ -268,23 +268,23 @@ class Socket implements MessageComponentInterface
                     $this->gameModes[$from->resourceId] = $fenMode;
                     $res = [
                         $cmd->name => [
-                            'mode' => LoadFenMode::NAME,
+                            'mode' => FenMode::NAME,
                             'fen' => $this->parser->argv[2],
                         ],
                     ];
                 } catch (\Throwable $e) {
                     $res = [
                         $cmd->name => [
-                            'mode' => LoadFenMode::NAME,
+                            'mode' => FenMode::NAME,
                             'message' => 'This FEN string could not be loaded.',
                         ],
                     ];
                 }
-            } elseif (LoadPgnMode::NAME === $this->parser->argv[1]) {
+            } elseif (PgnMode::NAME === $this->parser->argv[1]) {
                 try {
                     $movetext = (new Movetext($this->parser->argv[2]))->validate();
-                    $pgnMode = new LoadPgnMode(
-                        new Game(Game::MODE_LOAD_PGN),
+                    $pgnMode = new PgnMode(
+                        new Game(Game::MODE_PGN),
                         [$from->resourceId]
                     );
                     $game = $pgnMode->getGame();
@@ -302,7 +302,7 @@ class Socket implements MessageComponentInterface
                     }
                     $res = [
                         $cmd->name => [
-                            'mode' => LoadPgnMode::NAME,
+                            'mode' => PgnMode::NAME,
                             'turn' => $game->state()->turn,
                             'movetext' => $movetext,
                             'fen' => $game->state()->fen,
@@ -312,7 +312,7 @@ class Socket implements MessageComponentInterface
                 } catch (\Throwable $e) {
                     $res = [
                         $cmd->name => [
-                            'mode' => LoadPgnMode::NAME,
+                            'mode' => PgnMode::NAME,
                             'message' => 'This PGN movetext could not be loaded.',
                         ],
                     ];
@@ -356,7 +356,7 @@ class Socket implements MessageComponentInterface
                     $gameMode->getResourceIds(),
                     $gameMode->res($this->parser->argv, $cmd)
                 );
-            } elseif (is_a($gameMode, GrandmasterMode::class)) {
+            } elseif (is_a($gameMode, GmMode::class)) {
                 return $this->sendToOne(
                     $from->resourceId,
                     $gameMode->res($this->parser->argv, $cmd)

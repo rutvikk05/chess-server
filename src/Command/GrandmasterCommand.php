@@ -6,7 +6,7 @@ class GrandmasterCommand extends AbstractCommand
 {
     public function __construct()
     {
-        $this->name = '/grandmaster';
+        $this->name = '/gm';
         $this->description = 'Returns a computer generated response to the current position.';
         $this->dependsOn = [
             StartCommand::class,

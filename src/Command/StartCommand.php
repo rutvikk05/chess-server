@@ -4,9 +4,9 @@ namespace ChessServer\Command;
 
 use Chess\PGN\AN\Color;
 use ChessServer\GameMode\AnalysisMode;
-use ChessServer\GameMode\GrandmasterMode;
-use ChessServer\GameMode\LoadFenMode;
-use ChessServer\GameMode\LoadPgnMode;
+use ChessServer\GameMode\GmMode;
+use ChessServer\GameMode\FenMode;
+use ChessServer\GameMode\PgnMode;
 use ChessServer\GameMode\PlayMode;
 
 class StartCommand extends AbstractCommand
@@ -19,18 +19,18 @@ class StartCommand extends AbstractCommand
             // mandatory param
             'mode' => [
                 AnalysisMode::NAME,
-                GrandmasterMode::NAME,
-                LoadFenMode::NAME,
-                LoadPgnMode::NAME,
+                GmMode::NAME,
+                FenMode::NAME,
+                PgnMode::NAME,
                 PlayMode::NAME,
             ],
-            // LoadFenMode
+            // FenMode
             // optional param
             'fen' => 'string',
-            // LoadPgnMode
+            // PgnMode
             // optional param
             'movetext' => 'string',
-            // GrandmasterMode
+            // GmMode
             // optional param
             'color' => [
                 Color::W,
@@ -48,11 +48,11 @@ class StartCommand extends AbstractCommand
             switch ($argv[1]) {
                 case AnalysisMode::NAME:
                     return count($argv) - 1 === 1;
-                case GrandmasterMode::NAME:
+                case GmMode::NAME:
                     return count($argv) - 1 === 2;
-                case LoadFenMode::NAME:
+                case FenMode::NAME:
                     return count($argv) - 1 === 2;
-                case LoadPgnMode::NAME:
+                case PgnMode::NAME:
                     return count($argv) - 1 === 2;
                 case PlayMode::NAME:
                     return count($argv) - 1 === 2;

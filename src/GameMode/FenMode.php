@@ -7,9 +7,9 @@ use Chess\Heuristics;
 use Chess\FEN\StrToBoard;
 use ChessServer\Command\HeuristicsCommand;
 
-class LoadFenMode extends AbstractMode
+class FenMode extends AbstractMode
 {
-    const NAME = 'loadfen';
+    const NAME = 'fen';
 
     protected $fen;
 
