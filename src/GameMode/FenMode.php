@@ -34,7 +34,7 @@ class FenMode extends AbstractMode
                     $board = (new StrToBoard($this->fen))->create();
                     return [
                         $cmd->name => [
-                            'dimensions' => (new Heuristics())->getDimensionsNames(),
+                            'dimensions' => (new Heuristics())->getDimsNames(),
                             'balance' => (new Heuristics($movetext, $board))->getBalance(),
                         ],
                     ];
