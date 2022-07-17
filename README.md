@@ -22,6 +22,12 @@ Create an `.env` file:
 
     $ cp .env.example .env
 
+Finally make sure to install the Stockfish chess engine.
+
+```
+$ sudo apt-get install stockfish
+```
+
 ### WebSocket Server
 
 Start the server:
@@ -44,13 +50,13 @@ Commands available:
 /resign {"action":["accept"]} Allows to resign a game.
 /gm Returns a computer generated response to the current position.
 /restart {"hash":"string"} Restarts a game.
-/start {"mode":["analysis","gm","fen","pgn","play"],"fen":"string","movetext":"string","color":["w","b"],"settings":"string"} Starts a new game.
+/start {"mode":["analysis","gm","fen","pgn","play","stockfish"],"fen":"string","movetext":"string","color":["w","b"],"settings":"string"} Starts a new game.
+/stockfish Returns Stockfish's response to the current position.
 /takeback {"action":["accept","decline","propose"]} Allows to manage a takeback.
 /undo Undoes the last move.
 
 Listening to commands...
 ```
-
 
 Open a console in your favorite browser and run commands:
 
