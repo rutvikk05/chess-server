@@ -26,6 +26,7 @@ use ChessServer\GameMode\GmMode;
 use ChessServer\GameMode\FenMode;
 use ChessServer\GameMode\PgnMode;
 use ChessServer\GameMode\PlayMode;
+use ChessServer\GameMode\StockfishMode;
 use ChessServer\Parser\CommandParser;
 use Dotenv\Dotenv;
 use Firebase\JWT\JWT;
@@ -339,6 +340,17 @@ class Socket implements MessageComponentInterface
                         'mode' => PlayMode::NAME,
                         'jwt' => $jwt,
                         'hash' => md5($jwt),
+                    ],
+                ];
+            } elseif (StockfishMode::NAME === $this->parser->argv[1]) {
+                $this->gameModes[$from->resourceId] = new StockfishMode(
+                    new Game(Game::MODE_STOCKFISH, $this->gm),
+                    [$from->resourceId]
+                );
+                $res = [
+                    $cmd->name => [
+                        'mode' => StockfishMode::NAME,
+                        'color' => $this->parser->argv[2],
                     ],
                 ];
             }

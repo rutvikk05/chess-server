@@ -17,6 +17,7 @@ use ChessServer\Command\ResignCommand;
 use ChessServer\Command\GrandmasterCommand;
 use ChessServer\Command\RestartCommand;
 use ChessServer\Command\StartCommand;
+use ChessServer\Command\StockfishCommand;
 use ChessServer\Command\TakebackCommand;
 use ChessServer\Command\UndoCommand;
 
@@ -42,6 +43,7 @@ class CommandContainer
         $this->obj->attach(new GrandmasterCommand());
         $this->obj->attach(new RestartCommand());
         $this->obj->attach(new StartCommand());
+        $this->obj->attach(new StockfishCommand());
         $this->obj->attach(new TakebackCommand());
         $this->obj->attach(new UndoCommand());
     }

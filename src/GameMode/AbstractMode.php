@@ -10,6 +10,7 @@ use ChessServer\Command\HeuristicsBarCommand;
 use ChessServer\Command\LegalSqsCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\GrandmasterCommand;
+use ChessServer\Command\StockfishCommand;
 use ChessServer\Command\UndoCommand;
 
 abstract class AbstractMode
@@ -59,6 +60,23 @@ abstract class AbstractMode
     {
         try {
             switch (get_class($cmd)) {
+                case GrandmasterCommand::class:
+                    $ai = $this->game->ai();
+                    if ($ai) {
+                        $this->game->play($this->game->state()->turn, $ai->move);
+                        $game = (array) $ai->game;
+                        unset($game['movetext']);
+                        return [
+                            $cmd->name => [
+                                'game' => (object) $game,
+                                'move' => $ai->move,
+                                'state' => $this->game->state(),
+                            ],
+                        ];
+                    }
+                    return [
+                        $cmd->name => null,
+                    ];
                 case HeuristicsCommand::class:
                     $movetext = $this->game->getBoard()->getMovetext();
                     return [
@@ -91,15 +109,12 @@ abstract class AbstractMode
                             'pgn' => $this->game->state()->pgn
                         ],
                     ];
-                case GrandmasterCommand::class:
+                case StockfishCommand::class:
                     $ai = $this->game->ai();
                     if ($ai) {
                         $this->game->play($this->game->state()->turn, $ai->move);
-                        $game = (array) $ai->game;
-                        unset($game['movetext']);
                         return [
                             $cmd->name => [
-                                'game' => (object) $game,
                                 'move' => $ai->move,
                                 'state' => $this->game->state(),
                             ],

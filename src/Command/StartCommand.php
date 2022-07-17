@@ -8,6 +8,7 @@ use ChessServer\GameMode\GmMode;
 use ChessServer\GameMode\FenMode;
 use ChessServer\GameMode\PgnMode;
 use ChessServer\GameMode\PlayMode;
+use ChessServer\GameMode\StockfishMode;
 
 class StartCommand extends AbstractCommand
 {
@@ -23,6 +24,7 @@ class StartCommand extends AbstractCommand
                 FenMode::NAME,
                 PgnMode::NAME,
                 PlayMode::NAME,
+                StockfishMode::NAME,
             ],
             // FenMode
             // optional param
@@ -55,6 +57,8 @@ class StartCommand extends AbstractCommand
                 case PgnMode::NAME:
                     return count($argv) - 1 === 2;
                 case PlayMode::NAME:
+                    return count($argv) - 1 === 2;
+                case StockfishMode::NAME:
                     return count($argv) - 1 === 2;
                 default:
                     // do nothing
