@@ -9,7 +9,7 @@ use ChessServer\Command\HeuristicsCommand;
 
 class FenMode extends AbstractMode
 {
-    const NAME = 'fen';
+    const NAME = Game::MODE_FEN;
 
     protected $fen;
 

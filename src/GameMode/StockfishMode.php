@@ -2,7 +2,9 @@
 
 namespace ChessServer\GameMode;
 
+use Chess\Game;
+
 class StockfishMode extends AbstractMode
 {
-    const NAME = 'stockfish';
+    const NAME = Game::MODE_STOCKFISH;
 }

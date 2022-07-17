@@ -11,7 +11,7 @@ use ChessServer\Command\TakebackCommand;
 
 class PlayMode extends AbstractMode
 {
-    const NAME = 'play';
+    const NAME = Game::MODE_PLAY;
 
     const STATE_PENDING = 'pending';
 

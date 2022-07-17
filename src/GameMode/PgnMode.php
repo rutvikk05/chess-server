@@ -2,7 +2,9 @@
 
 namespace ChessServer\GameMode;
 
+use Chess\Game;
+
 class PgnMode extends AbstractMode
 {
-    const NAME = 'pgn';
+    const NAME = Game::MODE_PGN;
 }
