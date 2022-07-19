@@ -111,17 +111,12 @@ abstract class AbstractMode
                     ];
                 case StockfishCommand::class:
                     $ai = $this->game->ai();
-                    if ($ai) {
-                        $this->game->play($this->game->state()->turn, $ai->move);
-                        return [
-                            $cmd->name => [
-                                'move' => $ai->move,
-                                'state' => $this->game->state(),
-                            ],
-                        ];
-                    }
+                    $this->game->play($this->game->state()->turn, $ai->move);
                     return [
-                        $cmd->name => null,
+                        $cmd->name => [
+                            'move' => $ai->move,
+                            'state' => $this->game->state(),
+                        ],
                     ];
                 case UndoCommand::class:
                     $board = $this->game->getBoard();
