@@ -22,7 +22,7 @@ Create an `.env` file:
 
     $ cp .env.example .env
 
-Finally make sure to install the Stockfish chess engine.
+Finally if you're not using Docker make sure to install the Stockfish chess engine.
 
 ```
 $ sudo apt-get install stockfish
