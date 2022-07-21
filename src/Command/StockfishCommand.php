@@ -25,23 +25,33 @@ class StockfishCommand extends AbstractCommand
 
     public function validate(array $argv)
     {
-        $options = json_decode(stripslashes($argv[1]), true);
-        $params = json_decode(stripslashes($argv[2]), true);
-        foreach ($options as $key => $val) {
-            if (
-                !in_array($key, array_keys($this->params['options'])) ||
-                !is_int($val)
-            ) {
-                return false;
-            }
+        isset($argv[1]) ? $options = json_decode(stripslashes($argv[1]), true) : $options = null;
+        isset($argv[2]) ? $params = json_decode(stripslashes($argv[2]), true) : $params = null;
+
+        if ($options) {
+          foreach ($options as $key => $val) {
+              if (
+                  !in_array($key, array_keys($this->params['options'])) ||
+                  !is_int($val)
+              ) {
+                  return false;
+              }
+          }
+        } else {
+          return false;
         }
-        foreach ($params as $key => $val) {
-            if (
-                !in_array($key, array_keys($this->params['params'])) ||
-                !is_int($val)
-            ) {
-                return false;
-            }
+
+        if ($params) {
+          foreach ($params as $key => $val) {
+              if (
+                  !in_array($key, array_keys($this->params['params'])) ||
+                  !is_int($val)
+              ) {
+                  return false;
+              }
+          }
+        } else {
+          return false;
         }
 
         return true;
