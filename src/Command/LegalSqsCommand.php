@@ -9,7 +9,7 @@ class LegalSqsCommand extends AbstractCommand
         $this->name = '/legal_sqs';
         $this->description = 'Returns the legal squares of a piece.';
         $this->params = [
-            'position' => 'string',
+            'position' => '<string>',
         ];
         $this->dependsOn = [
             StartCommand::class,

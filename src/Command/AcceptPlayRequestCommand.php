@@ -9,7 +9,7 @@ class AcceptPlayRequestCommand extends AbstractCommand
         $this->name = '/accept';
         $this->description = 'Accepts a request to play a game.';
         $this->params = [
-            'id' => 'id',
+            'jwt' => '<string>',
         ];
         $this->dependsOn = [];
     }

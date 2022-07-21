@@ -28,10 +28,10 @@ class StartCommand extends AbstractCommand
             ],
             // FenMode
             // optional param
-            'fen' => 'string',
+            'fen' => '<string>',
             // PgnMode
             // optional param
-            'movetext' => 'string',
+            'movetext' => '<string>',
             // GmMode
             // optional param
             'color' => [
@@ -40,7 +40,7 @@ class StartCommand extends AbstractCommand
             ],
             // PlayMode
             // mandatory param
-            'settings' => 'string',
+            'settings' => '<string>',
         ];
     }
 

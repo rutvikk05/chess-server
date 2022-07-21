@@ -9,7 +9,7 @@ class PlayFenCommand extends AbstractCommand
         $this->name = '/play_fen';
         $this->description = 'Plays a chess move in shortened FEN format.';
         $this->params = [
-            'fen' => 'string',
+            'fen' => '<string>',
         ];
         $this->dependsOn = [
             StartCommand::class,

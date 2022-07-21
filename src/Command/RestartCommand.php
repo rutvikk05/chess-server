@@ -9,7 +9,7 @@ class RestartCommand extends AbstractCommand
         $this->name = '/restart';
         $this->description = 'Restarts a game.';
         $this->params = [
-            'hash' => 'string',
+            'hash' => '<string>',
         ];
         $this->dependsOn = [];
     }
