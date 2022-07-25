@@ -6,12 +6,15 @@ use Chess\Board;
 use Chess\Game;
 use Chess\Grandmaster;
 use Chess\Movetext;
+use Chess\Randomizer;
+use Chess\FEN\BoardToStr;
 use ChessServer\Command\AcceptPlayRequestCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\LeaveCommand;
 use ChessServer\Command\OnlineGamesCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\QuitCommand;
+use ChessServer\Command\RandomCheckmateCommand;
 use ChessServer\Command\RandomGameCommand;
 use ChessServer\Command\RematchCommand;
 use ChessServer\Command\ResignCommand;
@@ -149,6 +152,28 @@ class Socket implements MessageComponentInterface
             return $this->sendToOne($from->resourceId, [
                 $cmd->name => 'A game needs to be started first for this command to be allowed.',
             ]);
+        } elseif (is_a($cmd, RandomCheckmateCommand::class)) {
+            try {
+                $items = json_decode(stripslashes($this->parser->argv[2]), true);
+                $color = array_key_first($items);
+                $ids = str_split(current($items));
+                $board = (new Randomizer(
+                    $this->parser->argv[1],
+                    [$color => $ids]
+                ))->getBoard();
+                $res = [
+                    $cmd->name => [
+                        'fen' => (new BoardToStr($board))->create(),
+                    ],
+                ];
+            } catch (\Throwable $e) {
+                $res = [
+                    $cmd->name => [
+                        'message' => 'A random checkmate could not be loaded.',
+                    ],
+                ];
+            }
+            return $this->sendToOne($from->resourceId, $res);
         } elseif (is_a($cmd, RandomGameCommand::class)) {
             try {
                 $json = file_get_contents(self::DATA_FOLDER.'/tournaments.json');
