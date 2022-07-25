@@ -29,29 +29,29 @@ class StockfishCommand extends AbstractCommand
         isset($argv[2]) ? $params = json_decode(stripslashes($argv[2]), true) : $params = null;
 
         if ($options) {
-          foreach ($options as $key => $val) {
-              if (
-                  !in_array($key, array_keys($this->params['options'])) ||
-                  !is_int($val)
-              ) {
-                  return false;
-              }
-          }
+            foreach ($options as $key => $val) {
+                if (
+                    !in_array($key, array_keys($this->params['options'])) ||
+                    !is_int($val)
+                ) {
+                    return false;
+                }
+            }
         } else {
-          return false;
+            return false;
         }
 
         if ($params) {
-          foreach ($params as $key => $val) {
-              if (
-                  !in_array($key, array_keys($this->params['params'])) ||
-                  !is_int($val)
-              ) {
-                  return false;
-              }
-          }
+            foreach ($params as $key => $val) {
+                if (
+                    !in_array($key, array_keys($this->params['params'])) ||
+                    !is_int($val)
+                ) {
+                    return false;
+                }
+            }
         } else {
-          return false;
+            return false;
         }
 
         return true;
