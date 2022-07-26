@@ -163,6 +163,7 @@ class Socket implements MessageComponentInterface
                 ))->getBoard();
                 $res = [
                     $cmd->name => [
+                        'turn' => $board->getTurn(),
                         'fen' => (new BoardToStr($board))->create(),
                     ],
                 ];
