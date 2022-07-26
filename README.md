@@ -6,8 +6,6 @@ PHP Ratchet WebSocket server using [PHP Chess](https://github.com/chesslablab/ph
 
 Check out [this demo](https://www.chesslablab.com).
 
-> Please note the sandbox server might not be up and running all the time.
-
 ### Setup
 
 Clone the `chesslablab/chess-server` repo into your projects folder as it is described in the following example:
