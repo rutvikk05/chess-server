@@ -6,6 +6,8 @@ use Chess\PGN\AN\Color;
 
 class RandomCheckmateCommand extends AbstractCommand
 {
+    const TYPE_Q    = 'Q';
+
     const TYPE_R    = 'R';
 
     const TYPE_BB   = 'BB';
@@ -27,6 +29,7 @@ class RandomCheckmateCommand extends AbstractCommand
     public function cases()
     {
         return [
+            self::TYPE_Q,
             self::TYPE_R,
             self::TYPE_BB,
             self::TYPE_BN,
