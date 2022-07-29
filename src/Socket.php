@@ -6,8 +6,9 @@ use Chess\Board;
 use Chess\Game;
 use Chess\Grandmaster;
 use Chess\Movetext;
-use Chess\Randomizer;
 use Chess\FEN\BoardToStr;
+use Chess\Randomizer\Randomizer;
+use Chess\Randomizer\Checkmate\TwoBishopsRandomizer;
 use ChessServer\Command\AcceptPlayRequestCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\LeaveCommand;
@@ -157,10 +158,14 @@ class Socket implements MessageComponentInterface
                 $items = json_decode(stripslashes($this->parser->argv[2]), true);
                 $color = array_key_first($items);
                 $ids = str_split(current($items));
-                $board = (new Randomizer(
-                    $this->parser->argv[1],
-                    [$color => $ids]
-                ))->getBoard();
+                if ($ids === ['B', 'B']) {
+                    $board = (new TwoBishopsRandomizer($color))->getBoard();
+                } else {
+                    $board = (new Randomizer(
+                        $this->parser->argv[1],
+                        [$color => $ids]
+                    ))->getBoard();
+                }
                 $res = [
                     $cmd->name => [
                         'turn' => $board->getTurn(),
@@ -168,6 +173,7 @@ class Socket implements MessageComponentInterface
                     ],
                 ];
             } catch (\Throwable $e) {
+                echo $e->getMessage();
                 $res = [
                     $cmd->name => [
                         'message' => 'A random checkmate could not be loaded.',
