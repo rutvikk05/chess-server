@@ -16,7 +16,6 @@ use ChessServer\Command\DrawCommand;
 use ChessServer\Command\LeaveCommand;
 use ChessServer\Command\OnlineGamesCommand;
 use ChessServer\Command\PlayFenCommand;
-use ChessServer\Command\QuitCommand;
 use ChessServer\Command\RandomCheckmateCommand;
 use ChessServer\Command\RandomGameCommand;
 use ChessServer\Command\RematchCommand;
@@ -145,16 +144,6 @@ class Socket implements MessageComponentInterface
                     $this->gameModes[$from->resourceId]->res($this->parser->argv, $cmd)
                 );
             }
-        } elseif (is_a($cmd, QuitCommand::class)) {
-            if ($gameMode) {
-                unset($this->gameModes[$from->resourceId]);
-                return $this->sendToOne($from->resourceId, [
-                    $cmd->name => 'Good bye!',
-                ]);
-            }
-            return $this->sendToOne($from->resourceId, [
-                $cmd->name => 'A game needs to be started first for this command to be allowed.',
-            ]);
         } elseif (is_a($cmd, RandomCheckmateCommand::class)) {
             try {
                 $items = json_decode(stripslashes($this->parser->argv[2]), true);
@@ -264,11 +253,6 @@ class Socket implements MessageComponentInterface
                 ]);
             }
         } elseif (is_a($cmd, StartCommand::class)) {
-            if ($gameMode) {
-                return $this->sendToOne($from->resourceId, [
-                    $cmd->name => 'Game already started.',
-                ]);
-            }
             if (AnalysisMode::NAME === $this->parser->argv[1]) {
                 $this->gameModes[$from->resourceId] = new AnalysisMode(
                     new Game(Game::MODE_ANALYSIS),

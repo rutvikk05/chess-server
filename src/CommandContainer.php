@@ -10,7 +10,6 @@ use ChessServer\Command\LeaveCommand;
 use ChessServer\Command\LegalSqsCommand;
 use ChessServer\Command\OnlineGamesCommand;
 use ChessServer\Command\PlayFenCommand;
-use ChessServer\Command\QuitCommand;
 use ChessServer\Command\RandomCheckmateCommand;
 use ChessServer\Command\RandomGameCommand;
 use ChessServer\Command\RematchCommand;
@@ -37,7 +36,6 @@ class CommandContainer
         $this->obj->attach(new LegalSqsCommand());
         $this->obj->attach(new OnlineGamesCommand());
         $this->obj->attach(new PlayFenCommand());
-        $this->obj->attach(new QuitCommand());
         $this->obj->attach(new RandomCheckmateCommand());
         $this->obj->attach(new RandomGameCommand());
         $this->obj->attach(new RematchCommand());
