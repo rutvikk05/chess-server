@@ -28,11 +28,15 @@ class StartCommand extends AbstractCommand
             ],
             // FenMode
             // optional param
+            // StockfishMode
+            // optional param
             'fen' => '<string>',
             // PgnMode
             // optional param
             'movetext' => '<string>',
             // GmMode
+            // optional param
+            // StockfishMode
             // optional param
             'color' => [
                 Color::W,

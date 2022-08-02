@@ -7,6 +7,8 @@ use Chess\Game;
 use Chess\Grandmaster;
 use Chess\Movetext;
 use Chess\FEN\BoardToStr;
+use Chess\FEN\StrToBoard;
+use Chess\PGN\AN\Color;
 use Chess\Randomizer\Randomizer;
 use Chess\Randomizer\Checkmate\TwoBishopsRandomizer;
 use ChessServer\Command\AcceptPlayRequestCommand;
@@ -375,16 +377,38 @@ class Socket implements MessageComponentInterface
                     ],
                 ];
             } elseif (StockfishMode::NAME === $this->parser->argv[1]) {
-                $this->gameModes[$from->resourceId] = new StockfishMode(
-                    new Game(Game::MODE_STOCKFISH, $this->gm),
-                    [$from->resourceId]
-                );
-                $res = [
-                    $cmd->name => [
-                        'mode' => StockfishMode::NAME,
-                        'color' => $this->parser->argv[2],
-                    ],
-                ];
+                try {
+                    $board = (new StrToBoard($this->parser->argv[2]))->create();
+                    $game = (new Game(Game::MODE_STOCKFISH, $this->gm))->setBoard($board);
+                    $this->gameModes[$from->resourceId] = new StockfishMode($game, [$from->resourceId]);
+                    $res = [
+                        $cmd->name => [
+                            'mode' => StockfishMode::NAME,
+                            'color' => $game->getBoard()->getTurn(),
+                            'fen' => $game->getBoard()->toFen(),
+                        ],
+                    ];
+                } catch (\Throwable $e) {
+                    if ($this->parser->argv[2] === Color::W || $this->parser->argv[2] === Color::B) {
+                        $this->gameModes[$from->resourceId] = new StockfishMode(
+                            new Game(Game::MODE_STOCKFISH, $this->gm),
+                            [$from->resourceId]
+                        );
+                        $res = [
+                            $cmd->name => [
+                                'mode' => StockfishMode::NAME,
+                                'color' => $this->parser->argv[2],
+                            ],
+                        ];
+                    } else {
+                        $res = [
+                            $cmd->name => [
+                                'mode' => StockfishMode::NAME,
+                                'message' => 'The Stockfish mode could not be started.',
+                            ],
+                        ];
+                    }
+                }
             }
             return $this->sendToOne($from->resourceId, $res);
         } elseif (is_a($cmd, TakebackCommand::class)) {
