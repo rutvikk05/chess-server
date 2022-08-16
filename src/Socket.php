@@ -413,6 +413,11 @@ class Socket implements MessageComponentInterface
                     $from->resourceId,
                     $gameMode->res($this->parser->argv, $cmd)
                 );
+            } elseif (is_a($gameMode, AnalysisMode::class)) {
+                return $this->sendToOne(
+                    $from->resourceId,
+                    $gameMode->res($this->parser->argv, $cmd)
+                );
             }
         } elseif ($gameMode) {
             return $this->sendToOne(
