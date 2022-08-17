@@ -147,15 +147,21 @@ class Socket implements MessageComponentInterface
         } elseif (is_a($cmd, RandomCheckmateCommand::class)) {
             try {
                 $items = json_decode(stripslashes($this->parser->argv[2]), true);
-                $color = array_key_first($items);
-                $ids = str_split(current($items));
-                if ($ids === ['B', 'B']) {
-                    $board = (new TwoBishopsRandomizer($color))->getBoard();
+                if (count($items) === 1) {
+                    $color = array_key_first($items);
+                    $ids = str_split(current($items));
+                    if ($ids === ['B', 'B']) {
+                        $board = (new TwoBishopsRandomizer($this->parser->argv[1]))->getBoard();
+                    } else {
+                        $board = (new Randomizer($this->parser->argv[1], [$color => $ids]))->getBoard();
+                    }
                 } else {
-                    $board = (new Randomizer(
-                        $this->parser->argv[1],
-                        [$color => $ids]
-                    ))->getBoard();
+                    $wIds = str_split($items[Color::W]);
+                    $bIds = str_split($items[Color::B]);
+                    $board = (new Randomizer($this->parser->argv[1], [
+                        Color::W => $wIds,
+                        Color::B => $bIds,
+                    ]))->getBoard();
                 }
                 $res = [
                     $cmd->name => [
