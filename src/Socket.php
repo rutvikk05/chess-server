@@ -17,7 +17,6 @@ use ChessServer\Command\LeaveCommand;
 use ChessServer\Command\OnlineGamesCommand;
 use ChessServer\Command\PlayFenCommand;
 use ChessServer\Command\RandomCheckmateCommand;
-use ChessServer\Command\RandomGameCommand;
 use ChessServer\Command\RematchCommand;
 use ChessServer\Command\ResignCommand;
 use ChessServer\Command\RestartCommand;
@@ -174,49 +173,6 @@ class Socket implements MessageComponentInterface
                 $res = [
                     $cmd->name => [
                         'message' => 'A random checkmate could not be loaded.',
-                    ],
-                ];
-            }
-            return $this->sendToOne($from->resourceId, $res);
-        } elseif (is_a($cmd, RandomGameCommand::class)) {
-            try {
-                $json = file_get_contents(self::DATA_FOLDER.'/tournaments.json');
-                $tournaments = json_decode($json, true);
-                shuffle($tournaments);
-                $rand = $tournaments[0];
-                $movetext = $rand['movetext'];
-                $pgnMode = new PgnMode(
-                    new Game(Game::MODE_PGN),
-                    [$from->resourceId]
-                );
-                $game = $pgnMode->getGame();
-                $game->loadPgn($movetext);
-                $pgnMode->setGame($game);
-                $this->gameModes[$from->resourceId] = $pgnMode;
-                $board = new Board();
-                $history = [array_values($board->toAsciiArray())];
-                $moves = (new Movetext($movetext))->getMovetext()->moves;
-                foreach ($moves as $key => $move) {
-                    $key % 2 === 0
-                        ? $board->play('w', $move)
-                        : $board->play('b', $move);
-                    $history[] = array_values($board->toAsciiArray());
-                }
-                unset($rand['movetext']);
-                $res = [
-                    $cmd->name => [
-                        'mode' => PgnMode::NAME,
-                        'turn' => $game->state()->turn,
-                        'movetext' => $movetext,
-                        'fen' => $game->state()->fen,
-                        'history' => $history,
-                        'game' => $rand,
-                    ],
-                ];
-            } catch (\Throwable $e) {
-                $res = [
-                    $cmd->name => [
-                        'message' => 'A random game could not be loaded.',
                     ],
                 ];
             }
