@@ -1,7 +1,7 @@
 #!/bin/bash
 
 filename=../../storage/pchess.log
-maxsize=1000 # 10 MB
+maxsize=10485760 # 10 MB
 filesize=$(stat -c%s "$filename")
 
 if (( filesize > maxsize ))
