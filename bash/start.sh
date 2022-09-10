@@ -9,9 +9,8 @@ fi
 
 # cd the app's root directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-APP_PATH="$(dirname $(dirname $DIR))"
+APP_PATH="$(dirname $DIR)"
 cd $APP_PATH
 
 # build the docker containers
-cd $APP_PATH
 docker-compose up -d
