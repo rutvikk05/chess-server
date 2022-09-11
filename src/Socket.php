@@ -11,6 +11,7 @@ use Chess\FEN\StrToBoard;
 use Chess\PGN\AN\Color;
 use Chess\Randomizer\Randomizer;
 use Chess\Randomizer\Checkmate\TwoBishopsRandomizer;
+use Chess\Randomizer\Endgame\PawnEndgameRandomizer;
 use ChessServer\Command\AcceptPlayRequestCommand;
 use ChessServer\Command\DrawCommand;
 use ChessServer\Command\LeaveCommand;
@@ -151,6 +152,8 @@ class Socket implements MessageComponentInterface
                     $ids = str_split(current($items));
                     if ($ids === ['B', 'B']) {
                         $board = (new TwoBishopsRandomizer($this->parser->argv[1]))->getBoard();
+                    } elseif ($ids === ['P']) {
+                        $board = (new PawnEndgameRandomizer($this->parser->argv[1]))->getBoard();
                     } else {
                         $board = (new Randomizer($this->parser->argv[1], [$color => $ids]))->getBoard();
                     }
