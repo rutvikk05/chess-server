@@ -328,7 +328,7 @@ class Socket implements MessageComponentInterface
             } elseif (StockfishMode::NAME === $this->parser->argv[1]) {
                 try {
                     $board = (new StrToBoard($this->parser->argv[2]))->create();
-                    $game = (new Game(Game::MODE_STOCKFISH, $this->gm))->setBoard($board);
+                    $game = (new Game(Game::MODE_STOCKFISH))->setBoard($board);
                     $this->gameModes[$from->resourceId] = new StockfishMode($game, [$from->resourceId]);
                     $res = [
                         $cmd->name => [
