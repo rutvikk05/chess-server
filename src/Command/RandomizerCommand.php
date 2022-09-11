@@ -4,9 +4,9 @@ namespace ChessServer\Command;
 
 use Chess\PGN\AN\Color;
 
-class RandomCheckmateCommand extends AbstractCommand
+class RandomizerCommand extends AbstractCommand
 {
-    const TYPE_QR   = 'QR';
+    const TYPE_P    = 'P';
 
     const TYPE_Q    = 'Q';
 
@@ -16,10 +16,12 @@ class RandomCheckmateCommand extends AbstractCommand
 
     const TYPE_BN   = 'BN';
 
+    const TYPE_QR   = 'QR';
+
     public function __construct()
     {
-        $this->name = '/random_checkmate';
-        $this->description = 'Starts a random checkmate position.';
+        $this->name = '/randomizer';
+        $this->description = 'Starts a random position.';
         $this->params = [
             // mandatory param
             'turn' => '<string>',
@@ -31,11 +33,12 @@ class RandomCheckmateCommand extends AbstractCommand
     public function cases()
     {
         return [
-            self::TYPE_QR,
+            self::TYPE_P,
             self::TYPE_Q,
             self::TYPE_R,
             self::TYPE_BB,
             self::TYPE_BN,
+            self::TYPE_QR,
         ];
     }
 

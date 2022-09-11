@@ -17,7 +17,7 @@ use ChessServer\Command\DrawCommand;
 use ChessServer\Command\LeaveCommand;
 use ChessServer\Command\OnlineGamesCommand;
 use ChessServer\Command\PlayFenCommand;
-use ChessServer\Command\RandomCheckmateCommand;
+use ChessServer\Command\RandomizerCommand;
 use ChessServer\Command\RematchCommand;
 use ChessServer\Command\ResignCommand;
 use ChessServer\Command\RestartCommand;
@@ -144,7 +144,7 @@ class Socket implements MessageComponentInterface
                     $this->gameModes[$from->resourceId]->res($this->parser->argv, $cmd)
                 );
             }
-        } elseif (is_a($cmd, RandomCheckmateCommand::class)) {
+        } elseif (is_a($cmd, RandomizerCommand::class)) {
             try {
                 $items = json_decode(stripslashes($this->parser->argv[2]), true);
                 if (count($items) === 1) {
@@ -175,7 +175,7 @@ class Socket implements MessageComponentInterface
                 echo $e->getMessage();
                 $res = [
                     $cmd->name => [
-                        'message' => 'A random checkmate could not be loaded.',
+                        'message' => 'A random puzzle could not be loaded.',
                     ],
                 ];
             }
