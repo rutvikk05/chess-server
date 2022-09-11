@@ -113,9 +113,7 @@ abstract class AbstractMode
                     $options = json_decode(stripslashes($argv[1]), true);
                     $params = json_decode(stripslashes($argv[2]), true);
                     $ai = $this->game->ai($options, $params);
-                    if ($ai->move) {
-                        $this->game->play($this->game->state()->turn, $ai->move);
-                    }
+                    $this->game->play($this->game->state()->turn, $ai->move);
                     return [
                         $cmd->name => [
                             'move' => $ai->move,
