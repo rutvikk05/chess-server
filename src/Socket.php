@@ -327,9 +327,15 @@ class Socket implements MessageComponentInterface
                 ];
             } elseif (StockfishMode::NAME === $this->parser->argv[1]) {
                 try {
-                    $board = (new StrToBoard($this->parser->argv[2]))->create();
-                    $game = (new Game(Game::MODE_STOCKFISH))->setBoard($board);
-                    $this->gameModes[$from->resourceId] = new StockfishMode($game, [$from->resourceId]);
+                    $stockfishMode = new StockfishMode(
+                        new Game(Game::MODE_STOCKFISH),
+                        [$from->resourceId],
+                        $this->parser->argv[2]
+                    );
+                    $game = $stockfishMode->getGame();
+                    $game->loadFen($this->parser->argv[2]);
+                    $stockfishMode->setGame($game);
+                    $this->gameModes[$from->resourceId] = $stockfishMode;
                     $res = [
                         $cmd->name => [
                             'mode' => StockfishMode::NAME,
@@ -339,10 +345,11 @@ class Socket implements MessageComponentInterface
                     ];
                 } catch (\Throwable $e) {
                     if ($this->parser->argv[2] === Color::W || $this->parser->argv[2] === Color::B) {
-                        $this->gameModes[$from->resourceId] = new StockfishMode(
+                        $stockfishMode = new StockfishMode(
                             new Game(Game::MODE_STOCKFISH, $this->gm),
                             [$from->resourceId]
                         );
+                        $this->gameModes[$from->resourceId] = $stockfishMode;
                         $res = [
                             $cmd->name => [
                                 'mode' => StockfishMode::NAME,

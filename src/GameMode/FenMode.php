@@ -13,7 +13,7 @@ class FenMode extends AbstractMode
 
     protected $fen;
 
-    public function __construct(Game $game, array $resourceIds, string $fen)
+    public function __construct(Game $game, array $resourceIds, string $fen = '')
     {
         parent::__construct($game, $resourceIds);
 
@@ -31,11 +31,16 @@ class FenMode extends AbstractMode
             switch (get_class($cmd)) {
                 case HeuristicsCommand::class:
                     $movetext = $this->game->getBoard()->getMovetext();
-                    $board = (new StrToBoard($this->fen))->create();
+                    if ($this->fen) {
+                        $board = (new StrToBoard($this->fen))->create();
+                        $balance = (new Heuristics($movetext, $board))->getBalance();
+                    } else {
+                        $balance = (new Heuristics($movetext))->getBalance();
+                    }
                     return [
                         $cmd->name => [
                             'dimensions' => (new Heuristics())->getDimsNames(),
-                            'balance' => (new Heuristics($movetext, $board))->getBalance(),
+                            'balance' => $balance,
                         ],
                     ];
                 default:
