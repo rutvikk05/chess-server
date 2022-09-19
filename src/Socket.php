@@ -2,7 +2,6 @@
 
 namespace ChessServer;
 
-use Chess\Board;
 use Chess\Game;
 use Chess\Grandmaster;
 use Chess\Movetext;
@@ -218,64 +217,66 @@ class Socket implements MessageComponentInterface
                 ]);
             }
         } elseif (is_a($cmd, StartCommand::class)) {
-            if (AnalysisMode::NAME === $this->parser->argv[1]) {
+            $variant = $this->parser->argv[1];
+            $mode = $this->parser->argv[2];
+            if (AnalysisMode::NAME === $mode) {
                 $this->gameModes[$from->resourceId] = new AnalysisMode(
-                    new Game(Game::VARIANT_CLASSICAL, Game::MODE_ANALYSIS),
+                    new Game($variant, $mode),
                     [$from->resourceId]
                 );
                 $res = [
                     $cmd->name => [
-                        'mode' => AnalysisMode::NAME,
+                        'mode' => $mode,
                     ],
                 ];
-            } elseif (GmMode::NAME === $this->parser->argv[1]) {
+            } elseif (GmMode::NAME === $mode) {
                 $this->gameModes[$from->resourceId] = new GmMode(
-                    new Game(Game::VARIANT_CLASSICAL, Game::MODE_GM, $this->gm),
+                    new Game($variant, $mode, $this->gm),
                     [$from->resourceId]
                 );
                 $res = [
                     $cmd->name => [
-                        'mode' => GmMode::NAME,
-                        'color' => $this->parser->argv[2],
+                        'mode' => $mode,
+                        'color' => $this->parser->argv[3],
                     ],
                 ];
-            } elseif (FenMode::NAME === $this->parser->argv[1]) {
+            } elseif (FenMode::NAME === $mode) {
                 try {
                     $fenMode = new FenMode(
-                        new Game(Game::VARIANT_CLASSICAL, Game::MODE_FEN),
+                        new Game($variant, $mode),
                         [$from->resourceId],
-                        $this->parser->argv[2]
+                        $this->parser->argv[3]
                     );
                     $game = $fenMode->getGame();
-                    $game->loadFen($this->parser->argv[2]);
+                    $game->loadFen($this->parser->argv[3]);
                     $fenMode->setGame($game);
                     $this->gameModes[$from->resourceId] = $fenMode;
                     $res = [
                         $cmd->name => [
-                            'mode' => FenMode::NAME,
-                            'fen' => $this->parser->argv[2],
+                            'mode' => $mode,
+                            'fen' => $this->parser->argv[3],
                         ],
                     ];
                 } catch (\Throwable $e) {
                     $res = [
                         $cmd->name => [
-                            'mode' => FenMode::NAME,
+                            'mode' => $mode,
                             'message' => 'This FEN string could not be loaded.',
                         ],
                     ];
                 }
-            } elseif (PgnMode::NAME === $this->parser->argv[1]) {
+            } elseif (PgnMode::NAME === $mode) {
                 try {
-                    $movetext = (new Movetext($this->parser->argv[2]))->validate();
+                    $movetext = (new Movetext($this->parser->argv[3]))->validate();
                     $pgnMode = new PgnMode(
-                        new Game(Game::VARIANT_CLASSICAL, Game::MODE_PGN),
+                        new Game($variant, $mode),
                         [$from->resourceId]
                     );
                     $game = $pgnMode->getGame();
                     $game->loadPgn($movetext);
                     $pgnMode->setGame($game);
                     $this->gameModes[$from->resourceId] = $pgnMode;
-                    $board = new Board();
+                    $board = $game->getBoard();
                     $history = [array_values($board->toAsciiArray())];
                     $moves = (new Movetext($movetext))->getMovetext()->moves;
                     foreach ($moves as $key => $move) {
@@ -286,7 +287,7 @@ class Socket implements MessageComponentInterface
                     }
                     $res = [
                         $cmd->name => [
-                            'mode' => PgnMode::NAME,
+                            'mode' => $mode,
                             'turn' => $game->state()->turn,
                             'movetext' => $movetext,
                             'fen' => $game->state()->fen,
@@ -296,13 +297,13 @@ class Socket implements MessageComponentInterface
                 } catch (\Throwable $e) {
                     $res = [
                         $cmd->name => [
-                            'mode' => PgnMode::NAME,
+                            'mode' => $mode,
                             'message' => 'This PGN movetext could not be loaded.',
                         ],
                     ];
                 }
-            } elseif (PlayMode::NAME === $this->parser->argv[1]) {
-                $settings = json_decode($this->parser->argv[2]);
+            } elseif (PlayMode::NAME === $mode) {
+                $settings = json_decode($this->parser->argv[3]);
                 $payload = [
                     'iss' => $_ENV['JWT_ISS'],
                     'iat' => time(),
@@ -314,56 +315,52 @@ class Socket implements MessageComponentInterface
                 ];
                 $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
                 $this->gameModes[$from->resourceId] = new PlayMode(
-                    new Game(Game::VARIANT_CLASSICAL, Game::MODE_PLAY),
+                    new Game($variant, $mode),
                     [$from->resourceId],
                     $jwt
                 );
                 $res = [
                     $cmd->name => [
-                        'mode' => PlayMode::NAME,
+                        'mode' => $mode,
                         'jwt' => $jwt,
                         'hash' => md5($jwt),
                     ],
                 ];
-            } elseif (StockfishMode::NAME === $this->parser->argv[1]) {
+            } elseif (StockfishMode::NAME === $mode) {
                 try {
                     $stockfishMode = new StockfishMode(
-                        new Game(Game::VARIANT_CLASSICAL, Game::MODE_STOCKFISH),
+                        new Game($variant, $mode),
                         [$from->resourceId],
-                        $this->parser->argv[2]
+                        $this->parser->argv[3]
                     );
                     $game = $stockfishMode->getGame();
-                    $game->loadFen($this->parser->argv[2]);
+                    $game->loadFen($this->parser->argv[3]);
                     $stockfishMode->setGame($game);
                     $this->gameModes[$from->resourceId] = $stockfishMode;
                     $res = [
                         $cmd->name => [
-                            'mode' => StockfishMode::NAME,
+                            'mode' => $mode,
                             'color' => $game->getBoard()->getTurn(),
                             'fen' => $game->getBoard()->toFen(),
                         ],
                     ];
                 } catch (\Throwable $e) {
-                    if ($this->parser->argv[2] === Color::W || $this->parser->argv[2] === Color::B) {
+                    if ($this->parser->argv[3] === Color::W || $this->parser->argv[3] === Color::B) {
                         $stockfishMode = new StockfishMode(
-                            new Game(
-                                Game::VARIANT_CLASSICAL,
-                                Game::MODE_STOCKFISH,
-                                $this->gm
-                            ),
+                            new Game($variant, $mode, $this->gm),
                             [$from->resourceId]
                         );
                         $this->gameModes[$from->resourceId] = $stockfishMode;
                         $res = [
                             $cmd->name => [
-                                'mode' => StockfishMode::NAME,
-                                'color' => $this->parser->argv[2],
+                                'mode' => $mode,
+                                'color' => $this->parser->argv[3],
                             ],
                         ];
                     } else {
                         $res = [
                             $cmd->name => [
-                                'mode' => StockfishMode::NAME,
+                                'mode' => $mode,
                                 'message' => 'The Stockfish mode could not be started.',
                             ],
                         ];

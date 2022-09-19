@@ -2,6 +2,7 @@
 
 namespace ChessServer\Command;
 
+use Chess\Game;
 use Chess\PGN\AN\Color;
 use ChessServer\GameMode\AnalysisMode;
 use ChessServer\GameMode\GmMode;
@@ -17,6 +18,11 @@ class StartCommand extends AbstractCommand
         $this->name = '/start';
         $this->description = 'Starts a new game.';
         $this->params = [
+            // mandatory param
+            'variant' => [
+                Game::VARIANT_960,
+                Game::VARIANT_CLASSICAL,
+            ],
             // mandatory param
             'mode' => [
                 AnalysisMode::NAME,
@@ -50,23 +56,25 @@ class StartCommand extends AbstractCommand
 
     public function validate(array $argv)
     {
-        if (in_array($argv[1], $this->params['mode'])) {
-            switch ($argv[1]) {
-                case AnalysisMode::NAME:
-                    return count($argv) - 1 === 1;
-                case GmMode::NAME:
-                    return count($argv) - 1 === 2;
-                case FenMode::NAME:
-                    return count($argv) - 1 === 2;
-                case PgnMode::NAME:
-                    return count($argv) - 1 === 2;
-                case PlayMode::NAME:
-                    return count($argv) - 1 === 2;
-                case StockfishMode::NAME:
-                    return count($argv) - 1 === 2;
-                default:
-                    // do nothing
-                    break;
+        if (in_array($argv[1], $this->params['variant'])) {
+            if (in_array($argv[2], $this->params['mode'])) {
+                switch ($argv[2]) {
+                    case AnalysisMode::NAME:
+                        return count($argv) - 1 === 2;
+                    case GmMode::NAME:
+                        return count($argv) - 1 === 3;
+                    case FenMode::NAME:
+                        return count($argv) - 1 === 3;
+                    case PgnMode::NAME:
+                        return count($argv) - 1 === 3;
+                    case PlayMode::NAME:
+                        return count($argv) - 1 === 3;
+                    case StockfishMode::NAME:
+                        return count($argv) - 1 === 3;
+                    default:
+                        // do nothing
+                        break;
+                }
             }
         }
 
