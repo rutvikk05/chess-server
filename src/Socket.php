@@ -203,7 +203,7 @@ class Socket implements MessageComponentInterface
                 $newJwt = JWT::encode($decoded, $_ENV['JWT_SECRET']);
                 $resourceIds = $gameMode->getResourceIds();
                 $newGameMode = new PlayMode(
-                    new Game(Game::MODE_PLAY),
+                    new Game(Game::VARIANT_CLASSICAL, Game::MODE_PLAY),
                     [$resourceIds[0], $resourceIds[1]],
                     $newJwt
                 );
@@ -220,7 +220,7 @@ class Socket implements MessageComponentInterface
         } elseif (is_a($cmd, StartCommand::class)) {
             if (AnalysisMode::NAME === $this->parser->argv[1]) {
                 $this->gameModes[$from->resourceId] = new AnalysisMode(
-                    new Game(Game::MODE_ANALYSIS),
+                    new Game(Game::VARIANT_CLASSICAL, Game::MODE_ANALYSIS),
                     [$from->resourceId]
                 );
                 $res = [
@@ -230,7 +230,7 @@ class Socket implements MessageComponentInterface
                 ];
             } elseif (GmMode::NAME === $this->parser->argv[1]) {
                 $this->gameModes[$from->resourceId] = new GmMode(
-                    new Game(Game::MODE_GM, $this->gm),
+                    new Game(Game::VARIANT_CLASSICAL, Game::MODE_GM, $this->gm),
                     [$from->resourceId]
                 );
                 $res = [
@@ -242,7 +242,7 @@ class Socket implements MessageComponentInterface
             } elseif (FenMode::NAME === $this->parser->argv[1]) {
                 try {
                     $fenMode = new FenMode(
-                        new Game(Game::MODE_FEN),
+                        new Game(Game::VARIANT_CLASSICAL, Game::MODE_FEN),
                         [$from->resourceId],
                         $this->parser->argv[2]
                     );
@@ -268,7 +268,7 @@ class Socket implements MessageComponentInterface
                 try {
                     $movetext = (new Movetext($this->parser->argv[2]))->validate();
                     $pgnMode = new PgnMode(
-                        new Game(Game::MODE_PGN),
+                        new Game(Game::VARIANT_CLASSICAL, Game::MODE_PGN),
                         [$from->resourceId]
                     );
                     $game = $pgnMode->getGame();
@@ -314,7 +314,7 @@ class Socket implements MessageComponentInterface
                 ];
                 $jwt = JWT::encode($payload, $_ENV['JWT_SECRET']);
                 $this->gameModes[$from->resourceId] = new PlayMode(
-                    new Game(Game::MODE_PLAY),
+                    new Game(Game::VARIANT_CLASSICAL, Game::MODE_PLAY),
                     [$from->resourceId],
                     $jwt
                 );
@@ -328,7 +328,7 @@ class Socket implements MessageComponentInterface
             } elseif (StockfishMode::NAME === $this->parser->argv[1]) {
                 try {
                     $stockfishMode = new StockfishMode(
-                        new Game(Game::MODE_STOCKFISH),
+                        new Game(Game::VARIANT_CLASSICAL, Game::MODE_STOCKFISH),
                         [$from->resourceId],
                         $this->parser->argv[2]
                     );
@@ -346,7 +346,11 @@ class Socket implements MessageComponentInterface
                 } catch (\Throwable $e) {
                     if ($this->parser->argv[2] === Color::W || $this->parser->argv[2] === Color::B) {
                         $stockfishMode = new StockfishMode(
-                            new Game(Game::MODE_STOCKFISH, $this->gm),
+                            new Game(
+                                Game::VARIANT_CLASSICAL,
+                                Game::MODE_STOCKFISH,
+                                $this->gm
+                            ),
                             [$from->resourceId]
                         );
                         $this->gameModes[$from->resourceId] = $stockfishMode;
