@@ -229,12 +229,9 @@ class Socket implements MessageComponentInterface
                     $cmd->name => [
                         'variant' => $variant,
                         'mode' => $mode,
+                        'fen' => $analysisMode->getGame()->getBoard()->toFen(),
                     ],
                 ];
-                if (Game::VARIANT_960 === $variant) {
-                  $res[$cmd->name]['fen'] = $analysisMode
-                    ->getGame()->getBoard()->toFen();
-                }
             } elseif (GmMode::NAME === $mode) {
                 $this->gameModes[$from->resourceId] = new GmMode(
                     new Game($variant, $mode, $this->gm),
