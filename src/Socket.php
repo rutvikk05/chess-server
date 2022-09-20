@@ -226,6 +226,7 @@ class Socket implements MessageComponentInterface
                 );
                 $res = [
                     $cmd->name => [
+                        'variant' => $variant,
                         'mode' => $mode,
                     ],
                 ];
@@ -236,6 +237,7 @@ class Socket implements MessageComponentInterface
                 );
                 $res = [
                     $cmd->name => [
+                        'variant' => $variant,
                         'mode' => $mode,
                         'color' => $this->parser->argv[3],
                     ],
@@ -253,6 +255,7 @@ class Socket implements MessageComponentInterface
                     $this->gameModes[$from->resourceId] = $fenMode;
                     $res = [
                         $cmd->name => [
+                            'variant' => $variant,
                             'mode' => $mode,
                             'fen' => $this->parser->argv[3],
                         ],
@@ -260,6 +263,7 @@ class Socket implements MessageComponentInterface
                 } catch (\Throwable $e) {
                     $res = [
                         $cmd->name => [
+                            'variant' => $variant,
                             'mode' => $mode,
                             'message' => 'This FEN string could not be loaded.',
                         ],
@@ -287,6 +291,7 @@ class Socket implements MessageComponentInterface
                     }
                     $res = [
                         $cmd->name => [
+                            'variant' => $variant,
                             'mode' => $mode,
                             'turn' => $game->state()->turn,
                             'movetext' => $movetext,
@@ -297,6 +302,7 @@ class Socket implements MessageComponentInterface
                 } catch (\Throwable $e) {
                     $res = [
                         $cmd->name => [
+                            'variant' => $variant,
                             'mode' => $mode,
                             'message' => 'This PGN movetext could not be loaded.',
                         ],
@@ -321,6 +327,7 @@ class Socket implements MessageComponentInterface
                 );
                 $res = [
                     $cmd->name => [
+                        'variant' => $variant,
                         'mode' => $mode,
                         'jwt' => $jwt,
                         'hash' => md5($jwt),
@@ -339,6 +346,7 @@ class Socket implements MessageComponentInterface
                     $this->gameModes[$from->resourceId] = $stockfishMode;
                     $res = [
                         $cmd->name => [
+                            'variant' => $variant,
                             'mode' => $mode,
                             'color' => $game->getBoard()->getTurn(),
                             'fen' => $game->getBoard()->toFen(),
@@ -353,6 +361,7 @@ class Socket implements MessageComponentInterface
                         $this->gameModes[$from->resourceId] = $stockfishMode;
                         $res = [
                             $cmd->name => [
+                                'variant' => $variant,
                                 'mode' => $mode,
                                 'color' => $this->parser->argv[3],
                             ],
@@ -360,8 +369,9 @@ class Socket implements MessageComponentInterface
                     } else {
                         $res = [
                             $cmd->name => [
+                                'variant' => $variant,
                                 'mode' => $mode,
-                                'message' => 'The Stockfish mode could not be started.',
+                                'message' => 'Stockfish could not be started.',
                             ],
                         ];
                     }
