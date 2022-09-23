@@ -5,6 +5,7 @@ namespace ChessServer;
 use Chess\Game;
 use Chess\Grandmaster;
 use Chess\Movetext;
+use Chess\Player;
 use Chess\FEN\BoardToStr;
 use Chess\FEN\StrToBoard;
 use Chess\PGN\AN\Color;
@@ -278,19 +279,10 @@ class Socket implements MessageComponentInterface
                         new Game($variant, $mode),
                         [$from->resourceId]
                     );
-                    $game = $pgnMode->getGame();
-                    $game->loadPgn($movetext);
+                    $player = (new Player($movetext))->play();
+                    $game = $pgnMode->getGame()->setBoard($player->getBoard());
                     $pgnMode->setGame($game);
                     $this->gameModes[$from->resourceId] = $pgnMode;
-                    $board = $game->getBoard();
-                    $history = [array_values($board->toAsciiArray())];
-                    $moves = (new Movetext($movetext))->getMovetext()->moves;
-                    foreach ($moves as $key => $move) {
-                        $key % 2 === 0
-                            ? $board->play('w', $move)
-                            : $board->play('b', $move);
-                        $history[] = array_values($board->toAsciiArray());
-                    }
                     $res = [
                         $cmd->name => [
                             'variant' => $variant,
@@ -298,7 +290,7 @@ class Socket implements MessageComponentInterface
                             'turn' => $game->state()->turn,
                             'movetext' => $movetext,
                             'fen' => $game->state()->fen,
-                            'history' => $history
+                            'history' => $player->getHistory(),
                         ],
                     ];
                 } catch (\Throwable $e) {
