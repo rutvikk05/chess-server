@@ -3,7 +3,7 @@
 namespace ChessServer\Command;
 
 use Chess\Game;
-use Chess\PGN\AN\Color;
+use Chess\Variant\Classical\PGN\AN\Color;
 use ChessServer\GameMode\AnalysisMode;
 use ChessServer\GameMode\GmMode;
 use ChessServer\GameMode\FenMode;

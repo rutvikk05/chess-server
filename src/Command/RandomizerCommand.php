@@ -2,7 +2,7 @@
 
 namespace ChessServer\Command;
 
-use Chess\PGN\AN\Color;
+use Chess\Variant\Classical\PGN\AN\Color;
 
 class RandomizerCommand extends AbstractCommand
 {
