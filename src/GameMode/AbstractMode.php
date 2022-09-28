@@ -5,6 +5,8 @@ namespace ChessServer\GameMode;
 use Chess\Game;
 use Chess\Heuristics;
 use Chess\HeuristicsByFenString;
+use Chess\Variant\Chess960\Board as Chess960Board;
+use Chess\Variant\Classical\Board as ClassicalBoard;
 use ChessServer\Command\HeuristicsCommand;
 use ChessServer\Command\HeuristicsBarCommand;
 use ChessServer\Command\LegalSqsCommand;
@@ -78,11 +80,18 @@ abstract class AbstractMode
                         $cmd->name => null,
                     ];
                 case HeuristicsCommand::class:
+                    $variant = $this->game->getVariant();
                     $movetext = $this->game->getBoard()->getMovetext();
+                    if ($variant === Game::VARIANT_CLASSICAL) {
+                        $board = new ClassicalBoard();
+                    } elseif ($variant === Game::VARIANT_960) {
+                        $startPos = $this->game->getBoard()->getStartPos();
+                        $board = new Chess960Board($startPos);
+                    }
                     return [
                         $cmd->name => [
                             'dimensions' => (new Heuristics())->getDimsNames(),
-                            'balance' => (new Heuristics($movetext))->getBalance(),
+                            'balance' => (new Heuristics($movetext, $board))->getBalance(),
                         ],
                     ];
                 case HeuristicsBarCommand::class:
