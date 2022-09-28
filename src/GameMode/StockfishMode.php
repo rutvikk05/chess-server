@@ -4,7 +4,7 @@ namespace ChessServer\GameMode;
 
 use Chess\Game;
 use Chess\Heuristics;
-use Chess\FEN\StrToBoard;
+use Chess\Variant\Classical\FEN\StrToBoard;
 use ChessServer\Command\HeuristicsCommand;
 
 class StockfishMode extends AbstractMode
