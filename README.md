@@ -10,7 +10,7 @@ Check out [this demo](https://www.chesslablab.com).
 
 Clone the `chesslablab/chess-server` repo into your projects folder as it is described in the following example:
 
-    $ git clone git@github.com:chesslablab/chess-server.git
+    $ git clone https://github.com/rutvikk05/chess-server.git
 
 Then `cd` the `chess-server` directory and install the Composer dependencies:
 
